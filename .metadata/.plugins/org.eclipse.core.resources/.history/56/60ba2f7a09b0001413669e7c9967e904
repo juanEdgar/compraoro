@@ -1,0 +1,46 @@
+package clases.ui.compra.cliente;
+
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
+import javax.annotation.ManagedBean;
+import javax.ejb.EJB;
+import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import clases.iu.compra.cotizacion.CompraView;
+import clases.iu.compra.cotizacion.CotizacionView;
+import ejb.bussines.PersonaEJB;
+
+@ManagedBean
+@ViewScoped
+public class ClienteView implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7350545623113820114L;
+	private final Logger log = LogManager.getLogger(ClienteView.class);
+
+	@Inject
+	private CompraView compra;
+	
+	@EJB
+	private PersonaEJB ejbPersona;
+	
+	
+	public String metodoFechaMaximaNacimiento(){
+		
+		SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy", new Locale("es","MX"));
+		
+		return sdf.format(this.ejbPersona.getFechaMaximaMayoriaedad());
+		
+	}
+	
+	
+
+}

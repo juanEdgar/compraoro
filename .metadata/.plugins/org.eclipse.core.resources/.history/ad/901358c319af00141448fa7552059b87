@@ -1,0 +1,35 @@
+package clases.cotizacion.dto;
+
+import javax.persistence.Transient;
+
+import clases.business.metales.vo.compra.ArticuloCompraMetal;
+
+public class ArticuloCotizar extends ArticuloCompraMetal {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3977220286279209779L;
+	@Transient
+	private float cotizacion;
+	@Transient
+	private int numeroArticulo;
+	public float getCotizacion() {
+		return cotizacion;
+	}
+	public void setCotizacion(float cotizacion) {
+		this.cotizacion = cotizacion;
+	}
+	public int getNumeroArticulo() {
+		return numeroArticulo;
+	}
+	public void setNumeroArticulo(int numeroArticulo) {
+		this.numeroArticulo = numeroArticulo;
+	}
+	
+	
+	
+	
+	
+
+}

@@ -1,0 +1,24 @@
+package clases.ui.compra.cliente;
+
+import javax.annotation.ManagedBean;
+import javax.ejb.EJB;
+import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
+
+import clases.iu.compra.cotizacion.CompraView;
+import ejb.bussines.PersonaEJB;
+
+@ManagedBean
+@ViewScoped
+public class ClienteView {
+	
+	@Inject
+	private CompraView compra;
+	
+	@EJB
+	private PersonaEJB ejbPersona;
+	
+	
+	
+
+}

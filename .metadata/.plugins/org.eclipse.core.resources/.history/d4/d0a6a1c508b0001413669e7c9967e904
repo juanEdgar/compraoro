@@ -1,0 +1,5 @@
+package clases.ui.compra.cliente;
+
+public class ClienteView {
+
+}

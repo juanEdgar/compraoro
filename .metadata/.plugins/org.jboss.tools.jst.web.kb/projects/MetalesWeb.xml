@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kb-project>
+ <depends-on-projects>
+  <project name="MetalesEJB"/>
+ </depends-on-projects>
+ <used-by-projects/>
+ <paths>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/enterprise/api/main/cdi-api-1.1.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/org/picketbox/main/picketbox-infinispan-4.0.21.Beta1.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/management/j2ee/api/main/jboss-j2eemgmt-api_1.1_spec-1.0.1.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/javaWorkSpace/compraOro/compra/Documentacion/jar/apache-log4j-2.0-bin/log4j-api-2.0.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/xml/soap/api/main/jboss-saaj-api_1.3_spec-1.0.3.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/ejb/api/main/jboss-ejb-api_3.2_spec-1.0.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/activation/api/main/activation-1.1.1.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/org/jboss/dmr/main/jboss-dmr-1.2.0.Final.jar"/>
+  <path value="/MetalesWeb/WebContent/WEB-INF/faces-config.xml">
+   <libraries>
+    <library class="faces-config">
+     <id class="model-object"
+      path="FileSystems/WEB-INF/faces-config.xml" project="MetalesWeb"/>
+    </library>
+   </libraries>
+  </path>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/org/picketbox/main/picketbox-commons-1.0.0.final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/xml/bind/api/main/jboss-jaxb-api_2.2_spec-1.0.4.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/persistence/api/main/hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/annotation/api/main/jboss-annotations-api_1.2_spec-1.0.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-jaxrs-3.0.8.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/inject/api/main/javax.inject-1.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/javaWorkSpace/compraOro/Metales/MetalesWeb/WebContent/WEB-INF/lib/log4j-core-2.1.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/servlet/jsp/api/main/jboss-jsp-api_2.3_spec-1.0.1.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/security/auth/message/api/main/jboss-jaspi-api_1.1_spec-1.0.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/batch/api/main/jboss-batch-api_1.0_spec-1.0.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxb-provider/main/resteasy-jaxb-provider-3.0.8.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/xml/rpc/api/main/jboss-jaxrpc-api_1.1_spec-1.0.1.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/rmi/api/main/jboss-rmi-api_1.0_spec-1.0.4.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/wsdl4j/api/main/wsdl4j-1.6.3.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/websocket/api/main/jboss-websocket-api_1.0_spec-1.0.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/interceptor/api/main/jboss-interceptors-api_1.2_spec-1.0.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/javaWorkSpace/compraOro/Metales/MetalesWeb/WebContent/WEB-INF/lib/log4j-1.2-api-2.0.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/javaWorkSpace/compraOro/Metales/MetalesWeb/WebContent/WEB-INF/lib/log4j-api-2.1.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/servlet/jstl/api/main/jboss-jstl-api_1.2_spec-1.1.0.Final.jar">
+   <libraries>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jboss-jstl-api_1.2_spec-1.1.0.Final.jar/META-INF/c-1_0-rt.tld" project="MetalesWeb"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jboss-jstl-api_1.2_spec-1.1.0.Final.jar/META-INF/c-1_0.tld" project="MetalesWeb"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jboss-jstl-api_1.2_spec-1.1.0.Final.jar/META-INF/c.tld" project="MetalesWeb"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jboss-jstl-api_1.2_spec-1.1.0.Final.jar/META-INF/fmt-1_0-rt.tld" project="MetalesWeb"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jboss-jstl-api_1.2_spec-1.1.0.Final.jar/META-INF/fmt-1_0.tld" project="MetalesWeb"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jboss-jstl-api_1.2_spec-1.1.0.Final.jar/META-INF/fmt.tld" project="MetalesWeb"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jboss-jstl-api_1.2_spec-1.1.0.Final.jar/META-INF/fn.tld" project="MetalesWeb"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jboss-jstl-api_1.2_spec-1.1.0.Final.jar/META-INF/permittedTaglibs.tld" project="MetalesWeb"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jboss-jstl-api_1.2_spec-1.1.0.Final.jar/META-INF/scriptfree.tld" project="MetalesWeb"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jboss-jstl-api_1.2_spec-1.1.0.Final.jar/META-INF/sql-1_0-rt.tld" project="MetalesWeb"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jboss-jstl-api_1.2_spec-1.1.0.Final.jar/META-INF/sql-1_0.tld" project="MetalesWeb"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jboss-jstl-api_1.2_spec-1.1.0.Final.jar/META-INF/sql.tld" project="MetalesWeb"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jboss-jstl-api_1.2_spec-1.1.0.Final.jar/META-INF/x-1_0-rt.tld" project="MetalesWeb"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jboss-jstl-api_1.2_spec-1.1.0.Final.jar/META-INF/x-1_0.tld" project="MetalesWeb"/>
+    </library>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jboss-jstl-api_1.2_spec-1.1.0.Final.jar/META-INF/x.tld" project="MetalesWeb"/>
+    </library>
+   </libraries>
+  </path>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/enterprise/concurrent/api/main/jboss-concurrency-api_1.0_spec-1.0.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/org/hibernate/validator/cdi/main/hibernate-validator-cdi-5.1.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/security/jacc/api/main/jboss-jacc-api_1.5_spec-1.0.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/org/hibernate/validator/main/hibernate-validator-5.1.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/javaWorkSpace/compraOro/Metales/MetalesWeb/WebContent/WEB-INF/lib/pepper-grinder-1.0.10.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/org/jboss/logging/main/jboss-logging-3.1.4.GA.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/jws/api/main/jsr181-api-1.0-MR1.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-client-3.0.8.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/jms/api/main/jboss-jms-api_2.0_spec-1.0.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/org/jboss/resteasy/resteasy-multipart-provider/main/resteasy-multipart-provider-3.0.8.Final-jandex.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/el/api/main/jboss-el-api_3.0_spec-1.0.3.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/org/jboss/ejb3/main/jboss-ejb3-ext-api-2.1.0.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxb-provider/main/resteasy-jaxb-provider-3.0.8.Final-jandex.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/javaWorkSpace/compraOro/Metales/MetalesWeb/WebContent/WEB-INF/lib/glass-x-1.0.10.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/faces/api/main/jboss-jsf-api_2.2_spec-2.2.6.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/xml/ws/api/main/jboss-jaxws-api_2.2_spec-2.0.2.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/validation/api/main/validation-api-1.1.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxrs/main/async-http-servlet-3.0-3.0.8.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/ws/rs/api/main/jaxrs-api-3.0.8.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/javaWorkSpace/compraOro/Metales/MetalesWeb/WebContent/WEB-INF/lib/flick-1.0.10.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/org/picketbox/main/picketbox-4.0.21.Beta1.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/org/jboss/as/controller-client/main/wildfly-controller-client-8.1.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/transaction/api/main/jboss-transaction-api_1.2_spec-1.0.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/javaWorkSpace/compraOro/Metales/MetalesWeb/WebContent/WEB-INF/lib/primefaces-5.1.jar">
+   <libraries>
+    <library class="faces-config">
+     <id class="model-object"
+      path="FileSystems/lib-primefaces-5.1.jar/META-INF/faces-config.xml" project="MetalesWeb"/>
+    </library>
+    <library class="facelet">
+     <id class="model-object"
+      path="FileSystems/lib-primefaces-5.1.jar/META-INF/primefaces-p.taglib.xml" project="MetalesWeb"/>
+    </library>
+    <library class="facelet">
+     <id class="model-object"
+      path="FileSystems/lib-primefaces-5.1.jar/META-INF/primefaces-pm.taglib.xml" project="MetalesWeb"/>
+    </library>
+   </libraries>
+  </path>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/mail/api/main/javax.mail-1.5.1.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/javax/resource/api/main/jboss-connector-api_1.7_spec-1.0.0.Final.jar"/>
+  <path value="/storage/disk1/juan/LINUX/programas/desarrollo/servers/wildfly-8.1.0.Final/modules/system/layers/base/org/jboss/resteasy/resteasy-multipart-provider/main/resteasy-multipart-provider-3.0.8.Final.jar"/>
+ </paths>
+ <validation>
+  <core validator-id="jsf-verification"/>
+  <core validator-id="jboss.cdi.core">
+   <linked-resource name="%1;%2;%3;%4;%5;%6;%7;%8;%9;%10;" path="%0"/>
+   <linked-resource name="%1;%2;%4;%5;%7;%8;%12;" path="%11"/>
+   <linked-resource name="%1;%4;%2;%3;%5;%6;%7;%0;%8;%9;" path="%13"/>
+   <linked-resource name="%15;%10;" path="%14"/>
+   <linked-resource declaration="true" name="%16;" path="%14"/>
+   <linked-resource name="%18;%1;%4;%2;%5;%7;%8;" path="%17"/>
+   <linked-resource name="%18;%1;%4;%2;%5;%7;%8;" path="%19"/>
+   <linked-resource name="%1;%2;%4;%5;%7;%8;%12;" path="%18"/>
+  </core>
+  <core validator-id="jboss.jsf.core"/>
+  <el>
+   <linked-el length="34" name="%20" offset="4521" path="%21"/>
+   <linked-el length="27" name="%20" offset="3856" path="%21"/>
+   <linked-el length="44" name="%20" offset="3270" path="%21"/>
+   <linked-el length="20" name="%20" offset="3722" path="%21"/>
+   <linked-el length="37" name="%20" offset="3067" path="%21"/>
+   <linked-el length="30" name="%20" offset="4174" path="%21"/>
+   <linked-el length="58" name="%20" offset="2323" path="%21"/>
+   <linked-el length="30" name="%20" offset="4009" path="%21"/>
+   <linked-el length="38" name="%20" offset="2495" path="%21"/>
+   <linked-el length="66" name="%20" offset="2686" path="%21"/>
+   <linked-el length="30" name="%20" offset="3566" path="%21"/>
+   <linked-el length="36" name="%20" offset="4911" path="%21"/>
+   <linked-el length="38" name="%20" offset="3226" path="%21"/>
+   <linked-el length="40" name="%20" offset="4339" path="%21"/>
+   <linked-el length="76" name="%20" offset="3487" path="%21"/>
+   <linked-el length="83" name="%22" offset="599" path="%23"/>
+   <linked-el length="50" name="%22" offset="537" path="%23"/>
+   <linked-el length="83" name="%22" offset="599" path="%24"/>
+   <linked-el length="50" name="%22" offset="537" path="%24"/>
+   <linked-el length="83" name="%25" offset="599" path="%23"/>
+   <linked-el length="50" name="%25" offset="537" path="%23"/>
+   <linked-el length="83" name="%25" offset="599" path="%24"/>
+   <linked-el length="50" name="%25" offset="537" path="%24"/>
+   <linked-el length="83" name="%26" offset="599" path="%23"/>
+   <linked-el length="50" name="%26" offset="537" path="%23"/>
+   <linked-el length="83" name="%26" offset="599" path="%24"/>
+   <linked-el length="50" name="%26" offset="537" path="%24"/>
+   <linked-el length="83" name="%27" offset="599" path="%23"/>
+   <linked-el length="83" name="%27" offset="599" path="%24"/>
+   <linked-el length="40" name="%28" offset="1526" path="%29"/>
+   <linked-el length="43" name="%28" offset="3102" path="%29"/>
+   <linked-el length="35" name="%28" offset="2423" path="%29"/>
+   <linked-el length="32" name="%28" offset="3886" path="%29"/>
+   <linked-el length="64" name="%28" offset="5229" path="%29"/>
+   <linked-el length="28" name="%28" offset="2256" path="%29"/>
+   <linked-el length="42" name="%28" offset="1855" path="%29"/>
+   <linked-el length="30" name="%28" offset="2860" path="%29"/>
+   <linked-el length="41" name="%28" offset="2100" path="%29"/>
+   <linked-el length="19" name="%28" offset="2307" path="%29"/>
+   <linked-el length="30" name="%28" offset="1682" path="%29"/>
+   <linked-el length="35" name="%28" offset="1965" path="%29"/>
+   <linked-el length="35" name="%28" offset="2682" path="%29"/>
+   <linked-el length="15" name="%28" offset="2336" path="%29"/>
+   <linked-el length="44" name="%28" offset="3287" path="%29"/>
+   <linked-el length="40" name="%28" offset="3604" path="%29"/>
+   <linked-el length="17" name="%28" offset="1768" path="%29"/>
+   <linked-el length="29" name="%28" offset="2545" path="%29"/>
+   <linked-el length="21" name="%28" offset="1737" path="%29"/>
+   <linked-el length="19" name="%30" offset="2307" path="%29"/>
+   <linked-el length="15" name="%30" offset="2336" path="%29"/>
+   <linked-el length="83" name="%31" offset="599" path="%23"/>
+   <linked-el length="50" name="%31" offset="537" path="%23"/>
+   <linked-el length="83" name="%31" offset="599" path="%24"/>
+   <linked-el length="50" name="%31" offset="537" path="%24"/>
+   <linked-el length="41" name="%32" offset="543" path="%29"/>
+   <linked-el length="69" name="%32" offset="633" path="%33"/>
+   <linked-el length="69" name="%32" offset="633" path="%29"/>
+   <linked-el length="52" name="%32" offset="751" path="%33"/>
+   <linked-el length="41" name="%32" offset="543" path="%33"/>
+   <linked-el length="41" name="%32" offset="444" path="%21"/>
+   <linked-el length="52" name="%32" offset="652" path="%21"/>
+   <linked-el length="69" name="%32" offset="534" path="%21"/>
+   <linked-el length="52" name="%32" offset="751" path="%29"/>
+   <linked-el length="83" name="%34" offset="599" path="%23"/>
+   <linked-el length="83" name="%34" offset="599" path="%24"/>
+   <linked-el length="40" name="%10" offset="1526" path="%29"/>
+   <linked-el length="35" name="%10" offset="2423" path="%29"/>
+   <linked-el length="43" name="%10" offset="3102" path="%29"/>
+   <linked-el length="32" name="%10" offset="3886" path="%29"/>
+   <linked-el length="64" name="%10" offset="5229" path="%29"/>
+   <linked-el length="28" name="%10" offset="2256" path="%29"/>
+   <linked-el length="42" name="%10" offset="1855" path="%29"/>
+   <linked-el length="30" name="%10" offset="2860" path="%29"/>
+   <linked-el length="41" name="%10" offset="2100" path="%29"/>
+   <linked-el length="30" name="%10" offset="1682" path="%29"/>
+   <linked-el length="35" name="%10" offset="1965" path="%29"/>
+   <linked-el length="35" name="%10" offset="2682" path="%29"/>
+   <linked-el length="44" name="%10" offset="3287" path="%29"/>
+   <linked-el length="40" name="%10" offset="3604" path="%29"/>
+   <linked-el length="29" name="%10" offset="2545" path="%29"/>
+   <linked-el length="83" name="%35" offset="599" path="%23"/>
+   <linked-el length="50" name="%35" offset="537" path="%23"/>
+   <linked-el length="83" name="%35" offset="599" path="%24"/>
+   <linked-el length="50" name="%35" offset="537" path="%24"/>
+   <linked-el length="34" name="%15" offset="4521" path="%21"/>
+   <linked-el length="38" name="%15" offset="2495" path="%21"/>
+   <linked-el length="44" name="%15" offset="3270" path="%21"/>
+   <linked-el length="66" name="%15" offset="2686" path="%21"/>
+   <linked-el length="36" name="%15" offset="4911" path="%21"/>
+   <linked-el length="37" name="%15" offset="3067" path="%21"/>
+   <linked-el length="38" name="%15" offset="3226" path="%21"/>
+   <linked-el length="58" name="%15" offset="2323" path="%21"/>
+   <linked-el length="76" name="%15" offset="3487" path="%21"/>
+   <linked-el length="26" name="%36" offset="5626" path="%29"/>
+   <linked-el length="26" name="%36" offset="4543" path="%33"/>
+   <linked-el length="13" name="%37" offset="459" path="%23"/>
+   <linked-el length="10" name="%37" offset="718" path="%24"/>
+   <linked-el length="13" name="%37" offset="459" path="%24"/>
+   <linked-el length="10" name="%37" offset="718" path="%23"/>
+   <linked-el length="38" name="%38" offset="5843" path="%29"/>
+   <linked-el length="38" name="%38" offset="4760" path="%33"/>
+   <linked-el length="64" name="%38" offset="5229" path="%29"/>
+   <linked-el length="37" name="%38" offset="5151" path="%29"/>
+   <linked-el length="17" name="%39" offset="1768" path="%29"/>
+   <linked-el length="21" name="%39" offset="1737" path="%29"/>
+   <linked-el length="41" name="%40" offset="543" path="%29"/>
+   <linked-el length="69" name="%40" offset="633" path="%33"/>
+   <linked-el length="69" name="%40" offset="633" path="%29"/>
+   <linked-el length="52" name="%40" offset="751" path="%33"/>
+   <linked-el length="41" name="%40" offset="543" path="%33"/>
+   <linked-el length="41" name="%40" offset="444" path="%21"/>
+   <linked-el length="52" name="%40" offset="652" path="%21"/>
+   <linked-el length="69" name="%40" offset="534" path="%21"/>
+   <linked-el length="52" name="%40" offset="751" path="%29"/>
+   <linked-el length="83" name="%41" offset="599" path="%23"/>
+   <linked-el length="50" name="%41" offset="537" path="%23"/>
+   <linked-el length="83" name="%41" offset="599" path="%24"/>
+   <linked-el length="50" name="%41" offset="537" path="%24"/>
+   <linked-el length="38" name="%42" offset="1786" path="%21"/>
+   <linked-el length="41" name="%42" offset="1893" path="%21"/>
+   <linked-el length="27" name="%42" offset="3856" path="%21"/>
+   <linked-el length="30" name="%42" offset="3161" path="%33"/>
+   <linked-el length="20" name="%42" offset="3722" path="%21"/>
+   <linked-el length="37" name="%42" offset="3264" path="%33"/>
+   <linked-el length="39" name="%42" offset="3486" path="%33"/>
+   <linked-el length="30" name="%42" offset="4174" path="%21"/>
+   <linked-el length="49" name="%42" offset="3603" path="%33"/>
+   <linked-el length="32" name="%42" offset="1681" path="%21"/>
+   <linked-el length="40" name="%42" offset="2148" path="%21"/>
+   <linked-el length="30" name="%42" offset="4009" path="%21"/>
+   <linked-el length="39" name="%42" offset="3374" path="%33"/>
+   <linked-el length="30" name="%42" offset="3566" path="%21"/>
+   <linked-el length="40" name="%42" offset="4339" path="%21"/>
+   <linked-el length="76" name="%42" offset="3487" path="%21"/>
+   <linked-el length="40" name="%42" offset="2002" path="%21"/>
+   <linked-el length="38" name="%14" offset="1786" path="%21"/>
+   <linked-el length="31" name="%14" offset="4487" path="%29"/>
+   <linked-el length="41" name="%14" offset="1893" path="%21"/>
+   <linked-el length="30" name="%14" offset="4175" path="%29"/>
+   <linked-el length="30" name="%14" offset="3161" path="%33"/>
+   <linked-el length="36" name="%14" offset="4351" path="%29"/>
+   <linked-el length="39" name="%14" offset="1051" path="%21"/>
+   <linked-el length="42" name="%14" offset="1636" path="%33"/>
+   <linked-el length="40" name="%14" offset="4736" path="%29"/>
+   <linked-el length="37" name="%14" offset="3264" path="%33"/>
+   <linked-el length="39" name="%14" offset="3486" path="%33"/>
+   <linked-el length="38" name="%14" offset="415" path="%33"/>
+   <linked-el length="49" name="%14" offset="3603" path="%33"/>
+   <linked-el length="26" name="%14" offset="4270" path="%33"/>
+   <linked-el length="32" name="%14" offset="1681" path="%21"/>
+   <linked-el length="27" name="%14" offset="3061" path="%33"/>
+   <linked-el length="31" name="%14" offset="4947" path="%29"/>
+   <linked-el length="40" name="%14" offset="2148" path="%21"/>
+   <linked-el length="39" name="%14" offset="3374" path="%33"/>
+   <linked-el length="36" name="%14" offset="1350" path="%33"/>
+   <linked-el length="38" name="%14" offset="415" path="%29"/>
+   <linked-el length="40" name="%14" offset="2002" path="%21"/>
+   <linked-el length="40" name="%14" offset="4096" path="%33"/>
+   <linked-el length="26" name="%14" offset="4984" path="%29"/>
+   <linked-el length="83" name="%43" offset="599" path="%23"/>
+   <linked-el length="83" name="%43" offset="599" path="%24"/>
+   <linked-el length="38" name="%16" offset="1786" path="%21"/>
+   <linked-el length="30" name="%16" offset="4175" path="%29"/>
+   <linked-el length="30" name="%16" offset="3161" path="%33"/>
+   <linked-el length="36" name="%16" offset="4351" path="%29"/>
+   <linked-el length="39" name="%16" offset="1051" path="%21"/>
+   <linked-el length="39" name="%16" offset="3486" path="%33"/>
+   <linked-el length="27" name="%16" offset="3061" path="%33"/>
+   <linked-el length="39" name="%16" offset="3374" path="%33"/>
+   <linked-el length="38" name="%16" offset="4760" path="%33"/>
+   <linked-el length="36" name="%16" offset="1350" path="%33"/>
+   <linked-el length="40" name="%16" offset="2002" path="%21"/>
+   <linked-el length="40" name="%16" offset="4096" path="%33"/>
+   <linked-el length="26" name="%16" offset="4984" path="%29"/>
+   <linked-el length="14" name="%16" offset="4422" path="%33"/>
+   <linked-el length="31" name="%16" offset="4487" path="%29"/>
+   <linked-el length="41" name="%16" offset="1893" path="%21"/>
+   <linked-el length="42" name="%16" offset="1636" path="%33"/>
+   <linked-el length="64" name="%16" offset="5229" path="%29"/>
+   <linked-el length="40" name="%16" offset="4736" path="%29"/>
+   <linked-el length="37" name="%16" offset="3264" path="%33"/>
+   <linked-el length="38" name="%16" offset="415" path="%33"/>
+   <linked-el length="49" name="%16" offset="3603" path="%33"/>
+   <linked-el length="26" name="%16" offset="4270" path="%33"/>
+   <linked-el length="32" name="%16" offset="1681" path="%21"/>
+   <linked-el length="26" name="%16" offset="4543" path="%33"/>
+   <linked-el length="38" name="%16" offset="5843" path="%29"/>
+   <linked-el length="26" name="%16" offset="5626" path="%29"/>
+   <linked-el length="14" name="%16" offset="5505" path="%29"/>
+   <linked-el length="31" name="%16" offset="4947" path="%29"/>
+   <linked-el length="40" name="%16" offset="2148" path="%21"/>
+   <linked-el length="38" name="%16" offset="415" path="%29"/>
+   <linked-el length="37" name="%16" offset="5151" path="%29"/>
+  </el>
+ </validation>
+ <aliases>
+  <alias path="sys.jboss.server" value="%22"/>
+  <alias path="sys" value="%25"/>
+  <alias
+   path="/MetalesEJB/ejbModule/clases/login/QualifierUsuarioSesion.java" value="%19"/>
+  <alias path="sys.jboss.server.log.dir" value="%26"/>
+  <alias path="/MetalesEJB/ejbModule/ejb/bussines/venta/ClienteEJB.java" value="%5"/>
+  <alias path="/MetalesEJB/ejbModule/log4j2.xml" value="%23"/>
+  <alias path="/MetalesEJB/ejbModule/ejb/bussines/MetalEJB.java" value="%6"/>
+  <alias path="cotizacionView" value="%28"/>
+  <alias
+   path="/MetalesEJB/ejbModule/clases/persistence/jpa/factory/qualifier/MetalesEM.java" value="%13"/>
+  <alias path="date" value="%34"/>
+  <alias path="request.contextPath" value="%32"/>
+  <alias
+   path="/MetalesEJB/ejbModule/clases/business/metales/vo/cotizador/PurezaMetal.java" value="%30"/>
+  <alias
+   path="/MetalesWeb/src/clases/iu/compra/cotizacion/CotizacionView.java" value="%10"/>
+  <alias path="sys.jboss.server.log" value="%35"/>
+  <alias path="/MetalesWeb/WebContent/ui/compra/resumen.xhtml" value="%33"/>
+  <alias
+   path="/MetalesEJB/ejbModule/clases/login/UsuarioSesionFactory.java" value="%18"/>
+  <alias path="name" value="%41"/>
+  <alias path="request" value="%40"/>
+  <alias path="/MetalesWeb/src/log4j2.xml" value="%24"/>
+  <alias path="/MetalesEJB/ejbModule/clases/vo/Persona.java" value="%42"/>
+  <alias
+   path="/MetalesEJB/ejbModule/ejb/bussines/venta/CotizadorEJB.java" value="%9"/>
+  <alias path="/MetalesEJB/ejbModule/ejb/bussines/PersonaEJB.java" value="%8"/>
+  <alias
+   path="/MetalesWeb/src/clases/iu/compra/cotizacion/CompraView.java" value="%14"/>
+  <alias
+   path="/MetalesEJB/ejbModule/clases/login/QualifierUsuarioSesionTienda.java" value="%17"/>
+  <alias path="/MetalesWeb/src/clases/iu/compra/cotizacion/Test.java" value="%12"/>
+  <alias path="compraView" value="%16"/>
+  <alias path="/MetalesEJB/ejbModule/ejb/bussines/TestEjb.java" value="%1"/>
+  <alias path="clienteView" value="%20"/>
+  <alias
+   path="/MetalesEJB/ejbModule/ejb/bussines/administracion/TipoDeCambioEJB.java" value="%4"/>
+  <alias path="/MetalesEJB/ejbModule/ejb/bussines/PropertiesEJB.java" value="%3"/>
+  <alias
+   path="/MetalesEJB/ejbModule/ejb/bussines/administracion/PreciosEJB.java" value="%2"/>
+  <alias path="/MetalesWeb/WebContent/ui/compra/cotizacion.xhtml" value="%29"/>
+  <alias path="MM" value="%27"/>
+  <alias path="sys.jboss" value="%31"/>
+  <alias
+   path="/MetalesWeb/src/clases/ui/compra/cliente/ClienteView.java" value="%15"/>
+  <alias path="/MetalesWeb/WebContent/ui/compra/busquedaCliente.xhtml" value="%21"/>
+  <alias path="/MetalesEJB/ejbModule/clases/login/UsuarioSesion.java" value="%11"/>
+  <alias path="pattern" value="%37"/>
+  <alias
+   path="/MetalesEJB/ejbModule/clases/business/metales/vo/compra/ArticuloCompraMetal.java" value="%36"/>
+  <alias
+   path="/MetalesWeb/src/clases/cotizacion/dto/ArticuloCotizar.java" value="%38"/>
+  <alias
+   path="/MetalesEJB/ejbModule/clases/business/metales/vo/cotizador/Metal.java" value="%39"/>
+  <alias path="/MetalesEJB/ejbModule/ejb/bussines/CompraEJB.java" value="%7"/>
+  <alias
+   path="/MetalesEJB/ejbModule/clases/persistence/jpa/factory/EntityManagerFactory.java" value="%0"/>
+  <alias path="date.yyyy" value="%43"/>
+  <alias path="%26" value="sys.jboss.server.log.dir"/>
+  <alias path="%25" value="sys"/>
+  <alias path="%28" value="cotizacionView"/>
+  <alias path="%27" value="MM"/>
+  <alias path="%29" value="/MetalesWeb/WebContent/ui/compra/cotizacion.xhtml"/>
+  <alias path="%43" value="date.yyyy"/>
+  <alias path="%20" value="clienteView"/>
+  <alias path="%22" value="sys.jboss.server"/>
+  <alias path="%40" value="request"/>
+  <alias path="%21" value="/MetalesWeb/WebContent/ui/compra/busquedaCliente.xhtml"/>
+  <alias path="%24" value="/MetalesWeb/src/log4j2.xml"/>
+  <alias path="%42" value="/MetalesEJB/ejbModule/clases/vo/Persona.java"/>
+  <alias path="%23" value="/MetalesEJB/ejbModule/log4j2.xml"/>
+  <alias path="%41" value="name"/>
+  <alias path="%0" value="/MetalesEJB/ejbModule/clases/persistence/jpa/factory/EntityManagerFactory.java"/>
+  <alias path="%4" value="/MetalesEJB/ejbModule/ejb/bussines/administracion/TipoDeCambioEJB.java"/>
+  <alias path="%3" value="/MetalesEJB/ejbModule/ejb/bussines/PropertiesEJB.java"/>
+  <alias path="%2" value="/MetalesEJB/ejbModule/ejb/bussines/administracion/PreciosEJB.java"/>
+  <alias path="%1" value="/MetalesEJB/ejbModule/ejb/bussines/TestEjb.java"/>
+  <alias path="%7" value="/MetalesEJB/ejbModule/ejb/bussines/CompraEJB.java"/>
+  <alias path="%17" value="/MetalesEJB/ejbModule/clases/login/QualifierUsuarioSesionTienda.java"/>
+  <alias path="%16" value="compraView"/>
+  <alias path="%8" value="/MetalesEJB/ejbModule/ejb/bussines/PersonaEJB.java"/>
+  <alias path="%15" value="/MetalesWeb/src/clases/ui/compra/cliente/ClienteView.java"/>
+  <alias path="%5" value="/MetalesEJB/ejbModule/ejb/bussines/venta/ClienteEJB.java"/>
+  <alias path="%6" value="/MetalesEJB/ejbModule/ejb/bussines/MetalEJB.java"/>
+  <alias path="%14" value="/MetalesWeb/src/clases/iu/compra/cotizacion/CompraView.java"/>
+  <alias path="%39" value="/MetalesEJB/ejbModule/clases/business/metales/vo/cotizador/Metal.java"/>
+  <alias path="%38" value="/MetalesWeb/src/clases/cotizacion/dto/ArticuloCotizar.java"/>
+  <alias path="%37" value="pattern"/>
+  <alias path="%19" value="/MetalesEJB/ejbModule/clases/login/QualifierUsuarioSesion.java"/>
+  <alias path="%9" value="/MetalesEJB/ejbModule/ejb/bussines/venta/CotizadorEJB.java"/>
+  <alias path="%36" value="/MetalesEJB/ejbModule/clases/business/metales/vo/compra/ArticuloCompraMetal.java"/>
+  <alias path="%18" value="/MetalesEJB/ejbModule/clases/login/UsuarioSesionFactory.java"/>
+  <alias path="%35" value="sys.jboss.server.log"/>
+  <alias path="%34" value="date"/>
+  <alias path="%33" value="/MetalesWeb/WebContent/ui/compra/resumen.xhtml"/>
+  <alias path="%32" value="request.contextPath"/>
+  <alias path="%31" value="sys.jboss"/>
+  <alias path="%13" value="/MetalesEJB/ejbModule/clases/persistence/jpa/factory/qualifier/MetalesEM.java"/>
+  <alias path="%12" value="/MetalesWeb/src/clases/iu/compra/cotizacion/Test.java"/>
+  <alias path="%30" value="/MetalesEJB/ejbModule/clases/business/metales/vo/cotizador/PurezaMetal.java"/>
+  <alias path="%11" value="/MetalesEJB/ejbModule/clases/login/UsuarioSesion.java"/>
+  <alias path="%10" value="/MetalesWeb/src/clases/iu/compra/cotizacion/CotizacionView.java"/>
+ </aliases>
+ <includes/>
+ <uris>
+  <uri value="http://primefaces.org/ui">
+   <prefix>p</prefix>
+  </uri>
+ </uris>
+</kb-project>

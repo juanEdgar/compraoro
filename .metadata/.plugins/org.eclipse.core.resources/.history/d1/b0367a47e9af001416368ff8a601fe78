@@ -1,0 +1,16 @@
+.totalDineroCompra{
+	
+	text-color: purple;
+	font-size:15 px;
+	font-weight: bold;
+	
+}
+
+.textoPequeno{
+	font-size. 10px;
+}
+
+.encabezadocampo{
+	font-size:12 px;
+	font-weight: bold;
+}

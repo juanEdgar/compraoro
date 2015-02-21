@@ -1,0 +1,24 @@
+.totalDineroCotizacion{
+	
+	color: blue;
+	font-size: 30px !important;
+	font-weight: bold;
+}
+
+
+.totalDineroCompra{
+	
+	color: purple;
+	font-size: 40px !important;
+	font-weight: bold;
+	
+}
+
+.textoPequeno{
+	font-size: 9 px;
+}
+
+.encabezadocampo{
+	font-size: 12 px;
+	font-weight: bold;
+}

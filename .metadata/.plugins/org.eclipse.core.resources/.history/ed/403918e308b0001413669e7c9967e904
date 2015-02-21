@@ -1,0 +1,14 @@
+package clases.ui.compra.cliente;
+
+import javax.annotation.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
+@ManagedBean
+@ViewScoped
+public class ClienteView {
+	
+	
+	
+	
+
+}

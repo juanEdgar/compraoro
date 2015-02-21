@@ -1,0 +1,20 @@
+package ejb.bussines;
+
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+
+/**
+ * Session Bean implementation class MatalEJB
+ */
+@Stateless
+@LocalBean
+public class MatalEJB {
+
+    /**
+     * Default constructor. 
+     */
+    public MatalEJB() {
+        // TODO Auto-generated constructor stub
+    }
+
+}
