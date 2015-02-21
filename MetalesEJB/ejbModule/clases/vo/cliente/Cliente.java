@@ -1,0 +1,87 @@
+package clases.vo.cliente;
+
+import java.io.Serializable;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
+import clases.vo.Persona;
+import clases.vo.catalogo.Estatus;
+import clases.vo.tienda.Tienda;
+
+@Entity
+@Table(schema="public", name="Cliente")
+@DiscriminatorValue("-1")
+public class Cliente extends Persona implements Serializable{
+	
+	
+	
+	
+
+	private static final long serialVersionUID = 20365790312875790L;
+
+	{
+		
+		this.estatusCliente= new Estatus(1);
+	}
+		
+	public Cliente() {
+		super();
+		
+		
+	}
+	
+	public Cliente(int id){
+		super(id);
+	}
+	
+	public Cliente(String usuarioModifico){
+		super(usuarioModifico);		
+		this.usuarioModificoCliente= new UsuarioModifico(usuarioModifico);
+	}
+
+	@OneToOne
+	@JoinColumn(name="fiIdTienda")
+	private Tienda tienda;
+	
+	@OneToOne
+	@JoinColumn(name="fiIdEstatus")
+	private Estatus estatusCliente;
+	
+	private UsuarioModifico usuarioModificoCliente;
+
+	public Tienda getTienda() {
+		return tienda;
+	}
+
+	public void setTienda(Tienda tienda) {
+		this.tienda = tienda;
+	}
+
+	public Estatus getEstatusCliente() {
+		return estatusCliente;
+		
+	}
+
+	public void setEstatusCliente(Estatus estatusCliente) {
+		this.estatusCliente = estatusCliente;
+	}
+
+	public UsuarioModifico getUsuarioModificoCliente() {
+		
+		return usuarioModificoCliente;
+	}
+
+	public void setUsuarioModificoCliente(UsuarioModifico usuarioModificoCliente) {
+		super.setUsuarioModifico(usuarioModificoCliente);
+		this.usuarioModificoCliente = usuarioModificoCliente;
+	}
+	
+	
+	
+
+}

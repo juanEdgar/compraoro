@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="Metales">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="MetalesEJB.jar" deploy-path="/" handle="module:/resource/MetalesEJB/MetalesEJB">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="MetalesWeb.war" deploy-path="/" handle="module:/resource/MetalesWeb/MetalesWeb">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="log4j-api-2.0.jar" deploy-path="/lib" handle="module:/classpath/lib/Documentacion/jar/apache-log4j-2.0-bin/log4j-api-2.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>
