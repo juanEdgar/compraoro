@@ -18,8 +18,7 @@ import javax.inject.Named;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import clases.business.metales.vo.compra.ArticuloCompraMetal;
-import clases.cotizacion.dto.ArticuloCotizar;
+import clases.business.metales.vo.compra.ArticuloCompra;
 import clases.vo.cliente.Cliente;
 import ejb.bussines.CompraEJB;
 import ejb.bussines.exception.RDNException;
@@ -37,12 +36,12 @@ public class CompraView implements Serializable{
 	
 	private final Logger log = LogManager.getLogger(CompraView.class);
 	
-	private int numeroArticolo=0;
+	private int numeroArticulo=0;
 	
 	@Inject
 	 private Conversation conversation;
 	
-	private List<ArticuloCotizar> articulos;
+	private List<ArticuloCompra> articulos;
 	private Cliente cliente;
 	
 	@EJB
@@ -57,8 +56,8 @@ public class CompraView implements Serializable{
 	public String getTotalValuacionArticulos(){
 		float total=0.0F;
 		DecimalFormat df2 = new DecimalFormat( "#,###,###,##0.00" );
-		for(ArticuloCotizar a : this.articulos){
-			total+=a.getCotizacion();
+		for(ArticuloCompra a : this.articulos){
+			total+=a.getValor();
 		}
 		
 		return "$ "+df2.format(total);
@@ -69,7 +68,7 @@ public class CompraView implements Serializable{
 	@PostConstruct
 	private void init(){
 		
-		this.articulos= new ArrayList<ArticuloCotizar>();
+		this.articulos= new ArrayList<ArticuloCompra>();
 		this.cliente= new Cliente();
 	}
 	
@@ -95,22 +94,11 @@ public class CompraView implements Serializable{
 		
 		try{
 			
-			// se copia la lista
-			List<ArticuloCompraMetal> articulosCompra=new ArrayList<ArticuloCompraMetal>();
 			
-			for(ArticuloCotizar a: this.articulos){
-				ArticuloCompraMetal an= new ArticuloCompraMetal();
-				an.setDescripcion(a.getDescripcion());
-				an.setPesoBruto(a.getPesoBruto());
-				an.setPesoNeto(a.getPesoNeto());
-				an.setPrecioMetal(a.getPrecioMetal());
-				an.setPureza(a.getPureza());
-				articulosCompra.add(an);
-			}
 			
-			log.debug("Lista de articulos a mandar: "+articulosCompra.size());
+			log.debug("Lista de articulos a mandar: "+this.articulos.size());
 			
-			this.ejbCompra.registrarCompra(this.cliente,articulosCompra);
+			this.ejbCompra.registrarClienteCompra(this.cliente,this.articulos);
 			
 			log.debug("OK, operacion realizada con éxito");
 			
@@ -131,6 +119,8 @@ public class CompraView implements Serializable{
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo dar de alta al cliente"+e.getMessage()));
 			return null;
 		}
+		
+		
 	
 	}
 	
@@ -172,11 +162,11 @@ public class CompraView implements Serializable{
 		this.conversation = conversation;
 	}
 
-	public List<ArticuloCotizar> getArticulos() {
+	public List<ArticuloCompra> getArticulos() {
 		return articulos;
 	}
 
-	public void setArticulos(List<ArticuloCotizar> articulos) {
+	public void setArticulos(List<ArticuloCompra> articulos) {
 		this.articulos = articulos;
 	}
 
@@ -188,8 +178,8 @@ public class CompraView implements Serializable{
 		this.cliente = cliente;
 	}
 	
-	public int getNumeroArtculo(){
-		return ++this.numeroArticolo;
+	public int getNumeroArticulo(){
+		return ++this.numeroArticulo;
 	}
 
 

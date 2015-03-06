@@ -13,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 import clases.login.QualifierUsuarioSesion;
 import clases.login.UsuarioSesion;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
-import ejb.bussines.venta.CotizadorEJB;
 
 /**
  * Session Bean implementation class PreciosEJB

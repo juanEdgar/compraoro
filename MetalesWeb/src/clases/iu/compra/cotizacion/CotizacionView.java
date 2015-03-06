@@ -2,11 +2,13 @@ package clases.iu.compra.cotizacion;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -16,16 +18,18 @@ import javax.persistence.EntityManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import clases.business.metales.vo.compra.ArticuloCompra;
+import clases.business.metales.vo.compra.ArticuloCompraMetal;
+import clases.business.metales.vo.cotizador.Diamante;
 import clases.business.metales.vo.cotizador.Metal;
-import clases.business.metales.vo.cotizador.PurezaMetal;
-import clases.cotizacion.dto.ArticuloCotizar;
+import clases.business.metales.vo.cotizador.PrecioMetal;
+import clases.business.metales.vo.cotizador.Producto;
 import clases.login.QualifierUsuarioSesionTienda;
 import clases.login.UsuarioSesion;
-import clases.login.UsuarioSesionTienda;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
-import clases.vo.tienda.Tienda;
 import ejb.bussines.MetalEJB;
-import ejb.bussines.venta.CotizadorEJB;
+import ejb.bussines.compra.CotizadorEJB;
+import ejb.bussines.exception.RDNException;
 
 
 @ManagedBean
@@ -60,15 +64,12 @@ public class CotizacionView  implements Serializable{
 	@QualifierUsuarioSesionTienda
 	private UsuarioSesion usuarioSesion;
 	
-	private List<Metal> productos;
-	private List<PurezaMetal> purezas;
-	private float pesoNeto;
-	private float pesoBruto;
-	private float resultadoCotizacion;
 	
-	private int idMetalSeleccionado=0;
-	private int idPurezaSeleccionada=0;
-	private String descripcion;
+	private List<Producto> productos;		
+	private int idProductoSeleccionado=0;
+
+	private boolean isMetalSeleccionado=false;
+	private ArticuloCompraMetal articuloMetalCotizacion;
 	
 	
 	public CotizacionView() {
@@ -83,8 +84,16 @@ public class CotizacionView  implements Serializable{
 	private void init(){
 		
 		// Se inicializa la lista de metales
-		this.productos= this.EjbMetal.getMetalesComercializables();
-		log.info("Lista de metaes recuperados: "+this.productos!=null? this.productos.size():"NULL");
+		this.productos= new ArrayList<>(); 
+		
+		// se carga la lista de metales comercializables
+		this.productos.addAll(this.EjbMetal.getMetalesComercializables());
+		Diamante diamante= new Diamante(500);
+		diamante.setNombre("DIAMANTES");
+		this.productos.add(diamante);
+		
+		log.info("Lista de productos recuperados: "+this.productos!=null? this.productos.size():"NULL");
+		
 		
 		
 	}
@@ -99,50 +108,88 @@ public class CotizacionView  implements Serializable{
 		try{
 			
 			log.debug("Iniciando el evento de cotizador");
-			if(this.idMetalSeleccionado!=0 && this.idPurezaSeleccionada!=0 && this.pesoNeto>0.0){
-				
-				Metal m= new Metal(this.idMetalSeleccionado);
-				PurezaMetal p= new PurezaMetal(this.idPurezaSeleccionada, m);
-				m.setPurezaMetal(p);
-				
-				this.resultadoCotizacion=this.EjbCotizador.cotizar(m, this.pesoNeto);
-				
-				this.pesoBruto=this.pesoNeto;
-			}
-			else{
-				this.resultadoCotizacion=0.0F;
-			}
 			
-			log.debug("Cotizacion: "+this.resultadoCotizacion);
+			
+			
+			Object coincidencia= this.getProductoSeleccionado();
+			
+			if( coincidencia  instanceof Metal) {
+				this.cotizarMetal();
+				
+			}		
 			
 		}catch(Exception e){
 			log.info("Error al obtener la cotizacion");
 		}
+			
 		
 	}
 	
-	public void eventProductoChange(){
+	
+	private void cotizarMetal(){
+		try{
+			
+			
+			if(this.articuloMetalCotizacion.getPesoBruto()>0.0 && this.articuloMetalCotizacion.getPesoNeto()==0.0F){
+				this.articuloMetalCotizacion.setPesoNeto(this.articuloMetalCotizacion.getPesoBruto());
+			
+			}
+			
+			if(this.idProductoSeleccionado!=0 && this.articuloMetalCotizacion.getPesoNeto()>0.0F && this.articuloMetalCotizacion.getPorcentajePureza()>0.0F){
+				
+				Metal m= new Metal(this.idProductoSeleccionado);
+				
+				m.setPorcentajePureza(this.articuloMetalCotizacion.getPorcentajePureza());
+				
+				this.articuloMetalCotizacion.setValor(
+													this.EjbCotizador.cotizarRedondeada(m, this.articuloMetalCotizacion.getPesoNeto())
+													);
+				
+				this.articuloMetalCotizacion.setPesoFino( this.articuloMetalCotizacion.getPesoNeto()*this.articuloMetalCotizacion.getPorcentajePureza()/100F);
+				
+			}
+			else{
+				this.articuloMetalCotizacion.setValor(0.0F);
+			}
+			
+			log.debug("Cotizacion: "+this.articuloMetalCotizacion.getValor());
+		}catch(RDNException e){
+			setMensage(FacesMessage.SEVERITY_WARN, "Cuidado", e.getMessage());
+		}catch (Exception e) {
+			log.info("Error al mandar a llamar la cotizacion", e);
+			setMensage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
+		}
+	}
+	
+	public void eventProductoSeleccionado(){
 		
-		if(this.idMetalSeleccionado==0){
-			this.resultadoCotizacion=0.0F;
-			this.idPurezaSeleccionada=0;
-			return;
+
+		log.debug("Se selecciono un producto");
+		
+		this.isMetalSeleccionado=false;
+		
+		if(this.idProductoSeleccionado!=0){
+		
+				this.isMetalSeleccionado=false;
+				Producto  producto=this.getProductoSeleccionado();
+				
+				if(producto instanceof Metal){
+					log.debug("Se selecciono un Metal");
+					this.eventMetalSeleccionado();
+				}
 		}
 		
-		log.debug("Se llena la lista de purezas");
-		this.idPurezaSeleccionada=0;				
-		
-		Metal  m=this.getSeleccionMetal();
-		
-		log.debug("Se consulta la lista de purezas");
-		m.setListaPurezas(this.EjbMetal.getListaPurezas(m));
-			
 		
 		
-		this.purezas=  m.getListaPurezas();
-		
-		
-		log.debug("OK, lista de purezas llena");
+	}
+	
+	
+	private void eventMetalSeleccionado(){
+		this.isMetalSeleccionado= true;
+		if(this.articuloMetalCotizacion==null){
+			this.articuloMetalCotizacion= new ArticuloCompraMetal();
+		}
+		this.cotizarMetal();
 		
 	}
 	
@@ -150,7 +197,7 @@ public class CotizacionView  implements Serializable{
 		
 		log.debug("Eliminando articulo de la lista: "+numero);
 		
-		ArticuloCotizar a= new ArticuloCotizar();
+		ArticuloCompra a= new ArticuloCompra();
 		a.setNumeroArticulo(numero);
 		
 		this.compraView.getArticulos().remove(this.compraView.getArticulos().indexOf(a));
@@ -163,175 +210,189 @@ public class CotizacionView  implements Serializable{
 		
 		log.debug("Agragando articulo");
 		
-		if(this.resultadoCotizacion<=0.0F || this.pesoBruto<=0.0 ){
-			log.debug("No se puede agregar una cotizacion sin datos");
+		
+		if(!isMetalSeleccionado){
+			setMensage(FacesMessage.SEVERITY_WARN, "Cuidado", "Debe seleccionar un producto válido");
 			return;
 		}
 		
-		ArticuloCotizar a = new ArticuloCotizar();
-		a.setDescripcion(this.descripcion);
-		a.setPesoBruto(this.pesoBruto);
-		a.setPesoNeto(this.pesoNeto);		
-		a.setCotizacion(this.resultadoCotizacion);
-		a.setNumeroArticulo(this.compraView.getNumeroArtculo());
+		if(isMetalSeleccionado){
+			if(!this.validarCotizacionMetal()){
+				log.debug("No se puede agragar producto, faltan campos");
+				return;
+			}
+			log.debug("Agregando producto");
+			this.agregarArticuloMetal();
+			
+		}
 		
-		Metal mseleccionado= this.getSeleccionMetal();
+		
+		// se resetea el valor del combo
+		this.idProductoSeleccionado=0;
+	
+		
+	}
+	
+	
+	private void agregarArticuloMetal(){
+		
+		log.debug("Agregando articulo metal");
+		
+		
+		
+		this.articuloMetalCotizacion.setNumeroArticulo(this.compraView.getNumeroArticulo());
+		
+		Metal mseleccionado= (Metal) this.getProductoSeleccionado();
 		
 		Metal m= new Metal(mseleccionado.getId());
 		m.setNombre(mseleccionado.getNombre());
-		m.setEstatus(1);
-		m.setPurezaBase(mseleccionado.getPurezaBase());
-		m.setPrecioGramo(mseleccionado.getPrecioGramo());
 		
-		a.setPureza(this.getSeleccionPureza());
-		a.setTipoProducto(m);
-		a.getTipoProducto().setPurezaMetal(this.getSeleccionPureza());
-		a.setPrecioMetal(mseleccionado.getPrecioGramo());
+		this.articuloMetalCotizacion.setPrecioMetal(mseleccionado.getPrecioGramo());
+		this.articuloMetalCotizacion.getPrecioMetal().setMetal(m);
 		
-		this.compraView.getArticulos().add(a);
+		log.debug("Se agrega producto metal ID precio ID "+this.articuloMetalCotizacion.getPrecioMetal().getId()+" "+this.articuloMetalCotizacion.getPrecioMetal().getMetal().getId());
 		
+		this.compraView.getArticulos().add(this.articuloMetalCotizacion);
 		
-		this.resultadoCotizacion=0.0F;
-		this.idPurezaSeleccionada=0;
-		this.pesoBruto=0.0F;
-		this.pesoNeto=0.0F;
-		this.descripcion=null;
+		this.articuloMetalCotizacion= new ArticuloCompraMetal();
+		this.isMetalSeleccionado=false;
+
 		log.debug("Articulo agregado");
-	
+		
 		
 	}
 	
-	
-	private PurezaMetal getSeleccionPureza(){
-	
-		PurezaMetal pureza=new PurezaMetal();
-		pureza.setId(this.idPurezaSeleccionada);
+	private Producto getProductoSeleccionado(){
+		Producto productoSeleccionado= new Producto() ;
+		productoSeleccionado.setId(this.idProductoSeleccionado);
 		
-		int index	=  this.getSeleccionMetal().getListaPurezas().indexOf(pureza);
-		
-		pureza		=  this.getSeleccionMetal().getListaPurezas().get(index);
-		
-		return   pureza;
-	}
-	
-	private Metal getSeleccionMetal(){
-		
-		Metal metalSeleccionado= new Metal();
-		metalSeleccionado.setId(this.idMetalSeleccionado);
-		
-		int index=this.productos.indexOf(metalSeleccionado);
+		int index=this.productos.indexOf(productoSeleccionado);
 		if(index<0){
-			log.error("Error al recuperar el metal seleccionado");
+			log.error("Error al recuperar el produco seleccionado");
+			this.setMensage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo obtener el ID delproducto seleccionado");
+			return null;
 		}
-		metalSeleccionado=this.productos.get(index);		
-		return metalSeleccionado;
+		productoSeleccionado=this.productos.get(index);		
+		return productoSeleccionado;
 	}
 	
 	
 	
-	public  void validarCotizacion(){
+	private  boolean validarCotizacionMetal(){
+		
 		// resultado cotizacion se valida en el metodo cotizar(), donde se revisa el resto de los campos
-		if(this.resultadoCotizacion<=0.0F || this.pesoBruto<=0.0){
+		if(	this.articuloMetalCotizacion.getValor()<=0.0F || this.articuloMetalCotizacion.getPesoBruto()<=0.0||
+			this.articuloMetalCotizacion.getPesoNeto()<=0 || this.articuloMetalCotizacion.getDescripcion()==null
+			|| this.articuloMetalCotizacion.getDescripcion().trim().equals("")|| this.articuloMetalCotizacion.getPorcentajePureza()<=0.0F
+		){
 			
-			FacesContext context= FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Cuidado", "Debe especificar los parametos obligatorios (marcados con * ) para poder agregar un producto a la lista "));
 			
-			log.debug("Se muestra el mesanje");
+			this.setMensage(FacesMessage.SEVERITY_WARN, "Cuidado", "Debe llenar todos los campos obligatorios");
+			return false;
 	
 		}
 	
-		return;
+		return true;
 	}
 	
 	public String cotizacionFormateada(){
 		
-		DecimalFormat df2 = new DecimalFormat( "#,###,###,##0.00" );		
-		return "$ "+df2.format( this.resultadoCotizacion );
+		DecimalFormat df2 = new DecimalFormat( "#,###,###,##0.00" );	
+		
+		if(isMetalSeleccionado){
+			return "$ "+df2.format( this.articuloMetalCotizacion.getValor() );
+		}
+		
+		return "$ "+df2.format( 0.0F );
 	}
-	
-	
-	
+
+	private void setMensage(Severity severity, String titulo, String Mensage){
+		FacesContext context= FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(severity,titulo,Mensage));
+		
+	}
 
 
-	public List<Metal> getProductos() {
+
+	public List<Producto> getProductos() {
 		return productos;
 	}
 
 
-	public void setProductos(List<Metal> productos) {
+
+
+
+	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
 
 
-	public List<PurezaMetal> getPurezas() {
-		return purezas;
+
+
+
+
+
+
+
+	public int getIdProductoSeleccionado() {
+		return idProductoSeleccionado;
 	}
 
 
-	public void setPurezas(List<PurezaMetal> purezas) {
-		this.purezas = purezas;
+
+
+
+	public void setIdProductoSeleccionado(int idProductoSeleccionado) {
+		this.idProductoSeleccionado = idProductoSeleccionado;
 	}
 
 
-	public float getPesoNeto() {
-		return pesoNeto;
+
+
+
+
+
+
+
+
+	public boolean isMetalSeleccionado() {
+		return isMetalSeleccionado;
 	}
 
 
-	public void setPesoNeto(float pesoNeto) {
-		this.pesoNeto = pesoNeto;
+
+
+
+	public void setMetalSeleccionado(boolean isMetalSeleccionado) {
+		this.isMetalSeleccionado = isMetalSeleccionado;
 	}
 
 
-	public float getPesoBruto() {
-		return pesoBruto;
+
+
+
+
+
+	public ArticuloCompraMetal getArticuloMetalCotizacion() {
+		return articuloMetalCotizacion;
 	}
 
 
-	public void setPesoBruto(float pesoBruto) {
-		this.pesoBruto = pesoBruto;
+
+
+
+	public void setArticuloMetalCotizacion(
+			ArticuloCompraMetal articuloMetalCotizacion) {
+		this.articuloMetalCotizacion = articuloMetalCotizacion;
 	}
 
 
-	public float getResultadoCotizacion() {
-		return resultadoCotizacion;
-	}
 
 
-	public void setResultadoCotizacion(float resultadoCotizacion) {
-		this.resultadoCotizacion = resultadoCotizacion;
-	}
+  
 
-
-	public int getIdMetalSeleccionado() {
-		return idMetalSeleccionado;
-	}
-
-
-	public void setIdMetalSeleccionado(int idMetalSeleccionado) {
-		this.idMetalSeleccionado = idMetalSeleccionado;
-	}
-
-
-	public int getIdPurezaSeleccionada() {
-		return idPurezaSeleccionada;
-	}
-
-
-	public void setIdPurezaSeleccionada(int idPurezaSeleccionada) {
-		this.idPurezaSeleccionada = idPurezaSeleccionada;
-	}
-
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
+	
+	
 
 	
 	

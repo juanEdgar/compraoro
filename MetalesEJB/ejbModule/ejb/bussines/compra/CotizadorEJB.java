@@ -1,4 +1,4 @@
-package ejb.bussines.venta;
+package ejb.bussines.compra;
 
 import java.security.InvalidParameterException;
 import java.util.List;
@@ -16,8 +16,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import clases.business.metales.vo.cotizador.Metal;
+import clases.business.metales.vo.cotizador.Producto;
 import clases.business.metales.vo.cotizador.PurezaMetal;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
+import clases.vo.dinero.Moneda;
 import ejb.bussines.PropertiesEJB;
 import ejb.bussines.administracion.TipoDeCambioEJB;
 import ejb.bussines.exception.RDNException;
@@ -50,26 +52,51 @@ public class CotizadorEJB {
     
     
     
+    public float cotizarRedondeada(final Metal metalAcotizar, float pesoGramos) throws RDNException, Exception{
+    	
+    try{
+    	log.info("Cotizacion redondeada a decenas");
+    	
+    	float cotizacion=this.cotizar(metalAcotizar, pesoGramos);
+    	log.info("Cotizacion sin redondeo:"+cotizacion);
+    	cotizacion/=properties.getFactorRedondeo();
+    	cotizacion=(float)Math.floor(cotizacion);
+    	cotizacion*=properties.getFactorRedondeo();
+    	log.info("Cotizacion con redondeo:"+cotizacion);
+    	return cotizacion;
+    }catch(Exception e){
+    	log.error(e);
+    	this.context.setRollbackOnly();
+    	throw e;
+    }
+    
+    }
+
+    
+    
     public float cotizar(final Metal metalAcotizar, float pesoGramos) throws RDNException, Exception{
     	
-    	log.info("Inicia el metodo de cotizacion");
     	
-    	if(metalAcotizar==null || metalAcotizar.getPurezaMetal()==null || metalAcotizar.getPurezaMetal().getId()==0){
-    		throw new InvalidParameterException("No se pude contizar un metal NULL");
-    	}
-    	if(pesoGramos<0.0F){
-    		throw new InvalidParameterException("No se puede cotizar un peso menor a cero");
-    	}
-    	
-    	if(pesoGramos==0.0F){
-    		return 0.0F;
-    	}
-    	
-    	
-    	Metal metalBD=null;
     	
     	try{
-    	
+    		
+    		
+    		log.info("Inicia el metodo de cotizacion");
+        	
+        	if(metalAcotizar==null || metalAcotizar.getPorcentajePureza()<=0.0F ){
+        		throw new InvalidParameterException("No se pude contizar un metal NULL");
+        	}
+        	if(pesoGramos<0.0F){
+        		throw new InvalidParameterException("No se puede cotizar un peso menor a cero");
+        	}
+        	
+        	if(pesoGramos==0.0F){
+        		return 0.0F;
+        	}
+        	
+        	
+        	Metal metalBD=null;
+    		
     		metalBD= this.metalesEM.find(Metal.class, metalAcotizar.getId());
     		
     		if(metalBD==null){
@@ -91,30 +118,26 @@ public class CotizadorEJB {
     			valorTC=1;
     		}
     		
-    		try{
+    		float cantidadMetalFino=pesoGramos*metalAcotizar.getPorcentajePureza()/100.0F;    	
     		
-    		// se intenta recuperar el valor de la pureza de la bd
-    		metalBD.setPurezaMetal(metalBD.getListaPurezas().get(
-    																metalBD.getListaPurezas().indexOf(metalAcotizar.getPurezaMetal())  
-    															));
-    		}catch(IndexOutOfBoundsException iob){
-    			throw new Exception("No existe la pureza del metal a cotizar ID "+metalAcotizar.getId());
-    		}
-    		
-    	
+    		log.info(String.format("Precio por gramo del %s : %f",metalBD.getNombre(),metalBD.getPrecioGramo().getPrecio()));
     		
     		// se obtiene el valor de la cotizacion , peso del metal por precio de gramo del metal por tipo de cambio
     		return  (valorTC* metalBD.getPrecioGramo().getPrecio() )* // esto da el precio de gramo de metal fino por el tipo de cambio a aplicar
-    				(pesoGramos*metalBD.getCantidadMetalFino()); // esto da la cantidad de metal fino total
+    				cantidadMetalFino;
+    		
     		
     		
     	}catch(javax.persistence.NoResultException nre){
+    		this.context.setRollbackOnly();
     		throw new RDNException("No existe precio para metal requerido");
     	}
     	
     	
     	
     }
+    
+  
     
     
     

@@ -47,6 +47,17 @@ public class PrecioMetal {
 	
 	private UsuarioModifico usuarioModifico;
 
+	
+	public float getValorOnzaEnGramos(){
+    	return 31.103477F;
+    }
+	
+	public float getPrecioPorOnza(){
+		return this.precio*this.getValorOnzaEnGramos();
+	}
+	public void setPrecioPorOnza(float precio){
+		this.precio=precio/this.getValorOnzaEnGramos();
+	}
 	public int getId() {
 		return id;
 	}
@@ -86,7 +97,33 @@ public class PrecioMetal {
 	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
+
+	public UsuarioModifico getUsuarioModifico() {
+		return usuarioModifico;
+	}
+
+	public void setUsuarioModifico(UsuarioModifico usuarioModifico) {
+		this.usuarioModifico = usuarioModifico;
+	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if(obj==null){
+			return false;
+		}
+		
+		if(!(obj instanceof PrecioMetal)){
+			return false;
+		}
+		
+		return ((PrecioMetal)obj).id==this.id;
+	}
 	
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return this.id;
+	}
 	
 }

@@ -20,7 +20,6 @@ import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
 import clases.vo.Persona;
 import clases.vo.catalogo.Estatus;
-import clases.vo.cliente.Cliente;
 import ejb.bussines.exception.RDNException;
 
 /**

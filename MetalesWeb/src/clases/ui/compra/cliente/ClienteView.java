@@ -19,8 +19,8 @@ import org.apache.logging.log4j.Logger;
 import clases.iu.compra.cotizacion.CompraView;
 import clases.vo.cliente.Cliente;
 import ejb.bussines.PersonaEJB;
+import ejb.bussines.compra.ClienteEJB;
 import ejb.bussines.exception.RDNException;
-import ejb.bussines.venta.ClienteEJB;
 
 @ManagedBean
 @ViewScoped

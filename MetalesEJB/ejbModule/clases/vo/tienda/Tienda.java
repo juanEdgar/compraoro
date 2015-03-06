@@ -76,6 +76,14 @@ public class Tienda {
 		this.estatus = estatus;
 	}
 
+	public UsuarioModifico getUsuarioModifico() {
+		return usuarioModifico;
+	}
+
+	public void setUsuarioModifico(UsuarioModifico usuarioModifico) {
+		this.usuarioModifico = usuarioModifico;
+	}
+
 
 	
 	

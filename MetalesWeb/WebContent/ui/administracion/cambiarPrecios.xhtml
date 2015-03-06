@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+<f:view contentType="text/html">
+
+
+<f:event listener="#{compraView.initConversation()}"
+  type="preRenderView"></f:event>
+
+<h:head>
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/default.css" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/syntaxhighlighter/syntaxhighlighter.css" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/compra/compraMetal.css" />
+</h:head>
+
+
+
+
+
+<h:form id="preciosForm">
+
+<p:growl id="growl" showDetail="true"  autoUpdate="true"  autlife="4500" />
+
+
+
+<br />
+<br />
+<br />
+	<table width="90%" align="center">
+		<tr>
+			
+			<td>
+				<table>
+					<tr>
+						<td>Lista de precios de metales
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p:dataTable  value="#{cambiarPrecioView.productoMetales}" var="metal" id="tablaMetales" >
+								
+								<p:column headerText="NOMBRE" width="30%">
+									<h:outputText id="nombre#{metal.id}" value="#{metal.nombre}" />
+								</p:column>
+								<p:column headerText="PRECIO OZ" width="50">
+									<p:inputText id="onzas" value="#{metal.precioGramo.precioPorOnza}" >
+										<p:ajax event="blur" update="gramos" ></p:ajax>
+									</p:inputText>
+								</p:column>
+								<p:column headerText="PRECIO G" width="10%" style="text-align: right;">
+									
+									<p:inputText id="gramos" value="#{metal.precioGramo.precio}"  >
+										<p:ajax event="blur" update="onzas" ></p:ajax>
+									</p:inputText>
+									
+								</p:column>
+								<p:column headerText="MONEDA" width="10%" style="text-align: right;">
+									<p:selectOneMenu id="comboMoneda" value="#{metal.precioGramo.moneda.id}" >
+										<f:selectItems value="#{cambiarPrecioView.monedas}" var="moneda" itemLabel="#{moneda.nombre}" itemValue="#{moneda.id}" />
+									</p:selectOneMenu>
+								</p:column>
+								<p:column headerText="ACTUALIZAR" width="5%" style="text-align:center;">
+									<p:commandLink id="metalActualizarB"  actionListener="#{cambiarPrecioView.eventActualizarPrecio(metal.id)}">
+							        <h:outputText value="O" style="color: blue; font-weight: bold" />
+							    </p:commandLink>
+								</p:column>
+							</p:dataTable>
+						</td>
+					</tr>
+				</table>
+			</td>
+			
+		</tr>
+		
+	</table>
+
+
+	
+</h:form>
+
+</f:view>
+
+</html>
+

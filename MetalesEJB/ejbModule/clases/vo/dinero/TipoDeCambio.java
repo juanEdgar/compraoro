@@ -2,19 +2,16 @@ package clases.vo.dinero;
 
 import java.io.Serializable;
 
-import javax.inject.Inject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import clases.login.UsuarioSesion;
 import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
 
 @Entity

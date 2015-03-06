@@ -1,4 +1,4 @@
-package ejb.bussines.venta;
+package ejb.bussines.compra;
 
 import java.util.ArrayList;
 import java.util.List;

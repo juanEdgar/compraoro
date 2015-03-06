@@ -3,129 +3,99 @@ package clases.business.metales.vo.compra;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import clases.business.metales.vo.cotizador.Metal;
 import clases.business.metales.vo.cotizador.PrecioMetal;
-import clases.business.metales.vo.cotizador.PurezaMetal;
-import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
 
 @Entity
 @Table(schema="public",name="ArticuloCompraMetal")
-@SequenceGenerator(name="seq_articuloCompraMetal", schema="public", sequenceName="seq_articuloCompraMetal", allocationSize=50)
-public class ArticuloCompraMetal  extends Articulo  implements Serializable {
+@DiscriminatorValue("-100")
+public class ArticuloCompraMetal  extends ArticuloCompra  implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7175681960930291399L;
-	
-	
-	public ArticuloCompraMetal(){
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 7175681960930291399L;
 		
-	}
-	public ArticuloCompraMetal(String usuarioModifico){
-		this.usuarioModifico= new UsuarioModifico(usuarioModifico);
-	}
-	
-	
-	
-	@Id @GeneratedValue(generator="seq_articuloCompraMetal")
-	@Column(name="fiIdArticuloCompraMetal")
-	private int id;
-	
-	@Id
-	@ManyToOne
-	@JoinColumn(name="fiidcomprametal")
-	private CompraMetal compraMetal;
-	
-	
-	@Column(name="fnPesoNeto")
-	private float pesoNeto;
-	
-	@Column(name="fnPesoBruto")
-	private float pesoBruto;
-	
-	@Column(name="fcDescripcion")
-	private String descripcion;
-	
-	@ManyToOne
-	@JoinColumns({@JoinColumn(name="fiIdMetal"), @JoinColumn(name="fiidTipoPureza")})
-	private PurezaMetal pureza;
-	
-	@ManyToOne
-	@JoinColumn(name="fiidpreciometalgramofino")
-	private PrecioMetal precioMetal;
-	
-	
-	private UsuarioModifico usuarioModifico;
-	
-	
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public float getPesoNeto() {
-		return pesoNeto;
-	}
-	public void setPesoNeto(float pesoNeto) {
-		this.pesoNeto = pesoNeto;
-	}
-	public float getPesoBruto() {
-		return pesoBruto;
-	}
-	public void setPesoBruto(float pesoBruto) {
-		this.pesoBruto = pesoBruto;
-	}
-	public String getDescripcion() {
-		return descripcion;
-	}
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion.toLowerCase().trim();
-	}
-	
+		
+		public ArticuloCompraMetal(){
 			
-	public PurezaMetal getPureza() {
-		return pureza;
-	}
-	public void setPureza(PurezaMetal pureza) {
-		this.pureza = pureza;
-	}
-
-	
-	
-	
-	public PrecioMetal getPrecioMetal() {
-		return precioMetal;
-	}
-	public void setPrecioMetal(PrecioMetal precioMetal) {
-		this.precioMetal = precioMetal;
-	}
-	public void setUsuarioModifico(UsuarioModifico usuarioModifico) {
-		this.usuarioModifico = usuarioModifico;
-	}
-	public CompraMetal getCompraMetal() {
-		return compraMetal;
-	}
-	public void setCompraMetal(CompraMetal compraMetal) {
-		this.compraMetal = compraMetal;
-	}
-	
-	
-	
+		}
+		public ArticuloCompraMetal(String usuarioModifico){
+			super(usuarioModifico);
+		}
+		
+		
+		
+		
+		@Column(name="fnPesoNeto")
+		private float pesoNeto;
+		
+		@Column(name="fnPesoBruto")
+		private float pesoBruto;
+		
+		@Column(name="fnPorcentajePureza")
+		private float porcentajePureza=0.0F;
+		
+		@ManyToOne
+		@JoinColumn(name="fiidpreciometalgramofino")
+		private PrecioMetal precioMetal;
+		
+		@Column(name="fnPesoFino")
+		private float pesoFino;
+		
+		public float getPesoNeto() {
+			return pesoNeto;
+		}
+		public void setPesoNeto(float pesoNeto) {
+			this.pesoNeto = pesoNeto;
+		}
+		public float getPesoBruto() {
+			return pesoBruto;
+		}
+		public void setPesoBruto(float pesoBruto) {
+			this.pesoBruto = pesoBruto;
+		}
+		public float getPorcentajePureza() {
+			return porcentajePureza;
+		}
+		public void setPorcentajePureza(float porcentajePureza) {
+			this.porcentajePureza = porcentajePureza;
+		}
+		public PrecioMetal getPrecioMetal() {
+			return precioMetal;
+		}
+		public void setPrecioMetal(PrecioMetal precioMetal) {
+			this.precioMetal = precioMetal;
+		}
+		
+		
+		
+		public float getPesoFino() {
+			return pesoFino;
+		}
+		public void setPesoFino(float pesoFino) {
+			this.pesoFino = pesoFino;
+		}
+		@Override
+		public String toString() {
+			StringBuilder sb= new StringBuilder();
+			
+			
+			sb.append(this.precioMetal.getMetal().getNombre());
+			sb.append(" DE ");
+			sb.append(this.getPorcentajePureza());
+			sb.append("% DE PUREZA CON UN PESO DE  ");
+			sb.append(this.getPesoNeto());
+			sb.append(" GRAMOS.");
+			
+			return sb.toString().toLowerCase();
+		}
+		
 	
 	
 }

@@ -2,14 +2,10 @@ package clases.persistence.jpa.commun.embeddable;
 
 import java.util.Date;
 
-import javax.inject.Inject;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-
-import clases.login.UsuarioSesion;
 
 
 @Embeddable

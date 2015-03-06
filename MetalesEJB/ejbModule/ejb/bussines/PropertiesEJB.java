@@ -8,7 +8,6 @@ import javax.persistence.TypedQuery;
 
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
 import clases.vo.dinero.Moneda;
-import clases.vo.dinero.TipoDeCambio;
 
 /**
  * Session Bean implementation class PropertiesEJB
@@ -25,7 +24,7 @@ public class PropertiesEJB {
 
 	private  Moneda MONEDA_SISTEMA;
 	private String codigoMonedasistema="MXP";
-	private int mayoriaEdad=1000;
+	
 	
 	
 	
@@ -66,6 +65,10 @@ public class PropertiesEJB {
     }
     
     
+   
     
+    public int getFactorRedondeo(){
+    	return 10;
+    }
     
 }

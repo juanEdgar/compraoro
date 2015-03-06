@@ -7,12 +7,14 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
@@ -21,23 +23,24 @@ import clases.vo.cliente.Cliente;
 import clases.vo.tienda.Tienda;
 
 @Entity
-@Table(schema="public", name="CompraMetal")
-public class CompraMetal  implements Serializable {
+@Table(schema="public", name="Compra")
+@SequenceGenerator(name="seq_compra",schema="public", sequenceName="seq_compra",allocationSize=10)
+public class Compra  implements Serializable {
 
 	static final long serialVersionUID = -8275342757424131090L;
 	
-	public CompraMetal(){
+	public Compra(){
 		this.estatus= new Estatus(1);
 	}
 	
 	
-	public CompraMetal(String usuarioModifico){
+	public Compra(String usuarioModifico){
 		this.usuarioModifico= new UsuarioModifico(usuarioModifico);
 	}
 	
 	
-	@Id
-	@Column(name="fiIdCompraMetal")
+	@Id @GeneratedValue(generator="seq_compra")
+	@Column(name="fiIdCompra")
 	private int id;
 	
 	@ManyToOne
@@ -56,6 +59,12 @@ public class CompraMetal  implements Serializable {
 	@OrderBy("id ASC")
 	@Basic(fetch=FetchType.EAGER)
 	private List<ArticuloCompra> articulos;
+	
+	@OneToMany(mappedBy="compra")
+	@OrderBy("fecha")
+	@Basic(fetch=FetchType.EAGER)
+	private List<PagoCompra> pagos;
+	
 	
 	private UsuarioModifico usuarioModifico;
 	
@@ -103,6 +112,12 @@ public class CompraMetal  implements Serializable {
 	}
 
 
+
+	public void setUsuarioModifico(UsuarioModifico usuarioModifico) {
+		this.usuarioModifico = usuarioModifico;
+	}
+
+
 	public List<ArticuloCompra> getArticulos() {
 		return articulos;
 	}
@@ -113,8 +128,13 @@ public class CompraMetal  implements Serializable {
 	}
 
 
-	public void setUsuarioModifico(UsuarioModifico usuarioModifico) {
-		this.usuarioModifico = usuarioModifico;
+	public List<PagoCompra> getPagos() {
+		return pagos;
+	}
+
+
+	public void setPagos(List<PagoCompra> pagos) {
+		this.pagos = pagos;
 	}
 
 

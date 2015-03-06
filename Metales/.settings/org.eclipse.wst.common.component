@@ -12,5 +12,8 @@
         <dependent-module archiveName="log4j-api-2.0.jar" deploy-path="/lib" handle="module:/classpath/lib/Documentacion/jar/apache-log4j-2.0-bin/log4j-api-2.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="log4j-core-2.0.jar" deploy-path="/lib" handle="module:/classpath/lib/Documentacion/jar/apache-log4j-2.0-bin/log4j-core-2.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>

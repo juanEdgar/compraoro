@@ -18,7 +18,7 @@ import clases.login.UsuarioSesionTienda;
 import clases.vo.tienda.Tienda;
 import ejb.bussines.TestEjb;
 import ejb.bussines.administracion.TipoDeCambioEJB;
-import ejb.bussines.venta.CotizadorEJB;
+import ejb.bussines.compra.CotizadorEJB;
 
 /**
  * Servlet implementation class Test

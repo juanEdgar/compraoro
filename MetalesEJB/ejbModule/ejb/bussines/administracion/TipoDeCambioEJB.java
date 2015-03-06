@@ -15,16 +15,14 @@ import javax.persistence.TypedQuery;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import clases.business.metales.vo.cotizador.Metal;
 import clases.login.QualifierUsuarioSesion;
-import clases.login.QualifierUsuarioSesionTienda;
 import clases.login.UsuarioSesion;
 import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
 import clases.vo.dinero.Moneda;
 import clases.vo.dinero.TipoDeCambio;
+import ejb.bussines.compra.CotizadorEJB;
 import ejb.bussines.exception.RDNException;
-import ejb.bussines.venta.CotizadorEJB;
 
 /**
  * Session Bean implementation class TipoDeCambioEJB
@@ -307,7 +305,25 @@ public class TipoDeCambioEJB {
     	return tcList;
     }
     
-    
-    
+    public List<Moneda> getListaMonedas(){
+    	log.info("Recuperando la lista de monedas");
+    	
+    	List<Moneda> mList=null;
+    	
+    	try {
+    		
+    		TypedQuery<Moneda> query= metalesEM.createQuery("SELECT M FROM Moneda M" ,Moneda.class);
+    		mList= query.getResultList();
+    		
+    		
+    		log.info("OK, tabla de monedas size: "+mList.size());
+		} catch (Exception e) {
+			this.context.setRollbackOnly();
+			log.error("Error al obtener la tabla completa de tipode de cambio",e);
+			return null;
+		}
+    	
+    	return mList;
+    }
 
 }

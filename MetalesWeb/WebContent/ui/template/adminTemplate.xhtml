@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+
+	  <ui:composition template="/ui/template/mainTemplate.xhtml">
+	  	
+	  	
+	  <ui:define name="menu">
+	  		<!-- mp-menu -->
+				<nav id="mp-menu" class="mp-menu">
+					<div class="mp-level">
+						<h2 >Menu General</h2>
+						<ul>
+							<li >
+								<a  href="#">Sucursales</a>
+								<div class="mp-level">
+									<h2>Sucursales</h2>
+									<ul>
+										<li>
+											<a  href="#">Precios compra</a>
+											<div class="mp-level">
+												<h2>Precios compra</h2>
+												<ul>
+													<li><a href="#">Metales</a></li>
+													<li><a href="#">Diamantes</a></li>										
+												</ul>
+											</div>		
+										</li>
+										<li><a href="#">Dotaciones</a></li>										
+									</ul>
+								</div>	
+							</li>
+							<li>
+								<a  href="#">Tipo de cambio</a>
+								<div class="mp-level">
+									<h2>Tipo de cambio</h2>
+									<ul>
+										<li><a href="#">Ajustar TC</a></li>																		
+									</ul>
+								</div>		
+							</li>
+						</ul>
+					</div>
+				</nav>
+				<!-- /mp-menu -->		
+	  </ui:define>	
+	  	
+	 
+	  </ui:composition>
+
+</html>

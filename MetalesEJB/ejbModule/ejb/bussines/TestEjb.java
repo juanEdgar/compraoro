@@ -10,20 +10,16 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import clases.business.metales.vo.compra.ArticuloCompraMetal;
-import clases.business.metales.vo.compra.CompraMetal;
 import clases.business.metales.vo.cotizador.Metal;
-import clases.business.metales.vo.cotizador.PurezaMetal;
 import clases.login.QualifierUsuarioSesionTienda;
 import clases.login.UsuarioSesion;
 import clases.login.UsuarioSesionTienda;
-import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
 import clases.vo.cliente.Cliente;
 import clases.vo.dinero.Moneda;
-import clases.vo.tienda.Tienda;
 import ejb.bussines.administracion.TipoDeCambioEJB;
-import ejb.bussines.venta.ClienteEJB;
-import ejb.bussines.venta.CotizadorEJB;
+import ejb.bussines.compra.ClienteEJB;
+import ejb.bussines.compra.CotizadorEJB;
 
 /**
  * Session Bean implementation class TestEjb
@@ -118,43 +114,7 @@ System.out.println("Test EJB");
     		a1= new ArticuloCompraMetal();
     		a2= new ArticuloCompraMetal();
     		
-    		a1.setDescripcion("Cadena de 24");
-    		a1.setPesoBruto(10.00f);
-    		a1.setPesoNeto(10f);
-    		a1.setPrecioMetal(m.getPrecioGramo());
-    		a1.setPureza(new PurezaMetal(7,m));
-    		
-    		a2.setDescripcion("Cadena de 14");
-    		a2.setPesoBruto(10.00f);
-    		a2.setPesoNeto(10f);
-    		a2.setPrecioMetal(m.getPrecioGramo());
-    		a2.setPureza(new PurezaMetal(18,m));
-    		
-    		
-    		articulos.add(a1);
-    		articulos.add(a2);
-    		
-    		CompraMetal compra= new CompraMetal();
-    		
-    		compra.setArticulos(articulos);
-    		compra.setCliente(c);
-    		compra.setUsuarioModifico(new UsuarioModifico(usr.getNombreUsuario()));
-    		
-    		System.out.println("Se detalla la compra");
-    		
-    		for(ArticuloCompraMetal a: compra.getArticulos()){
-    			
-    			m.setPurezaMetal(a.getPureza());
-    			System.out.println(String.format("Precio %s = %f",a.getDescripcion(),this.cotizador.cotizar(m, a.getPesoNeto())));
-    			
-    			
-    		}
-    		
-    		
-    		
-    		this.compraEJB.registarCompra(compra);
-    		
-    		
+
     		
     		
     		

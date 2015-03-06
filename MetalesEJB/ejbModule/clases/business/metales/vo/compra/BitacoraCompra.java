@@ -1,7 +1,6 @@
 package clases.business.metales.vo.compra;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,33 +11,33 @@ import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
 
 
 @Entity
-@Table(schema="public", name="bitacoracomprametal")
-@SequenceGenerator(name="seq_bitacoraCompraMetal", schema="public", sequenceName="seq_bitacoraCompraMetal", allocationSize=50)
-public class BitacoraCompraMetal {
+@Table(schema="public", name="bitacoracompra")
+@SequenceGenerator(name="seq_bitacoraCompra", schema="public", sequenceName="seq_bitacoraCompra", allocationSize=50)
+public class BitacoraCompra {
 		
 	
-	public BitacoraCompraMetal() {
+	public BitacoraCompra() {
 		
 	}
 	
-	public BitacoraCompraMetal(String usuarioModifico){
+	public BitacoraCompra(String usuarioModifico){
 		this.usuarioModifico= new UsuarioModifico(usuarioModifico);
 	}
 	
-	public BitacoraCompraMetal(CompraMetal compraMetal) {
+	public BitacoraCompra(Compra compraMetal) {
 		
 		this.idCompra= compraMetal.getId();
 		this.estatus= compraMetal.getEstatus().getId();
 		
 	}
 
-	@Column(name="fiIdBitacoraCompraMetal")
-	@Id @GeneratedValue(generator="seq_bitacoraCompraMetal")
+	@Column(name="fiIdBitacoraCompra")
+	@Id @GeneratedValue(generator="seq_bitacoraCompra")
 	private int id;
 	
 	@Column(name="fiIdEstatus")
 	private int estatus;
-	@Column(name="fiidcomprametal")
+	@Column(name="fiidcompra")
 	private int idCompra;
 	
 	private UsuarioModifico usuarioModifico;
@@ -74,6 +73,10 @@ public class BitacoraCompraMetal {
 
 	public void setUsuarioModifico(UsuarioModifico usuarioModifico) {
 		this.usuarioModifico = usuarioModifico;
+	}
+
+	public UsuarioModifico getUsuarioModifico() {
+		return usuarioModifico;
 	}
 	
 	

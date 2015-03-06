@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html">
+
+	<h:head>
+		<f:facet name="first">
+			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+			<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+			<title>Compra</title>
+		</f:facet>
+
+		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/default.css" />
+		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/main.css" />
+		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/syntaxhighlighter/syntaxhighlighter.css" />
+
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/menu/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/menu/demo.css" />
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/menu/icons.css" />
+		<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/menu/component.css" />
+		<script src="#{request.contextPath}/js/modernizr.custom.js"></script>
+		
+
+	</h:head>
+
+	<h:body  >
+	<div class="container">
+			<!-- Push Wrapper -->
+	<div class="mp-pusher" id="mp-pusher">	
+		<div>
+			<ui:insert name="header">
+				<f:view contentType="text/html">
+					<h:head>
+						
+						<style type="text/css">
+							.ui-layout-north {
+								z-index: 20 !important;
+								overflow: visible !important;;
+							}
+							
+							.ui-layout-north .ui-layout-unit-content {
+								overflow: visible !important;
+							}
+						</style>
+					</h:head>
+					<br />
+					
+					<h:form>
+						<table width="100%">
+							<tr>
+								<td align="left" height="30px" title="Mostrar/Ocultar Menu">
+								<a href="#" id="trigger" class="menu-trigger" >Juan</a>
+								</td>
+								<td align="right">
+									<h:outputLink value="#{request.contextPath}/logout">
+						            	<p:button id="buttonSalir" icon="ui-icon-extlink"/>
+					            	</h:outputLink>			 					
+				 					<p:tooltip for="buttonSalir">Salir</p:tooltip>
+				 					
+								</td>
+							</tr>
+						
+						</table>
+											
+					</h:form>
+				</f:view>
+				<br />
+			</ui:insert>
+			<ui:insert name="menu">				
+					
+			</ui:insert>
+			<div class="scroller"><!-- this is for emulating position fixed of the nav -->
+					<div class="scroller-inner">
+						<br/>
+						<br/>
+						<ui:insert name="content"></ui:insert>
+					</div>
+			</div>
+		</div>
+		
+		
+
+		<p:dialog modal="true" widgetVar="dlg2" header="Cargando" resizable="false" draggable="false" closable="false">
+			<p:graphicImage value="/images/ajaxloadingbar.gif" />
+		</p:dialog>
+		
+		<p:ajaxStatus onstart="PF('dlg2').show();" oncomplete="PF('dlg2').hide();" id="statusDLG2"/>
+		
+	</div>
+	</div>
+	
+	<script src="#{request.contextPath}/js/classie.js"></script>
+		<script src="#{request.contextPath}/js/mlpushmenu.js"></script>
+		<script>
+			new mlPushMenu( document.getElementById( 'mp-menu' ), document.getElementById( 'trigger' ) );
+		</script>
+		
+	</h:body>
+ 
+</f:view>
+</html>
