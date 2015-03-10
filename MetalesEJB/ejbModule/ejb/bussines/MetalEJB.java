@@ -17,7 +17,6 @@ import org.apache.logging.log4j.Logger;
 import clases.business.metales.vo.cotizador.Metal;
 import clases.business.metales.vo.cotizador.PrecioMetal;
 import clases.business.metales.vo.cotizador.PurezaMetal;
-import clases.login.QualifierUsuarioSesion;
 import clases.login.UsuarioSesion;
 import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
@@ -45,7 +44,6 @@ public class MetalEJB {
 	private static final Logger log = LogManager .getLogger(MetalEJB.class);
 	
 	@Inject
-	@QualifierUsuarioSesion 
 	private UsuarioSesion ejbUsuario;
 	
 	
@@ -125,7 +123,7 @@ public class MetalEJB {
   		}catch(Exception e){
   			this.context.setRollbackOnly();
   		    e = new Exception("Error al realizar el cambio al precio del metal",e);
-  			log.error(e);;
+  			log.error(e,e);;
   			throw e;
   		}
   		

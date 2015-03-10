@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+
+
+<ui:composition template="/ui/template/cajeroTemplate.xhtml">
+	<ui:define name="content">
+
+
+<h:head>
+<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/compra/compraMetal.css" />
+	
+</h:head>
+
+
+<h:form id="busquedaCliente">
+
+	<p:growl id="growl" showDetail="true"  life="4500" ></p:growl>
+	
+
+	<table width="90%" align="center">
+		<tr>
+			<td>
+				
+				
+			<table cellspacing="5px" cellpadding="2px" style="font-size: 12px">
+			<tr>
+				<td colspan="5">
+					<p:commandButton action="#{compraView.navegacionCotizacion()}" value="ATRAS" icon="ui-icon-circle-triangle-w" 
+							                styleClass="callToAction" validateClient="false">
+					</p:commandButton>
+					<br/>
+					<br/>
+				</td>
+			</tr>
+			<tr>
+				<td class="encabezadocampo">Nombre *
+				</td>
+				
+				<td class="encabezadocampo">Segundo Nombre 
+				</td>
+				
+				<td class="encabezadocampo"> Apellido Paterno *
+				</td>
+				<td class="encabezadocampo"> Apellido Materno 
+				</td>
+				<td class="encabezadocampo">Fecha Nacimiento *
+				</td>
+				<td></td>
+			</tr>
+			
+			<tr>
+				<td>	
+					<p:inputText value="#{compraView.cliente.nombre}"  tabindex="1"/>
+				</td>
+				
+				
+				<td>
+					<p:inputText value="#{compraView.cliente.segundoNombre}" tabindex="2" />
+					
+				</td>
+				<td>
+					<p:inputText value="#{compraView.cliente.apellidoPaterno}"  tabindex="3" />
+				
+				</td>
+				<td>
+					<p:inputText value="#{compraView.cliente.apellidoMaterno}" tabindex="4"/>
+				</td>
+				<td>
+					<p:outputLabel for="fechaCalendar"  />
+					<p:calendar  value="#{compraView.cliente.fechaNacimiento}" id="fechaCalendar"  tabindex="5" mindate="01/01/1920"
+								 pattern="dd/MM/yyyy" mask="true"  navigator="true" locale="es" maxdate="#{clienteView.metodoFechaMaximaNacimiento()}" 
+								 yearRange="c-35:c+10"
+								 />
+				</td>
+				<td colspan="5" align="right"  >
+					<p:commandButton action="#{clienteView.eventBuscarCliente()}" value="BUSCAR" styleClass="callToAction"
+					                 icon="ui-icon-search" iconPos="right" tabindex="6"
+					                 actionListener="#{clienteView.validarBusquedaCliente()}" 
+					                 update="@form:busquedaResultado, @form:growl, @form:subViewResultados,@form:subViewAlta"
+					                 />
+				</td>
+			</tr>
+			
+			
+		</table>
+	
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<br></br>
+				<br></br>
+				<p:panel id="busquedaResultado" >
+					<f:subview id="subViewResultados" rendered="#{clienteView.mostrarListaClientes}">
+						<BR/>
+						RESULTADOS DE LA BÚSQUEDA
+						<BR/>
+						<BR/>
+						<center>
+							<p:dataTable   rendered="#{clienteView.mostrarListaClientes}" value="#{clienteView.listaClientes}" 
+											var="cliente" id="tablaClientes" >
+										
+								<p:column headerText="Seleccionar" width="5%" style="text-align:center;">									
+									<p:commandButton action="#{clienteView.eventClienteEncontrado(cliente.idPersona)}"  
+													 id="cliente#{cliente.idPersona}" icon="ui-icon-star" />
+								</p:column>
+								<p:column headerText="NOMBRE" width="15%">
+									<h:outputText value="#{cliente.nombre}" />
+								</p:column>
+								<p:column headerText="SEGUNDO NOMBRE" width="15%">
+									<h:outputText value="#{cliente.segundoNombre}" />
+								</p:column>
+								<p:column headerText="APELLIDO PATERNO" width="20%">									
+										<h:outputText value="#{cliente.apellidoPaterno}"  />									
+								</p:column>
+								<p:column headerText="APELLIDO MATERNO" width="20%">									
+										<h:outputText value="#{cliente.apellidoMaterno}"  />									
+								</p:column>
+								<p:column headerText="FECHA NACIMIENTO" width="10%">									
+										<h:outputText value="#{cliente.fechaNacimientoFormateada}"  />									
+								</p:column>
+							</p:dataTable>
+						</center>
+					</f:subview>
+					
+					<f:subview id="subViewAlta" rendered="#{clienteView.mostarAltaCliente}">
+						<table>
+						<tr>
+							<td>	
+								No hay coincidencias para la información ingresada.
+								<br></br>
+								Verifique los datos para una busqueda.
+								<br/><br/>
+								O puede crear un cliente nuevo con la infiormación proporcionada, dando clic en el botón anexo.
+							</td>
+							<td>
+								<p:commandButton action="#{clienteView.eventAltaCliente()}" value="ALTA DE CLIENTE" 
+												 iconPos="right" icon="ui-icon-circle-check"
+								/>
+							</td>
+						</tr>
+						
+						</table>
+					</f:subview>
+			
+			
+			</p:panel>
+		
+				
+			</td>
+		</tr>
+	</table>
+	
+	<br></br>
+
+	
+</h:form>
+
+
+
+
+
+
+
+</ui:define>
+</ui:composition>
+</html>
+

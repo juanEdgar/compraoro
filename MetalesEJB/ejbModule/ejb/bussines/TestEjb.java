@@ -1,24 +1,17 @@
 package ejb.bussines;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import clases.business.metales.vo.compra.ArticuloCompraMetal;
-import clases.business.metales.vo.cotizador.Metal;
-import clases.login.QualifierUsuarioSesionTienda;
 import clases.login.UsuarioSesion;
-import clases.login.UsuarioSesionTienda;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
-import clases.vo.cliente.Cliente;
 import clases.vo.dinero.Moneda;
 import ejb.bussines.administracion.TipoDeCambioEJB;
 import ejb.bussines.compra.ClienteEJB;
+import ejb.bussines.compra.CompraEJB;
 import ejb.bussines.compra.CotizadorEJB;
 
 /**
@@ -29,7 +22,7 @@ import ejb.bussines.compra.CotizadorEJB;
 public class TestEjb {
 
 	
-	@Inject @QualifierUsuarioSesionTienda
+	@Inject
 	private UsuarioSesion userSesion;
 	
 	@Inject @MetalesEM
@@ -98,22 +91,22 @@ System.out.println("Test EJB");
     		System.out.println("iniciando");
     		
     		
-    		
-    	
 //    		
-    		UsuarioSesionTienda usr= (UsuarioSesionTienda)this.userSesion;
-    		
-    		Cliente c= this.metalesEM.find(Cliente.class, -41);
-    		Metal m= this.metalesEM.find(Metal.class, 1);
-    		
-    		
-    		List<ArticuloCompraMetal> articulos= new ArrayList<ArticuloCompraMetal>();
-    		
-    		ArticuloCompraMetal a1,a2;
-    		
-    		a1= new ArticuloCompraMetal();
-    		a2= new ArticuloCompraMetal();
-    		
+//    	
+////    		
+//    		UsuarioSesionTienda usr= (UsuarioSesionTienda)this.userSesion;
+//    		
+//    		Cliente c= this.metalesEM.find(Cliente.class, -41);
+//    		Metal m= this.metalesEM.find(Metal.class, 1);
+//    		
+//    		
+//    		List<ArticuloCompraMetal> articulos= new ArrayList<ArticuloCompraMetal>();
+//    		
+//    		ArticuloCompraMetal a1,a2;
+//    		
+//    		a1= new ArticuloCompraMetal();
+//    		a2= new ArticuloCompraMetal();
+//    		
 
     		
     		

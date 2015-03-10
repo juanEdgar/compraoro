@@ -23,7 +23,7 @@ import clases.vo.dinero.Moneda;
 
 @Entity
 @Table(schema="public", name="PagoCompra")
-@SequenceGenerator(schema="pubic", sequenceName="seq_pagoCompa", name="seq_pagoCompra", allocationSize=50)
+@SequenceGenerator(schema="pubic", sequenceName="seq_pagoCompa", name="seq_pagoCompra", allocationSize=20)
 @Inheritance(strategy=InheritanceType.JOINED)
 @DiscriminatorColumn(name="fiidestatustipocompra",
 discriminatorType=DiscriminatorType.INTEGER  )
@@ -32,6 +32,7 @@ public class PagoCompra {
 
 	@Id
 	@GeneratedValue(generator="seq_pagoCompra")
+	@Column(name="fiIdPagoCompra")
 	private int id;
 	
 	@ManyToOne

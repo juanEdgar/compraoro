@@ -10,20 +10,15 @@ import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import clases.login.QualifierUsuarioSesionTienda;
 import clases.login.UsuarioSesion;
-import clases.login.UsuarioSesionTienda;
 import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
-import clases.vo.Persona;
 import clases.vo.cliente.Cliente;
-import clases.vo.dinero.TipoDeCambio;
 import ejb.bussines.PersonaEJB;
 import ejb.bussines.exception.RDNException;
 
@@ -37,7 +32,7 @@ public class ClienteEJB extends PersonaEJB{
 	@Inject @MetalesEM
 	private EntityManager metalesEM;
 	
-	@Inject @QualifierUsuarioSesionTienda
+	@Inject
 	private UsuarioSesion usuarioSesion;
 	
 	@Resource
@@ -62,14 +57,14 @@ public class ClienteEJB extends PersonaEJB{
     		
     		log.info("Alta de cliente");
     		
-    		UsuarioSesionTienda usuarioTienda=(UsuarioSesionTienda)this.usuarioSesion;
     		
     		
-    		if(usuarioTienda.getTienda()== null || usuarioTienda.getTienda().getId()<=0){
+    		
+    		if(usuarioSesion.getTienda()== null || usuarioSesion.getTienda().getId()<=0){
     			throw new Exception("La tienda en sesion es invalida, no se puede dar de alta al cliente");
     		}
     		
-    		log.info("Tienda de sesion correcta, ID: "+usuarioTienda.getTienda().getId());
+    		log.info("Tienda de sesion correcta, ID: "+usuarioSesion.getTienda().getId());
     		
     		log.info("Se manda a validar la informacion de la persona");
     		
@@ -77,10 +72,10 @@ public class ClienteEJB extends PersonaEJB{
     		
     		log.info("Se asigna el cliente a la tienda en sesion");
     		
-    		c.setTienda(((UsuarioSesionTienda)this.usuarioSesion).getTienda());
+    		c.setTienda((this.usuarioSesion).getTienda());
     		
     		if(c.getUsuarioModificoCliente()==null){
-    			c.setUsuarioModificoCliente(new UsuarioModifico(usuarioTienda.getNombreUsuario()));
+    			c.setUsuarioModificoCliente(new UsuarioModifico(usuarioSesion.getNombreUsuario()));
     		}
     		
     		log.info("Regisrando la informacion de cliente");

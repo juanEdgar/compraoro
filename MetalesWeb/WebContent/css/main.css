@@ -1,0 +1,30 @@
+.numero{
+	text-align: right;
+}
+
+.label{
+	text-align: right;	
+	width: auto;
+}
+
+.input{
+	text-align: left;
+	width: auto;
+}
+
+table.ui-panelgrid tbody tr.ui-widget-content{
+    border: none;
+}
+
+table.ui-panelgrid tbody tr.ui-widget-content td{
+	border-style: none;
+}
+div.treceSemanas div table{
+	font-size:10px;
+}
+div.muchasColumnas div table{
+	font-size: 9px;
+}
+.ui-notificationbar{
+	height: auto;
+}

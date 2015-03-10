@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema="public", name="PagoSPEI")
+@Table(schema="public", name="PagoCompraSPEI")
 @DiscriminatorValue("-201")
 public class PagoCompraSPEI extends PagoCompra{
 

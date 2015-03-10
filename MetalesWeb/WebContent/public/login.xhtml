@@ -1,0 +1,43 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<head>
+  <title>Login</title>
+</head>
+<body>
+  <form method="post" action="j_security_check" >
+    
+    <table align="center" width="90%" cellspacing="20px;">
+    
+    	<tr>
+    		<td>
+    			<img alt="madialiance" src="#{request.contextPath}/images/madialiance.jpg"/>
+    		</td>
+    		<td> 	
+    		
+    			 <p>
+			      <span>Username:</span>
+			      <br />
+			      <input type="text"  name= "j_username" />
+			    </p>
+			    <p>
+			      <span>Password:</span>
+			      <br />
+			      <input type="password"  name= "j_password" />
+			    </p>
+			    <p>
+			      <input type="submit" value="Login"/>
+			    </p>
+			 </td>
+    	</tr>
+    
+    </table>
+    
+   
+  </form>
+</body>
+</html>

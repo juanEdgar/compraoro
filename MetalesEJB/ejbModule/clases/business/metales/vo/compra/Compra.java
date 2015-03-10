@@ -1,6 +1,7 @@
 package clases.business.metales.vo.compra;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Basic;
@@ -16,6 +17,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
 import clases.vo.catalogo.Estatus;
@@ -33,7 +38,8 @@ public class Compra  implements Serializable {
 		this.estatus= new Estatus(1);
 	}
 	
-	
+	@Transient
+	private static final Logger log = LogManager .getLogger(Compra.class);
 	public Compra(String usuarioModifico){
 		this.usuarioModifico= new UsuarioModifico(usuarioModifico);
 	}
@@ -58,7 +64,7 @@ public class Compra  implements Serializable {
 	@OneToMany(mappedBy="compra")
 	@OrderBy("id ASC")
 	@Basic(fetch=FetchType.EAGER)
-	private List<ArticuloCompra> articulos;
+	private List<Seguribolsa> bolsas;
 	
 	@OneToMany(mappedBy="compra")
 	@OrderBy("fecha")
@@ -69,7 +75,25 @@ public class Compra  implements Serializable {
 	private UsuarioModifico usuarioModifico;
 	
 
-	
+	public List<ArticuloCompra> getArticulos(){
+		log.info("Lista de articulos %%%");
+		List<ArticuloCompra> listaArticulos=new ArrayList<ArticuloCompra>();
+		
+		if(this.bolsas!=null && this.bolsas.size()>0){
+			log.debug("bolsas "+this.bolsas.size());
+			for(Seguribolsa bolsa : this.bolsas){
+				if(bolsa.getArticulosCompra()!=null && bolsa.getArticulosCompra().size()>0){
+					log.debug("articulos bolsa "+bolsa.getCodigo()+" "+bolsa.getArticulosCompra().size());
+					for(ArticuloCompra a : bolsa.getArticulosCompra()){
+						listaArticulos.add(a);
+					}
+				}
+			}
+			
+			
+		}
+		return listaArticulos;
+	}
 	
 	
 	public int getId() {
@@ -118,13 +142,17 @@ public class Compra  implements Serializable {
 	}
 
 
-	public List<ArticuloCompra> getArticulos() {
-		return articulos;
+	
+	
+
+
+	public List<Seguribolsa> getBolsas() {
+		return bolsas;
 	}
 
 
-	public void setArticulos(List<ArticuloCompra> articulos) {
-		this.articulos = articulos;
+	public void setBolsas(List<Seguribolsa> bolsas) {
+		this.bolsas = bolsas;
 	}
 
 

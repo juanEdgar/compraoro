@@ -11,7 +11,7 @@
 		<f:facet name="first">
 			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
 			<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-			<title>Compra</title>
+			<title>MediAliance</title>
 		</f:facet>
 
 		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/default.css" />
@@ -33,7 +33,7 @@
 	<div class="mp-pusher" id="mp-pusher">	
 		<div>
 			<ui:insert name="header">
-				<f:view contentType="text/html">
+				<f:view contentType="text/html" >
 					<h:head>
 						
 						<style type="text/css">
@@ -47,13 +47,13 @@
 							}
 						</style>
 					</h:head>
-					<br />
+					<div style="background-color: #34495e; width: 100%" >
 					
 					<h:form>
-						<table width="100%">
+						<table width="100%" >
 							<tr>
 								<td align="left" height="30px" title="Mostrar/Ocultar Menu">
-								<a href="#" id="trigger" class="menu-trigger" >Juan</a>
+								<a href="#" id="trigger" class="menu-trigger"  > <h:outputText value=" #{sesionObject.nombreUsuario}@#{sesionObject.ubicacion}"></h:outputText> </a>
 								</td>
 								<td align="right">
 									<h:outputLink value="#{request.contextPath}/logout">
@@ -67,8 +67,10 @@
 						</table>
 											
 					</h:form>
+					</div>
 				</f:view>
-				<br />
+			
+			
 			</ui:insert>
 			<ui:insert name="menu">				
 					

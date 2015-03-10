@@ -10,7 +10,6 @@ import javax.persistence.EntityManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import clases.login.QualifierUsuarioSesion;
 import clases.login.UsuarioSesion;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
 
@@ -29,7 +28,7 @@ public class PreciosEJB {
 	
 	private static final Logger log = LogManager .getLogger(PreciosEJB.class);
 	
-	@Inject @QualifierUsuarioSesion
+	@Inject 
 	private UsuarioSesion usuarioSesion;
 	
 	

@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import clases.iu.compra.cotizacion.CompraView;
+import clases.ui.compra.cotizacion.CompraView;
 import clases.vo.cliente.Cliente;
 import ejb.bussines.PersonaEJB;
 import ejb.bussines.compra.ClienteEJB;

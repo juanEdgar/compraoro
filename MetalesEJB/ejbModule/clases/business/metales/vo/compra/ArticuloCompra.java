@@ -17,6 +17,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
 import clases.vo.dinero.Moneda;
 
@@ -28,19 +31,18 @@ import clases.vo.dinero.Moneda;
                      discriminatorType=DiscriminatorType.INTEGER)
 public    class ArticuloCompra implements Serializable {
 	
-		/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -5933541001999578641L;
 
+	@Transient
+	private static final Logger log = LogManager .getLogger(ArticuloCompra.class);
+	
 		@Id @GeneratedValue(generator="seq_ArticuloCompra")
 		@Column(name="fiIdArticuloCompra")
 		private  int id;
 		
 		
-		@ManyToOne
-		@JoinColumn(name="fiIdCompra")
-		private Compra compra;
+		
 		
 		@Column(name="fiIdEstatus")
 		private int estatus;
@@ -55,8 +57,11 @@ public    class ArticuloCompra implements Serializable {
 		@JoinColumn(name="fiIdMoneda")
 		private Moneda moneda;
 		
-		@Transient
-		private float numeroArticulo;
+		@ManyToOne
+		@JoinColumn(name="fiIdSeguribolsa")
+		private Seguribolsa seguribolsa;
+		
+		
 		
 		
 		
@@ -65,6 +70,10 @@ public    class ArticuloCompra implements Serializable {
 		
 		public ArticuloCompra() {
 			// TODO Auto-generated constructor stub
+		}
+		
+		public ArticuloCompra(int id) {
+			this.id=id;
 		}
 		
 		public ArticuloCompra(String usuarioModifico) {
@@ -88,13 +97,7 @@ public    class ArticuloCompra implements Serializable {
 			this.id = id;
 		}
 
-		public Compra getCompra() {
-			return compra;
-		}
-
-		public void setCompra(Compra compra) {
-			this.compra = compra;
-		}
+		
 
 		public int getEstatus() {
 			return estatus;
@@ -113,7 +116,11 @@ public    class ArticuloCompra implements Serializable {
 		}
 			
 		
-		
+		public String llaveBolsaArticulo(){
+			String llave=this.seguribolsa.getId()+"-"+this.id;
+			log.debug("Llave bolsa articulo "+llave);
+			return llave;
+		}
 	
 
 		
@@ -125,13 +132,6 @@ public    class ArticuloCompra implements Serializable {
 			this.moneda = moneda;
 		}
 
-		public float getNumeroArticulo() {
-			return numeroArticulo;
-		}
-
-		public void setNumeroArticulo(float numeroArticulo) {
-			this.numeroArticulo = numeroArticulo;
-		}
 
 		public float getValor() {
 			return valor;
@@ -149,6 +149,16 @@ public    class ArticuloCompra implements Serializable {
 
 		public void setDescripcion(String descripcion) {
 			this.descripcion = descripcion;
+		}
+		
+		
+
+		public Seguribolsa getSeguribolsa() {
+			return seguribolsa;
+		}
+
+		public void setSeguribolsa(Seguribolsa seguribolsa) {
+			this.seguribolsa = seguribolsa;
 		}
 
 		@Override
@@ -172,5 +182,7 @@ public    class ArticuloCompra implements Serializable {
 		public int hashCode() {		
 			return this.getId();
 		}
+		
+		
 		
 }

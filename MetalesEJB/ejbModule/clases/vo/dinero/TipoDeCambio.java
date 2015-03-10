@@ -49,6 +49,12 @@ public class TipoDeCambio implements Serializable{
 	
 	private UsuarioModifico usuarioModifico;
 	
+	
+	public TipoDeCambio(int id){
+		this();
+		this.id=id;
+	}
+	
 	public TipoDeCambio(){
 		this.invertido=false;
 	}
@@ -57,34 +63,54 @@ public class TipoDeCambio implements Serializable{
 		this.usuarioModifico= new UsuarioModifico(usuarioModifico);
 	}
 		
-	public int hashCode() {
-        if(this.monedaBase==null  || this.monedaCambio==null){
-        	return 0;
-        }
-        else{
-        	return (this.monedaBase.getNombre().hashCode())+this.monedaCambio.getNombre().hashCode();
-        }
-    }
- 
-    public boolean equals(Object obj) {
-        
-    	if(obj==null){
-    		return false;
-    	}
-    	
-    	
-        if (!(obj instanceof TipoDeCambio)){
-        	return false;
-        }
-        
-        TipoDeCambio comparar=(TipoDeCambio)obj;
-        
-        return  this.monedaBase.getId()==comparar.monedaBase.getId()&&this.monedaCambio.getId()==comparar.getMonedaCambio().getId();
-        
-      
-    }
+//	public int hashCode() {
+//        if(this.monedaBase==null  || this.monedaCambio==null){
+//        	return 0;
+//        }
+//        else{
+//        	return (this.monedaBase.getNombre().hashCode())+this.monedaCambio.getNombre().hashCode();
+//        }
+//    }
+// 
+//    public boolean equals(Object obj) {
+//        
+//    	if(obj==null){
+//    		return false;
+//    	}
+//    	
+//    	
+//        if (!(obj instanceof TipoDeCambio)){
+//        	return false;
+//        }
+//        
+//        TipoDeCambio comparar=(TipoDeCambio)obj;
+//        
+//        return  this.monedaBase.getId()==comparar.monedaBase.getId()&&this.monedaCambio.getId()==comparar.getMonedaCambio().getId();
+//        
+//      
+//    }
   
-   
+	public int hashCode() {
+		return this.id;
+	}
+
+public boolean equals(Object obj) {
+  
+	if(obj==null){
+		return false;
+	}
+	
+	
+  if (!(obj instanceof TipoDeCambio)){
+  	return false;
+  }
+  
+  TipoDeCambio comparar=(TipoDeCambio)obj;
+  
+  return  comparar.id==this.id;
+  
+
+}
     
 	
 	public int getId() {

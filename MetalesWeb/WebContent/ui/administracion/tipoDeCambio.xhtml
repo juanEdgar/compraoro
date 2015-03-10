@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+
+
+<ui:composition template="/ui/template/adminTemplate.xhtml">
+	<ui:define name="content">
+
+<h:form id="tipoDeCambioForm">
+
+<p:growl id="growl" showDetail="true"  autoUpdate="true"  autlife="4500" />
+
+<br />
+<br />
+<br />
+	<table width="90%" align="center">
+		<tr>
+			
+			<td>
+				<table>
+					<tr>
+						<td>Lista de tipos de cambio actuales
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p:dataTable  value="#{cambiarTipocambioView.listaTC}" var="tc" id="tablaTC" >
+								
+								<p:column headerText="Moneda Base" width="20%">
+									<h:outputText id="monedaBase" value="#{tc.monedaBase.nombre}" />
+								</p:column>
+								<p:column headerText="Moneda Cambio" width="20%">
+									<h:outputText id="monedacambio" value="#{tc.monedaCambio.nombre}" />
+								</p:column>							
+								
+								<p:column headerText="Valor cambiario" width="15%">
+									<p:inputText id="valorCambiario" value="#{tc.valor}" >										
+									</p:inputText>
+								</p:column>								
+								
+								<p:column headerText="Actualizar" width="10%" style="text-align:center;">
+									<p:commandLink id="metalActualizarB"  actionListener="#{cambiarTipocambioView.eventActualizarPrecio(tc.id)}">
+							        <h:outputText value="O" style="color: blue; font-weight: bold" />
+							    </p:commandLink>
+								</p:column>
+							</p:dataTable>
+						</td>
+					</tr>
+				</table>
+			</td>			
+		</tr>		
+	</table>	
+</h:form>
+
+</ui:define>
+</ui:composition>
+</html>
+

@@ -15,7 +15,6 @@ import javax.persistence.TypedQuery;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import clases.login.QualifierUsuarioSesion;
 import clases.login.UsuarioSesion;
 import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
@@ -40,7 +39,7 @@ public class TipoDeCambioEJB {
 	
 	private static final Logger log = LogManager .getLogger(CotizadorEJB.class);
 	
-	@Inject @QualifierUsuarioSesion
+	@Inject 
 	private UsuarioSesion usuarioSesion;
 	
     /**
