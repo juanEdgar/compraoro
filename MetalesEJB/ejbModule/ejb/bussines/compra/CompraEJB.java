@@ -1,7 +1,7 @@
 package ejb.bussines.compra;
 
 import java.security.InvalidParameterException;
-import java.util.List;
+import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -19,6 +19,9 @@ import clases.business.metales.vo.compra.ArticuloCompra;
 import clases.business.metales.vo.compra.ArticuloCompraMetal;
 import clases.business.metales.vo.compra.BitacoraCompra;
 import clases.business.metales.vo.compra.Compra;
+import clases.business.metales.vo.compra.PagoCompra;
+import clases.business.metales.vo.compra.PagoCompraEfectivo;
+import clases.business.metales.vo.compra.PagoCompraSPEI;
 import clases.business.metales.vo.compra.Seguribolsa;
 import clases.login.UsuarioSesion;
 import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
@@ -26,7 +29,6 @@ import clases.persistence.jpa.factory.qualifier.MetalesEM;
 import clases.vo.catalogo.Estatus;
 import clases.vo.cliente.Cliente;
 import clases.vo.dinero.Moneda;
-import clases.vo.dinero.TipoDeCambio;
 import clases.vo.tienda.Tienda;
 import ejb.bussines.PropertiesEJB;
 import ejb.bussines.exception.RDNException;
@@ -130,7 +132,13 @@ public class CompraEJB {
 			 //se registra la bitacora
 			
 			this.registarBitacora(compra);
+			
+			// se registran los pagos
+			log.info("Registrando pago");
+			this.registrarPagoCompra(compra);
 	    	
+			log.info("pago registrado");
+			
 	    	// se dan de alta las bolsas de seguridad
 	    	Seguribolsa bolsaCreada;
 	    	for(Seguribolsa bolsa: compra.getBolsas()){
@@ -303,17 +311,59 @@ public class CompraEJB {
     
     
     
-    public void registrarPagoCompra() throws Exception{
+    public void registrarPagoCompra(Compra compra) throws Exception{
+    	log.info("Registrando el pago de la compra");
     	try{
     		
-    	}catch(Exception e){
+    		
+    		if(compra==null || compra.getId()==0){
+    			throw new RDNException("No se puede registrar el pago de una compra inválida");
+    		}
+    		
+    		if(compra.getPagos()==null || compra.getPagos().size()<=0){
+    			throw new RDNException("La lista de pagos esta vacía");
+    		}
+    		
+    		Moneda moneda= this.ejbProperties.getMonedaSistema();
+    		UsuarioModifico usuarioM= new UsuarioModifico(this.usuarioSesion.getNombreUsuario());
+    		
+    		for(PagoCompra pago : compra.getPagos()  ){
+    			
+    			pago.setCompra(compra);
+    			pago.setMoneda(moneda);
+    			pago.setUsuarioModifico(usuarioM);
+    			pago.setEstatus(1);
+    			pago.setFecha(new Date());
+    			// TODO registar baja de monto de caja
+    			if( pago instanceof PagoCompraEfectivo ){
+    				this.metalesEM.persist((PagoCompraEfectivo)pago);
+    			}
+    			
+    			if( pago instanceof PagoCompraSPEI ){
+    				this.metalesEM.persist((PagoCompraSPEI)pago);
+    			}
+    			
+    			
+    		}
+    		
+    		log.info("Pago de compra registrado con exito");
+    		
+    	}catch(RDNException e){
+    		this.context.setRollbackOnly();
+    		throw e;
+    	}
+    	catch( Exception   e){
     		
     		e= new Exception("Error al registrar el pago de la compra",e);
+    		
     		log.error(e,e);
+    		
+    		this.context.setRollbackOnly();
     		throw e;
     		
     	}
     }
     
+
 
 }

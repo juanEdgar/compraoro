@@ -21,12 +21,7 @@
 
 <h:form id="cotizacionForm">
 
-<p:growl id="growl" showDetail="true"  life="4500" />
 
-<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
-        <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-    </p:confirmDialog>
 
 
 	<table width="90%" align="center">
@@ -37,11 +32,10 @@
 				</p:commandButton>
 			</td>
 			<td width="50%" align="right" style="padding-right: 20px">
-				<p:commandButton action="#{compraView.eventConfirmarOperacion()}" value="Confirmar" icon="ui-icon-disk" 
-									                styleClass="callToAction" validateClient="false"
-									                update="@form:growl"
+				<p:commandButton action="#{compraView.navegacionPago()}" value="Registrar Pago" icon="ui-icon-disk" 
+									                styleClass="callToAction" 
+									                
 									                >
-					<p:confirm header="Confirmar" message="¿Seguro desea continuar con la operación? Los datos no se podrán reversar" icon="ui-icon-alert" />
 				</p:commandButton>
 			</td>
 		</tr>

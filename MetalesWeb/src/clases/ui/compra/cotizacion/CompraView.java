@@ -168,6 +168,23 @@ public class CompraView implements Serializable{
 	}
 	
 	
+	public float getTotalPagoCompra(){
+		float total=0.0F;
+		
+		
+		for(Seguribolsa bolsa: compra.getBolsas()){
+		
+			for(ArticuloCompra a : bolsa.getArticulosCompra()){
+				total+=a.getValor();
+			}
+			
+		}
+		
+		return total;
+		
+	}
+	
+	
 	@PostConstruct
 	private void init(){
 		
@@ -236,6 +253,11 @@ public class CompraView implements Serializable{
 	public String navegacionCliente(){
 		log.debug("navega cliente");
 		return "busquedaCliente?faces-redirect=true";
+	}
+	
+	public String navegacionPago(){
+		log.debug("navega pago");
+		return "registroPago?faces-redirect=true";
 	}
 	
 	public String navegacionCotizacion(){

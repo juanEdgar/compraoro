@@ -11,6 +11,9 @@ import javax.persistence.Table;
 public class PagoCompraSPEI extends PagoCompra{
 
 
+	@Column(name="fnMonto")
+	private float monto;
+	
 	@Column(name="fcReferencia")
 	private String referencia;
 	
@@ -74,6 +77,14 @@ public class PagoCompraSPEI extends PagoCompra{
 	public void setCodigoRastreo(String codigoRastreo) {
 		this.codigoRastreo = codigoRastreo;
 	}
+	public float getMonto() {
+		return monto;
+	}
+	public void setMonto(float monto) {
+		this.monto = monto;
+	}
+	
+	
 	
 	
 }

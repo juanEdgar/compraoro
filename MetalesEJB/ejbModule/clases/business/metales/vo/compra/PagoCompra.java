@@ -23,7 +23,7 @@ import clases.vo.dinero.Moneda;
 
 @Entity
 @Table(schema="public", name="PagoCompra")
-@SequenceGenerator(schema="pubic", sequenceName="seq_pagoCompa", name="seq_pagoCompra", allocationSize=20)
+@SequenceGenerator(schema="public", sequenceName="seq_pagoCompa", name="seq_pagoCompra", allocationSize=20)
 @Inheritance(strategy=InheritanceType.JOINED)
 @DiscriminatorColumn(name="fiidestatustipocompra",
 discriminatorType=DiscriminatorType.INTEGER  )
@@ -103,6 +103,16 @@ public class PagoCompra {
 
 	public void setUsuarioModifico(UsuarioModifico usuarioModifico) {
 		this.usuarioModifico = usuarioModifico;
+	}
+	
+	
+
+	public Compra getCompra() {
+		return compra;
+	}
+
+	public void setCompra(Compra compra) {
+		this.compra = compra;
 	}
 
 	@Override
