@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import clases.login.UsuarioSesion;
+import clases.vo.tienda.caja.TiendaCajaEfectivo;
 
 @WebServlet(name = "welcomeServlet", urlPatterns = {"/index"})
 public class WelcometServlet extends HttpServlet {
@@ -39,6 +40,12 @@ public class WelcometServlet extends HttpServlet {
 			usuario.setNombreUsuario(request.getUserPrincipal().getName());			
 			usuario.getTienda().setId(1);
 			usuario.getTienda().setNombre("Tienda Centro");
+			TiendaCajaEfectivo caja= new TiendaCajaEfectivo();
+			caja.setTienda(usuario.getTienda());
+			caja.setId(1);
+			usuario.setCaja(caja);
+			
+			
 			
 		}
 		

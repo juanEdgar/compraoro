@@ -1,5 +1,6 @@
 package ejb.bussines;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
@@ -25,7 +26,7 @@ public class PropertiesEJB {
 	private  Moneda MONEDA_SISTEMA;
 	private String codigoMonedasistema="MXP";
 	
-	
+	private float [] denominacionesValidas= new float[]{10F,20F,50F,100F,200F,500F,1000F};
 	
 	
     /**
@@ -70,5 +71,13 @@ public class PropertiesEJB {
     public int getFactorRedondeo(){
     	return 10;
     }
+
+	public float[] getDenominacionesValidas() {
+		return denominacionesValidas;
+	}
+
+	
+    
+    
     
 }

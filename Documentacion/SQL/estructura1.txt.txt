@@ -1,0 +1,668 @@
+
+CREATE TABLE CatalogoGrupoEstatus
+(
+	fiIdGrupoEstatus  INT  NOT NULL ,
+	fcDescripcion	  VARCHAR2(100)  NULL ,
+	fcUsuarioModifico  VARCHAR2(20)  NULL ,
+	fdFechaModificacion  TIMESTAMP  NULL ,
+CONSTRAINT  XPKCatalogoGrupoEstatus PRIMARY KEY (fiIdGrupoEstatus)
+);
+
+
+
+CREATE TABLE CatalogoEstatus
+(
+	fiIdEstatus	  INT  NOT NULL ,
+	fiIdGrupoEstatus  INT  NOT NULL ,
+	fcDescripcion	  VARCHAR2(100)  NULL ,
+	fcUsuarioModifico  VARCHAR2(20)  NULL ,
+	fdFechaModificacion  TIMESTAMP  NULL ,
+CONSTRAINT  XPKCatalogoEstatus PRIMARY KEY (fiIdEstatus),
+CONSTRAINT  R_3 FOREIGN KEY (fiIdGrupoEstatus) REFERENCES CatalogoGrupoEstatus(fiIdGrupoEstatus)
+);
+
+
+
+CREATE INDEX XIF1CatalogoEstatus ON CatalogoEstatus
+(fiIdGrupoEstatus  ASC);
+
+
+
+CREATE TABLE Tienda
+(
+	fiIdTienda	  INT  NOT NULL ,
+	fiNumero	  INT  NULL ,
+	fcNombre	  VARCHAR2(250)  NULL ,
+	fiIdEstatus	  INT  NULL ,
+CONSTRAINT  XPKTienda PRIMARY KEY (fiIdTienda),
+CONSTRAINT  R_7 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus) ON DELETE SET NULL
+);
+
+
+
+CREATE INDEX XIF1Tienda ON Tienda
+(fiIdEstatus  ASC);
+
+
+
+CREATE TABLE Cliente
+(
+	fiIdcliente	  INT  NOT NULL ,
+	fcNombre	  VARCHAR2(250)  NOT NULL ,
+	fcSegundoNombre	  VARCHAR2(250)  NULL ,
+	fcApelllidoPaterno  VARCHAR2(250)  NOT NULL ,
+	fcApellidoMaterno  VARCHAR2(250)  NULL ,
+	fdFechaNacimiento  DATE  NOT NULL ,
+	fcUsuarioModifico  VARCHAR2(20)  NULL ,
+	fdFechaModificacion  TIMESTAMP  NULL ,
+	fcRFC		  VARCHAR2(12)  NULL ,
+CONSTRAINT  XPKCliente PRIMARY KEY (fiIdcliente)
+);
+
+
+
+CREATE INDEX IN002Cliente ON Cliente
+(fcNombre  ASC,fcApelllidoPaterno  ASC,fcApellidoMaterno  ASC,fdFechaNacimiento  ASC);
+
+
+
+CREATE INDEX IN003Cliente ON Cliente
+(fcRFC  ASC);
+
+
+
+CREATE TABLE ClienteTienda
+(
+	fiIdTienda	  INT  NOT NULL ,
+	fiIdcliente	  INT  NOT NULL ,
+	fcUsuarioModifico  VARCHAR2(20)  NULL ,
+	fdFechaModificacion  TIMESTAMP  NULL ,
+CONSTRAINT  XPKClienteTienda PRIMARY KEY (fiIdTienda,fiIdcliente),
+CONSTRAINT  R_14 FOREIGN KEY (fiIdTienda) REFERENCES Tienda(fiIdTienda),
+CONSTRAINT  R_15 FOREIGN KEY (fiIdcliente) REFERENCES Cliente(fiIdcliente)
+);
+
+
+
+CREATE INDEX IN001ClienteRegistro ON ClienteTienda
+(fiIdTienda  ASC);
+
+
+
+CREATE INDEX IN0002ClienteRegistro ON ClienteTienda
+(fdFechaModificacion  ASC);
+
+
+
+CREATE INDEX XIF1ClienteTienda ON ClienteTienda
+(fiIdTienda  ASC);
+
+
+
+CREATE INDEX XIF2ClienteTienda ON ClienteTienda
+(fiIdcliente  ASC);
+
+
+
+CREATE TABLE CatalogoIVA
+(
+	fiIdCatalogoIVA	  INT  NOT NULL ,
+	fdFechaInicioValidez  CHAR(18)  NULL ,
+	fdTasa		  CHAR(18)  NULL ,
+	fiIdEstatus	  INT  NULL ,
+CONSTRAINT  XPKCatalogoIVA PRIMARY KEY (fiIdCatalogoIVA),
+CONSTRAINT  R_67 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus) ON DELETE SET NULL
+);
+
+
+
+CREATE INDEX XIF1CatalogoIVA ON CatalogoIVA
+(fiIdEstatus  ASC);
+
+
+
+CREATE TABLE TiendaIVA
+(
+	fiIdTienda	  INT  NOT NULL ,
+	fiIdCatalogoIVA	  INT  NOT NULL ,
+	fiIdEstatus	  INT  NULL ,
+CONSTRAINT  XPKTiendaIVA PRIMARY KEY (fiIdTienda,fiIdCatalogoIVA),
+CONSTRAINT  R_63 FOREIGN KEY (fiIdTienda) REFERENCES Tienda(fiIdTienda),
+CONSTRAINT  R_64 FOREIGN KEY (fiIdCatalogoIVA) REFERENCES CatalogoIVA(fiIdCatalogoIVA),
+CONSTRAINT  R_68 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus) ON DELETE SET NULL
+);
+
+
+
+CREATE INDEX XIF1TiendaIVA ON TiendaIVA
+(fiIdTienda  ASC);
+
+
+
+CREATE INDEX XIF2TiendaIVA ON TiendaIVA
+(fiIdCatalogoIVA  ASC);
+
+
+
+CREATE INDEX XIF3TiendaIVA ON TiendaIVA
+(fiIdEstatus  ASC);
+
+
+
+CREATE TABLE CompraMetal
+(
+	fiIdCompra	  INT  NOT NULL ,
+	fiIdClienteTienda  INT  NOT NULL ,
+	fiIdcliente	  INT  NOT NULL ,
+	fcUsuarioModifico  VARCHAR2(20)  NULL ,
+	fdFechaModificacion  TIMESTAMP  NULL ,
+	fiIdEstatus	  INT  NULL ,
+	fiIdTiendaCompra  INT  NULL ,
+	fiIdCatalogoIVA	  INT  NULL ,
+CONSTRAINT  XPKCompraMetal PRIMARY KEY (fiIdCompra),
+CONSTRAINT  R_50 FOREIGN KEY (fiIdClienteTienda,fiIdcliente) REFERENCES ClienteTienda(fiIdTienda,fiIdcliente),
+CONSTRAINT  R_51 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus) ON DELETE SET NULL,
+CONSTRAINT  R_75 FOREIGN KEY (fiIdTiendaCompra,fiIdCatalogoIVA) REFERENCES TiendaIVA(fiIdTienda,fiIdCatalogoIVA) ON DELETE SET NULL
+);
+
+
+
+CREATE INDEX XIF3CompraMetal ON CompraMetal
+(fiIdcliente  ASC,fiIdClienteTienda  ASC);
+
+
+
+CREATE INDEX XIF4CompraMetal ON CompraMetal
+(fiIdEstatus  ASC);
+
+
+
+CREATE INDEX XIF5CompraMetal ON CompraMetal
+(fiIdTiendaCompra  ASC,fiIdCatalogoIVA  ASC);
+
+
+
+CREATE TABLE BitacoraCompraMetal
+(
+	fiIdCompra	  INT  NULL ,
+	fdFechaModificacion  TIMESTAMP  NULL ,
+	fcUsuarioModifico  VARCHAR2(20)  NULL ,
+	fiIdEstatus	  INT  NULL ,
+CONSTRAINT  R_79 FOREIGN KEY (fiIdCompra) REFERENCES CompraMetal(fiIdCompra) ON DELETE SET NULL,
+CONSTRAINT  R_80 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus) ON DELETE SET NULL
+);
+
+
+
+CREATE INDEX XIF1BitacoraCompraMetal ON BitacoraCompraMetal
+(fiIdCompra  ASC);
+
+
+
+CREATE INDEX XIF2BitacoraCompraMetal ON BitacoraCompraMetal
+(fiIdEstatus  ASC);
+
+
+
+CREATE TABLE CatalogoTipoPureza
+(
+	fiIdTipoPureza	  INT  NOT NULL ,
+	fcNombre	  VARCHAR2(150)  NULL ,
+	fiIdEstatus	  INT  NULL ,
+	fnProporcionPureza  DECIMAL(12,4)  NULL ,
+CONSTRAINT  XPKCatalogoTipoPureza PRIMARY KEY (fiIdTipoPureza),
+CONSTRAINT  R_21 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus) ON DELETE SET NULL
+);
+
+
+
+CREATE INDEX XIF2CatalogoTipoPureza ON CatalogoTipoPureza
+(fiIdEstatus  ASC);
+
+
+
+CREATE TABLE Metal
+(
+	idMetal		  INT  NOT NULL ,
+	Nombre		  VARCHAR2(150)  NULL ,
+	fiIdEstatus	  INT  NULL ,
+	fnPurezaBase	  DECIMAL(12,4)  NULL ,
+CONSTRAINT  XPKMetal PRIMARY KEY (idMetal),
+CONSTRAINT  R_19 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus) ON DELETE SET NULL
+);
+
+
+
+CREATE INDEX XIF1Metal ON Metal
+(fiIdEstatus  ASC);
+
+
+
+CREATE TABLE MetalTipoPureza
+(
+	fiIdTipoPureza	  INT  NOT NULL ,
+	idMetal		  INT  NOT NULL ,
+	fiIdEstatus	  INT  NULL ,
+CONSTRAINT  XPKMetalTipoPureza PRIMARY KEY (fiIdTipoPureza,idMetal),
+CONSTRAINT  R_16 FOREIGN KEY (fiIdTipoPureza) REFERENCES CatalogoTipoPureza(fiIdTipoPureza),
+CONSTRAINT  R_17 FOREIGN KEY (idMetal) REFERENCES Metal(idMetal),
+CONSTRAINT  R_20 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus) ON DELETE SET NULL
+);
+
+
+
+CREATE INDEX XIF1MetalTipoPureza ON MetalTipoPureza
+(fiIdTipoPureza  ASC);
+
+
+
+CREATE INDEX XIF2MetalTipoPureza ON MetalTipoPureza
+(idMetal  ASC);
+
+
+
+CREATE INDEX XIF3MetalTipoPureza ON MetalTipoPureza
+(fiIdEstatus  ASC);
+
+
+
+CREATE TABLE Moneda
+(
+	fiidMoneda	  INT  NOT NULL ,
+	fcUnidad	  VARCHAR2(20)  NULL ,
+	fcNombre	  VARCHAR2(50)  NULL ,
+CONSTRAINT  XPKMoneda PRIMARY KEY (fiidMoneda)
+);
+
+
+
+CREATE TABLE TipoCambio
+(
+	fiIdTipoCambio	  INT  NOT NULL ,
+	fiIdMonedaBase	  INT  NULL ,
+	fiIdMonedaCambio  INT  NULL ,
+	fdTipoDeCambio	  DECIMAL(12,3)  NULL ,
+	fdFechaModificacion  TIMESTAMP  NULL ,
+	fcUsuarioModifico  VARCHAR2(20)  NULL ,
+	fiIdEstatus	  INT  NULL ,
+CONSTRAINT  XPKTipoCambio PRIMARY KEY (fiIdTipoCambio),
+CONSTRAINT  R_71 FOREIGN KEY (fiIdMonedaBase) REFERENCES Moneda(fiidMoneda) ON DELETE SET NULL,
+CONSTRAINT  R_72 FOREIGN KEY (fiIdMonedaCambio) REFERENCES Moneda(fiidMoneda) ON DELETE SET NULL,
+CONSTRAINT  R_73 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus) ON DELETE SET NULL
+);
+
+
+
+CREATE INDEX XIF1TipoCambio ON TipoCambio
+(fiIdMonedaBase  ASC);
+
+
+
+CREATE INDEX XIF2TipoCambio ON TipoCambio
+(fiIdMonedaCambio  ASC);
+
+
+
+CREATE INDEX XIF3TipoCambio ON TipoCambio
+(fiIdEstatus  ASC);
+
+
+
+CREATE TABLE PrecioMetalGramoFino
+(
+	fiIdPrecioMetalGramoFino  INT  NOT NULL ,
+	idMetal		  INT  NOT NULL ,
+	fdPrecio	  DECIMAL(12,2)  NULL ,
+	fiidMoneda	  INT  NULL ,
+	fiIdTipoCambio	  INT  NULL ,
+	fiIdEstatus	  INT  NULL ,
+	fcUsuarioModifico  VARCHAR2(20)  NULL ,
+	fdFechaModificacion  TIMESTAMP  NULL ,
+CONSTRAINT  XPKPrecioMetalGramoFino PRIMARY KEY (fiIdPrecioMetalGramoFino),
+CONSTRAINT  R_44 FOREIGN KEY (fiidMoneda) REFERENCES Moneda(fiidMoneda) ON DELETE SET NULL,
+CONSTRAINT  R_45 FOREIGN KEY (idMetal) REFERENCES Metal(idMetal),
+CONSTRAINT  R_58 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus) ON DELETE SET NULL,
+CONSTRAINT  R_74 FOREIGN KEY (fiIdTipoCambio) REFERENCES TipoCambio(fiIdTipoCambio) ON DELETE SET NULL
+);
+
+
+
+CREATE INDEX XIF1PrecioMetalGramoFino ON PrecioMetalGramoFino
+(fiidMoneda  ASC);
+
+
+
+CREATE INDEX XIF2PrecioMetalGramoFino ON PrecioMetalGramoFino
+(idMetal  ASC);
+
+
+
+CREATE INDEX XIF3PrecioMetalGramoFino ON PrecioMetalGramoFino
+(fiIdEstatus  ASC);
+
+
+
+CREATE INDEX XIF4PrecioMetalGramoFino ON PrecioMetalGramoFino
+(fiIdTipoCambio  ASC);
+
+
+
+CREATE TABLE CompraMetalDetalle
+(
+	fiIdDetalle	  INT  NOT NULL ,
+	fiIdCompra	  INT  NOT NULL ,
+	fiIdPrecioMetalGramoFino  INT  NOT NULL ,
+	fdFechaModificacion  TIMESTAMP  NULL ,
+	fcUsuarioModifico  VARCHAR2(20)  NULL ,
+	fnPeso		  CHAR(18)  NULL ,
+	fiIdEstatus	  INT  NULL ,
+	fcDescripcionCompra  CHAR(18)  NULL ,
+	fiIdTipoPureza	  INT  NULL ,
+	idMetal		  INT  NULL ,
+	fnPrecioCompraTotal  CHAR(18)  NULL ,
+CONSTRAINT  XPKCompraMetalDetalle PRIMARY KEY (fiIdDetalle),
+CONSTRAINT  R_53 FOREIGN KEY (fiIdCompra) REFERENCES CompraMetal(fiIdCompra),
+CONSTRAINT  R_55 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus) ON DELETE SET NULL,
+CONSTRAINT  R_56 FOREIGN KEY (fiIdTipoPureza,idMetal) REFERENCES MetalTipoPureza(fiIdTipoPureza,idMetal) ON DELETE SET NULL,
+CONSTRAINT  R_77 FOREIGN KEY (fiIdPrecioMetalGramoFino) REFERENCES PrecioMetalGramoFino(fiIdPrecioMetalGramoFino)
+);
+
+
+
+CREATE INDEX IN001CompraMetalDetalle ON CompraMetalDetalle
+(fiIdCompra  ASC);
+
+
+
+CREATE INDEX XIF1CompraMetalDetalle ON CompraMetalDetalle
+(fiIdCompra  ASC);
+
+
+
+CREATE INDEX XIF3CompraMetalDetalle ON CompraMetalDetalle
+(fiIdEstatus  ASC);
+
+
+
+CREATE INDEX XIF4CompraMetalDetalle ON CompraMetalDetalle
+(fiIdTipoPureza  ASC,idMetal  ASC);
+
+
+
+CREATE INDEX XIF5CompraMetalDetalle ON CompraMetalDetalle
+(fiIdPrecioMetalGramoFino  ASC);
+
+
+
+CREATE TABLE BitacoraCompraMetalDetalle
+(
+	fiIdDetalle	  INT  NULL ,
+	fcUsuarioModifico  VARCHAR2(20)  NULL ,
+	fdFechaModificacion  TIMESTAMP  NULL ,
+	fiIdEstatus	  INT  NULL ,
+CONSTRAINT  R_76 FOREIGN KEY (fiIdDetalle) REFERENCES CompraMetalDetalle(fiIdDetalle) ON DELETE SET NULL,
+CONSTRAINT  R_78 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus) ON DELETE SET NULL
+);
+
+
+
+CREATE INDEX XIF1BitacoraCompraMetalDetalle ON BitacoraCompraMetalDetalle
+(fiIdDetalle  ASC);
+
+
+
+CREATE INDEX XIF2BitacoraCompraMetalDetalle ON BitacoraCompraMetalDetalle
+(fiIdEstatus  ASC);
+
+
+
+CREATE TABLE CompraMetalDescripcion
+(
+	fiIdDetalle	  INT  NOT NULL ,
+	fcObservaciones	  CHAR(18)  NULL ,
+CONSTRAINT  XPKCompraMetalDescripcion PRIMARY KEY (fiIdDetalle),
+CONSTRAINT  R_70 FOREIGN KEY (fiIdDetalle) REFERENCES CompraMetalDetalle(fiIdDetalle)
+);
+
+
+
+CREATE INDEX XIF1CompraMetalDescripcion ON CompraMetalDescripcion
+(fiIdDetalle  ASC);
+
+
+
+CREATE TABLE CatalogoEstado
+(
+	fiIdEstado	  INT  NOT NULL ,
+	fcNombre	  VARCHAR2(200)  NULL ,
+CONSTRAINT  XPKCatalogoEstado PRIMARY KEY (fiIdEstado)
+);
+
+
+
+CREATE TABLE CatalogoMunicipio
+(
+	fiIdMunicipio	  INT  NOT NULL ,
+	fiIdEstado	  INT  NOT NULL ,
+	fcNombre	  VARCHAR2(250)  NULL ,
+CONSTRAINT  XPKCatalogoMunicipio PRIMARY KEY (fiIdMunicipio,fiIdEstado),
+CONSTRAINT  R_27 FOREIGN KEY (fiIdEstado) REFERENCES CatalogoEstado(fiIdEstado)
+);
+
+
+
+CREATE INDEX IN001CatalogoMunicipio ON CatalogoMunicipio
+(fiIdEstado  ASC);
+
+
+
+CREATE INDEX XIF1CatalogoMunicipio ON CatalogoMunicipio
+(fiIdEstado  ASC);
+
+
+
+CREATE TABLE PoblacionLibre
+(
+	fiIdMunicipio	  INT  NOT NULL ,
+	fiIdEstado	  INT  NOT NULL ,
+	fcNombre	  CHAR(18)  NULL ,
+CONSTRAINT  XPKPoblacionLibre PRIMARY KEY (fiIdMunicipio,fiIdEstado),
+CONSTRAINT  R_28 FOREIGN KEY (fiIdMunicipio,fiIdEstado) REFERENCES CatalogoMunicipio(fiIdMunicipio,fiIdEstado)
+);
+
+
+
+CREATE INDEX XIF1PoblacionLibre ON PoblacionLibre
+(fiIdMunicipio  ASC,fiIdEstado  ASC);
+
+
+
+CREATE TABLE CatalogoCodigoPostal
+(
+	fiIdCodigoPostal  INT  NOT NULL ,
+	fiIdMunicipio	  INT  NOT NULL ,
+	fiIdEstado	  INT  NOT NULL ,
+	fcCodigoPostal	  CHAR(6)  NULL ,
+CONSTRAINT  XPKCatalogoCodigoPostal PRIMARY KEY (fiIdCodigoPostal,fiIdMunicipio,fiIdEstado),
+CONSTRAINT  R_31 FOREIGN KEY (fiIdMunicipio,fiIdEstado) REFERENCES CatalogoMunicipio(fiIdMunicipio,fiIdEstado)
+);
+
+
+
+CREATE INDEX IN0021CatalogoCodigoPostal ON CatalogoCodigoPostal
+(fcCodigoPostal  ASC);
+
+
+
+CREATE INDEX IN0022CatalogoCodigoPostal ON CatalogoCodigoPostal
+(fiIdEstado  ASC,fiIdMunicipio  ASC);
+
+
+
+CREATE INDEX XIF1CatalogoCodigoPostal ON CatalogoCodigoPostal
+(fiIdMunicipio  ASC,fiIdEstado  ASC);
+
+
+
+CREATE TABLE CatalogoColonia
+(
+	fiIdColonia	  INT  NOT NULL ,
+	fiIdCodigoPostal  INT  NOT NULL ,
+	fiIdMunicipio	  INT  NOT NULL ,
+	fiIdEstado	  INT  NOT NULL ,
+	fiIdEstatus	  INT  NOT NULL ,
+	fcNombre	  VARCHAR2(250)  NULL ,
+CONSTRAINT  XPKCatalogoColonia PRIMARY KEY (fiIdColonia,fiIdCodigoPostal,fiIdMunicipio,fiIdEstado),
+CONSTRAINT  R_32 FOREIGN KEY (fiIdCodigoPostal,fiIdMunicipio,fiIdEstado) REFERENCES CatalogoCodigoPostal(fiIdCodigoPostal,fiIdMunicipio,fiIdEstado),
+CONSTRAINT  R_35 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus)
+);
+
+
+
+CREATE INDEX IN001CatalogoColonia ON CatalogoColonia
+(fiIdCodigoPostal  ASC,fiIdMunicipio  ASC,fiIdEstado  ASC);
+
+
+
+CREATE INDEX XIF1CatalogoColonia ON CatalogoColonia
+(fiIdCodigoPostal  ASC,fiIdMunicipio  ASC,fiIdEstado  ASC);
+
+
+
+CREATE INDEX XIF2CatalogoColonia ON CatalogoColonia
+(fiIdEstatus  ASC);
+
+
+
+CREATE TABLE CatalogoCalle
+(
+	fiIdColonia	  INT  NOT NULL ,
+	fiIdCodigoPostal  INT  NOT NULL ,
+	fiIdMunicipio	  INT  NOT NULL ,
+	fiIdEstado	  INT  NOT NULL ,
+	fcCalle		  VARCHAR2(300)  NOT NULL ,
+	fiIdEstatus	  INT  NULL ,
+CONSTRAINT  XPKCatalogoCalle PRIMARY KEY (fiIdColonia,fiIdCodigoPostal,fiIdMunicipio,fiIdEstado,fcCalle),
+CONSTRAINT  R_33 FOREIGN KEY (fiIdColonia,fiIdCodigoPostal,fiIdMunicipio,fiIdEstado) REFERENCES CatalogoColonia(fiIdColonia,fiIdCodigoPostal,fiIdMunicipio,fiIdEstado),
+CONSTRAINT  R_34 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus) ON DELETE SET NULL
+);
+
+
+
+CREATE INDEX IN001CatalogoCalle ON CatalogoCalle
+(fiIdEstado  ASC,fiIdMunicipio  ASC,fiIdCodigoPostal  ASC,fiIdColonia  ASC);
+
+
+
+CREATE INDEX XIF1CatalogoCalle ON CatalogoCalle
+(fiIdColonia  ASC,fiIdCodigoPostal  ASC,fiIdMunicipio  ASC,fiIdEstado  ASC);
+
+
+
+CREATE INDEX XIF2CatalogoCalle ON CatalogoCalle
+(fiIdEstatus  ASC);
+
+
+
+CREATE TABLE Direccion
+(
+	fiIdDireccion	  INT  NOT NULL ,
+	fcNumeroInterior  INT  NULL ,
+	fcNumeroExperior  INT  NOT NULL ,
+	fcUsuarioModifico  VARCHAR2(20)  NULL ,
+	fdFechaModificacion  TIMESTAMP  NULL ,
+	fiIdColonia	  INT  NULL ,
+	fiIdCodigoPostal  INT  NULL ,
+	fiIdMunicipio	  INT  NULL ,
+	fiIdEstado	  INT  NULL ,
+	fcCalle		  VARCHAR2(300)  NULL ,
+CONSTRAINT  XPKDireccion PRIMARY KEY (fiIdDireccion),
+CONSTRAINT  R_26 FOREIGN KEY (fiIdColonia,fiIdCodigoPostal,fiIdMunicipio,fiIdEstado,fcCalle) REFERENCES CatalogoCalle(fiIdColonia,fiIdCodigoPostal,fiIdMunicipio,fiIdEstado,fcCalle) ON DELETE SET NULL
+);
+
+
+
+CREATE INDEX XIF1Direccion ON Direccion
+(fiIdColonia  ASC,fiIdCodigoPostal  ASC,fiIdMunicipio  ASC,fiIdEstado  ASC,fcCalle  ASC);
+
+
+
+CREATE TABLE TiendaDireccion
+(
+	fiIdTienda	  INT  NOT NULL ,
+	fiIdDireccion	  INT  NOT NULL ,
+	fiIdEstatus	  INT  NULL ,
+CONSTRAINT  XPKTiendaDireccion PRIMARY KEY (fiIdTienda,fiIdDireccion),
+CONSTRAINT  R_10 FOREIGN KEY (fiIdTienda) REFERENCES Tienda(fiIdTienda),
+CONSTRAINT  R_11 FOREIGN KEY (fiIdDireccion) REFERENCES Direccion(fiIdDireccion),
+CONSTRAINT  R_12 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus) ON DELETE SET NULL
+);
+
+
+
+CREATE INDEX XIF1TiendaDireccion ON TiendaDireccion
+(fiIdTienda  ASC);
+
+
+
+CREATE INDEX XIF2TiendaDireccion ON TiendaDireccion
+(fiIdDireccion  ASC);
+
+
+
+CREATE INDEX XIF3TiendaDireccion ON TiendaDireccion
+(fiIdEstatus  ASC);
+
+
+
+CREATE TABLE BitacoraTienda
+(
+	fdFechaModificacion  TIMESTAMP  NULL ,
+	fiNumero	  INT  NULL ,
+	fcNombre	  VARCHAR2(250)  NULL ,
+	fcUsuarioModifico  VARCHAR2(20)  NULL ,
+	fiIdTienda	  INT  NULL ,
+	fiIdEstatus	  INT  NULL ,
+CONSTRAINT  R_8 FOREIGN KEY (fiIdTienda) REFERENCES Tienda(fiIdTienda) ON DELETE SET NULL,
+CONSTRAINT  R_9 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus) ON DELETE SET NULL
+);
+
+
+
+CREATE INDEX XIF1BitacoraTienda ON BitacoraTienda
+(fiIdTienda  ASC);
+
+
+
+CREATE INDEX XIF2BitacoraTienda ON BitacoraTienda
+(fiIdEstatus  ASC);
+
+
+
+CREATE TABLE ClienteDireccion
+(
+	fiIdcliente	  INT  NOT NULL ,
+	fiIdDireccion	  INT  NOT NULL ,
+	fiIdEstatus	  INT  NULL ,
+CONSTRAINT  XPKClienteDireccion PRIMARY KEY (fiIdcliente,fiIdDireccion),
+CONSTRAINT  R_4 FOREIGN KEY (fiIdcliente) REFERENCES Cliente(fiIdcliente),
+CONSTRAINT  R_5 FOREIGN KEY (fiIdDireccion) REFERENCES Direccion(fiIdDireccion),
+CONSTRAINT  R_6 FOREIGN KEY (fiIdEstatus) REFERENCES CatalogoEstatus(fiIdEstatus) ON DELETE SET NULL
+);
+
+
+
+CREATE INDEX XIF1ClienteDireccion ON ClienteDireccion
+(fiIdcliente  ASC);
+
+
+
+CREATE INDEX XIF2ClienteDireccion ON ClienteDireccion
+(fiIdDireccion  ASC);
+
+
+
+CREATE INDEX XIF3ClienteDireccion ON ClienteDireccion
+(fiIdEstatus  ASC);
+
+

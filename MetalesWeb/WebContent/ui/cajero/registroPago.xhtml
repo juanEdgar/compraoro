@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+
+
+<ui:composition template="/ui/template/cajeroTemplate.xhtml">
+	<ui:define name="content">
+
+
+		<h:head>
+			<link type="text/css" rel="stylesheet"
+				href="#{request.contextPath}/css/compra/compraMetal.css" />
+
+		</h:head>
+
+
+		<h:form id="pagoForm">
+
+			<p:growl id="growl" showDetail="true" life="4500" />
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+				<p:commandButton value="SI" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+
+
+
+
+			<table width="90%" align="center">
+				<tr>
+					<td width="50%"><p:commandButton
+							action="#{compraView.navegarResumenCompra()}" value="ATRAS"
+							icon="ui-icon-circle-triangle-w" styleClass="callToAction"
+							validateClient="false">
+						</p:commandButton></td>
+				</tr>
+				<tr>
+					<td width="50%" align="left" >
+						<br/>
+						TOTAL DEL PAGO: <h:outputText value="#{compraView.totalValuacionArticulos}"></h:outputText>
+						<br />
+						<br/>
+						<table width="90%" align="left" style="padding-right: 30px" border="solid 1px">
+
+
+							<tr>
+								<th width="50%" align="left" class="ui-state-default" role="columnheader">PAGO EFECTIVO</th>
+								<th width="50%" align="left" class="ui-state-default"  role="columnheader">PAGO SPEI</th>
+							</tr>
+							<tr>
+								<td width="50%" align="center" style="vertical-align: text-top; padding-top: 20px; ">
+									
+									<f:subview id="subViewPagoNoDisponible" rendered="#{pagoCompraView.mostarPagoEfectivo}">
+									
+									
+									
+											<table width="90%">
+											<tr>
+													<td  align="right">
+															<p:commandButton
+																action="#{pagoCompraView.eventRegistraPagoEfectivo()}"
+																value="Confirmar Pago en Efectivo" icon="ui-icon-disk"
+																styleClass="callToAction" validateClient="false"
+																update="@form:growl">
+																	<p:confirm header="Confirmar compra"
+																				message="¿Seguro desea continuar con la operación? Los datos no se podrán reversar"
+																				icon="ui-icon-alert" />
+															</p:commandButton>
+													</td>	
+												</tr>	
+												<tr >
+													<td align="center">
+														<br/>
+														<br/>
+														<br/>
+														<p:dataTable value="#{pagoCompraView.movimientosPago}" var="movimiento" style="width:80%;	">
+															 <f:facet name="header">
+														        Lista de billetes y monedas para realizar el pago
+														    </f:facet>
+															<p:column headerText="Denominación de la moneda" style="text-align: right; padding-right: 30px">
+														       
+														        <h:outputText value="#{movimiento.denominacion}" />
+														    </p:column>
+															<p:column headerText="Cantidad a surtir" style="text-align: right; padding-right: 30px">
+														        <h:outputText value="#{movimiento.cantidad}" />
+														    </p:column>
+														    <p:column headerText="Total" style="text-align: right; padding-right: 30px">
+														        <h:outputText value="#{movimiento.cantidad*movimiento.denominacion}" />
+														    </p:column>
+														</p:dataTable>	
+													</td>
+												</tr>
+																
+											</table>					
+									
+									
+									</f:subview>
+									<f:subview id="subViewPagoEfectivo" rendered="#{!pagoCompraView.mostarPagoEfectivo}">
+									
+										No cuenta con el cambio o la cantidad de dinero necesaria en caja para realizar este pago en etectivo.
+									
+									</f:subview>
+									
+									</td>
+								<td width="50%" align="center">
+
+									<table width="90%" align="center" cellspacing="10px" cellpadding="10px">
+										<tr>
+											<td width="50%" align="left"></td>
+											<td width="50%" align="right"><p:commandButton
+													action="#{pagoCompraView.eventRegistraPagoSpei()}"
+													value="Confirmar Pago SPEI" icon="ui-icon-disk"
+													styleClass="callToAction" validateClient="false"
+													update="@form:growl">
+													<p:confirm header="Confirmar compra"
+														message="¿Seguro desea continuar con la operación? Los datos no se podrán reversar"
+														icon="ui-icon-alert" />
+												</p:commandButton></td>
+										</tr>
+										
+										<tr>
+											<td width="50%" align="right">BANCO DESTINO</td>
+											<td width="50%" align="left"><h:inputText
+													value="#{pagoCompraView.pagoSpei.bancoDestino}"></h:inputText>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%" align="right">MONTO</td>
+											<td width="50%" align="left"><h:outputText value="#{compraView.totalValuacionArticulos}"></h:outputText>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%" align="right">TITULAR</td>
+											<td width="50%" align="left"><h:inputText
+													value="#{pagoCompraView.pagoSpei.titular}"></h:inputText></td>
+										</tr>
+										<tr>
+											<td width="50%" align="right">BANCO ORIGEN</td>
+											<td width="50%" align="left"><h:inputText
+													value="#{pagoCompraView.pagoSpei.bancoOrigen}"></h:inputText>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%" align="right">TIPO CUENTA</td>
+											<td width="50%" align="left"><p:selectOneMenu
+													id="comboTipoCuenta"
+													value="#{pagoCompraView.pagoSpei.tipoCuenta}">
+													<f:selectItem itemLabel="CLABE" itemValue="CLABE" />
+													<f:selectItem itemLabel="TARJETA DÉBITO" itemValue="DEBITO" />
+												</p:selectOneMenu></td>
+										</tr>
+										<tr>
+											<td width="50%" align="right">NÚMERO CUENTA</td>
+											<td width="50%" align="left"><h:inputText
+													value="#{pagoCompraView.pagoSpei.cuentaDestino}"></h:inputText>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%" align="right">REFERENCIA DEPOSITO</td>
+											<td width="50%" align="left"><h:inputText
+													value="#{pagoCompraView.pagoSpei.referencia}"></h:inputText>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%" align="right">CÓDIGO RASTREO</td>
+											<td width="50%" align="left"><h:inputText
+													value="#{pagoCompraView.pagoSpei.codigoRastreo}"></h:inputText>
+											</td>
+										</tr>
+										
+									</table>
+
+
+								</td>
+
+							</tr>
+
+
+						</table>
+
+
+					</td>
+				</tr>
+			</table>
+
+		</h:form>
+
+
+
+	</ui:define>
+</ui:composition>
+</html>
+

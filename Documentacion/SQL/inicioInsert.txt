@@ -1,0 +1,24 @@
+
+
+
+
+
+-- se insetan los tipo de estatus base
+insert into CatalogoGrupoEstatus
+values(1,'estatus para los registros de base de datos','usrconcompraoro','20140101');
+
+
+-- se insertan los estatus base
+insert into CatalogoEstatus
+values(0,1,'Registro Muerto de BD', 'usrconcompraoro','20140101');
+
+insert into CatalogoEstatus
+values(1,1,'Registro Activo de BD', 'usrconcompraoro','20140101');
+
+select *
+from CatalogoGrupoEstatus
+
+select *
+from CatalogoEstatus
+
+end

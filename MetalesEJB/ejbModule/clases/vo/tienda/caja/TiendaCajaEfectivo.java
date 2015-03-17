@@ -1,46 +1,53 @@
-package clases.vo.tienda;
+package clases.vo.tienda.caja;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
+import clases.vo.tienda.Tienda;
 
 
 @Entity
-@Table(schema="public", name="CajaEfectivoTienda")
-@SequenceGenerator(schema="public", sequenceName="seq_caja", name="seq_caja", allocationSize=10 )
-public class CajaEfectivoTienda {
+@Table(schema="public", name="TiendaCajaEfectivo")
+public class TiendaCajaEfectivo implements Serializable{
+
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5532591833370240144L;
 
 	@Id
-	@GeneratedValue(generator="seq_caja")
-	@Column(name="fiIdCajaSucursal")
-	private int id;
-	
 	@ManyToOne
 	@JoinColumn(name="fiidtienda")
 	private Tienda tienda;
 	
+	@Id	
+	@Column(name="fiIdCaja")
+	private int id;
+	
 	@Column(name="fiIdEstatus")
 	private int estatus;
 	
-	@OneToMany(mappedBy="cajaTienda")
-	@OrderBy("denominacion asc")
+
+	@OneToMany(mappedBy="cajaEfectivo")
 	@Basic(fetch=FetchType.EAGER)
-	private List<DotacionCajaEfectivoTienda> dotaciones;
+	@OrderBy("denominacion ASC")
+	private List<TiendaCajaEfectivoSaldo> saldos;
 	
-	private UsuarioModifico usuarioModifico;
+	
+	
 
 	public int getId() {
 		return id;
@@ -65,34 +72,44 @@ public class CajaEfectivoTienda {
 	public void setEstatus(int estatus) {
 		this.estatus = estatus;
 	}
-
-	public UsuarioModifico getUsuarioModifico() {
-		return usuarioModifico;
-	}
-
-	public void setUsuarioModifico(UsuarioModifico usuarioModifico) {
-		this.usuarioModifico = usuarioModifico;
-	}
 	
 	
+	
+
+	
+
+	public List<TiendaCajaEfectivoSaldo> getSaldos() {
+		return saldos;
+	}
+
+	public void setSaldos(List<TiendaCajaEfectivoSaldo> saldos) {
+		this.saldos = saldos;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 	
 		if(obj==null){
 			return false;
 		}
-		if(!( obj instanceof CajaEfectivoTienda)){
+		if(!( obj instanceof TiendaCajaEfectivo)){
 			return false;
 		}
 		
-		return ((CajaEfectivoTienda)obj).id== this.id;
+		TiendaCajaEfectivo tc= (TiendaCajaEfectivo)obj;
+		
+		if(tc.tienda==null){
+			return false;
+		}
+		
+		return  tc.getId()==this.id&& tc.getTienda().getId()==this.getTienda().getId();
 		
 	}
 
 	@Override
 	public int hashCode() {
 	
-		return  this.id;
+		return  this.tienda.getId()+this.id;
 	}
 	
 }

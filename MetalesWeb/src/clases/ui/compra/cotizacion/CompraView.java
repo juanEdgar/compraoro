@@ -152,18 +152,9 @@ public class CompraView implements Serializable{
 	}
 	
 	public String getTotalValuacionArticulos(){
-		float total=0.0F;
-		DecimalFormat df2 = new DecimalFormat( "#,###,###,##0.00" );
 		
-		for(Seguribolsa bolsa: compra.getBolsas()){
-		
-			for(ArticuloCompra a : bolsa.getArticulosCompra()){
-				total+=a.getValor();
-			}
-			
-		}
-		
-		return "$ "+df2.format(total);
+		DecimalFormat df2 = new DecimalFormat( "#,###,###,##0.00" );	
+		return "$ "+df2.format(this.getTotalPagoCompra());
 		
 	}
 	

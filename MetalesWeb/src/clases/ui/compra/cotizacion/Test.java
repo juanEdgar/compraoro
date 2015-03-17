@@ -53,17 +53,7 @@ public class Test extends HttpServlet {
 		
 		try {
 			
-			Tienda s= new Tienda();
-    		s.setId(1);
-    		
-    		System.out.println(this.user);
-    		System.out.println(this.user.getNombreUsuario());
-
-		
-			
-		
-			
-			this.test.Test();
+		test.Test();
 			
 			
 		} catch (Exception e) {

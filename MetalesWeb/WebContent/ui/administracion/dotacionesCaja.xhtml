@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+
+
+<ui:composition template="/ui/template/adminTemplate.xhtml">
+	<ui:define name="content">
+	
+	<h:head>
+		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/compra/compraMetal.css" />
+	</h:head>
+
+<h:form id="tipoDeCambioForm">
+
+<p:growl id="growl" showDetail="true"  autoUpdate="true"  autlife="4500" />
+
+<br />
+
+<table width="90%" align="center">
+	<tr>
+		<td>
+			<table width="40%" align="left" cellpadding="5px" cellspacing="5px">
+				<tr>
+					<td width="50%" class="encabezadocampo">
+						Tienda
+					</td>
+					<td width="50%" class="encabezadocampo">
+						Caja
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+						<p:selectOneMenu id="comboTienda" value="#{dotacionCajaView.idTiendaSeleccionada}" tabindex="1">
+									<f:selectItem itemLabel="Seleccione una tienda" itemValue="0"/>
+									<f:selectItems value="#{dotacionCajaView.tiendasActivas}" var="tienda" 
+												   itemLabel="#{tienda.nombre}" itemValue="#{tienda.id}" />
+									<p:ajax update="@form:comboCaja, @form:vistaTabla" event="change"	
+											listener="#{dotacionCajaView.eventSeleccionarTienda()}" />	
+						</p:selectOneMenu>
+					</td>
+					<td align="left">
+						<p:selectOneMenu id="comboCaja" value="#{dotacionCajaView.idCajaSeleccionada}" tabindex="2">
+									<f:selectItem itemLabel="Seleccione una caja" itemValue="0"/>
+									<f:selectItems value="#{dotacionCajaView.cajas}" var="caja" 
+												   itemLabel="#{caja.id}" itemValue="#{caja.id}" />
+									<p:ajax update="@form:vistaTabla" event="change"	
+											listener="#{dotacionCajaView.eventSeleccionarCaja()}" />	
+						</p:selectOneMenu>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td align="left">
+			
+			<p:panel id="vistaTabla" style="border: 0px">
+			<f:subview id="subViewLista" rendered="#{dotacionCajaView.mostrarTabla}">
+					<table width="100%">
+						<tr>
+							<td class="encabezadocampo" style="color:red">Saldar Caja (todo a cero)
+							</td>
+							<td class="encabezadocampo"> Saldo Actual
+							</td>
+							<td class="encabezadocampo">Saldo a Dotar
+							</td>
+							<td class="encabezadocampo">Saldo final
+							</td >
+							
+							<td>
+							</td>
+						</tr>
+						
+						<tr>
+							<td>
+								<p:commandButton
+										action="#{dotacionCajaView.saldarCaja()}"
+										value="Saldar Caja" icon="ui-icon-disk"
+										styleClass="callToAction" 
+										update="@form"/>
+							</td>
+							<td>
+								<h:outputText value="#{dotacionCajaView.calcularSaldoActualFormateado()}" id="idSaldoActual"></h:outputText>
+							</td>
+							<td class="encabezadocampo" style="color:green;">
+								<h:outputText value="#{dotacionCajaView.calcularSaldoDotarFormateado()}" id="idSaldoDotar"></h:outputText>
+							</td>
+							<td class="encabezadocampo">
+								<h:outputText value="#{dotacionCajaView.calcularSaldoTotalformateado()}" id="idSaldoTotal"></h:outputText>
+							</td>
+							
+							<td>
+								<p:commandButton
+										action="#{dotacionCajaView.guardar()}"
+										value="Guardar" icon="ui-icon-disk"
+										styleClass="callToAction" 
+										update="@form"/>
+							</td>
+						</tr>
+						
+										
+						<tr>
+							<td colspan="5" align="center">
+								<br />
+													
+								
+									
+									<p:dataTable id="saldosDataTable" var="saldo" editable="true" value="#{dotacionCajaView.saldosCaja}" style="width:40%; ">
+										<f:facet name="header">
+										Lista de monedas y billetes actuales de la caja
+										</f:facet>
+										
+										<p:ajax event="rowEdit" listener="#{dotacionCajaView.eventEditarFila}" 
+												update="@form:subViewLista:idSaldoDotar,@form:subViewLista:idSaldoTotal"></p:ajax>
+										<p:ajax event="rowEditCancel" listener="#{dotacionCajaView.eventCancelarEditarFila}" 
+												update="@form:subViewLista:idSaldoDotar,@form:subViewLista:idSaldoTotal"></p:ajax>
+										
+										<p:column headerText="Moneda" style="text-align: right; width: 20%">
+											<h:outputText value="#{saldo.denominacion}"></h:outputText>
+										</p:column>
+										<p:column headerText="Cantida actual" style="text-align: right; width: 20%">
+											<h:outputText value="#{saldo.cantidad}"></h:outputText>
+										</p:column>	
+										<p:column headerText="Cantidad a dotar" style="text-align: right; width: 20%">
+											<p:cellEditor>
+												<f:facet name="output">
+													<h:outputText value="#{saldo.cantidadDotar}" ></h:outputText>
+												</f:facet>
+												<f:facet name="input">
+													<h:inputText value="#{saldo.cantidadDotar}"  id="idCantidadDotar"></h:inputText>
+												</f:facet>
+												
+											</p:cellEditor>
+										</p:column>	
+										<p:column style="width: 5%">
+											<p:rowEditor></p:rowEditor>
+										</p:column>
+													
+									</p:dataTable>				
+								
+							</td>
+						</tr>				
+				</table>
+			</f:subview>
+			</p:panel>	
+			
+		</td>
+	</tr>
+</table>
+
+	
+
+	
+
+	
+</h:form>
+
+</ui:define>
+</ui:composition>
+</html>
+

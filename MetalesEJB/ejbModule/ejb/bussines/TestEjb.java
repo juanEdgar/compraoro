@@ -1,5 +1,7 @@
 package ejb.bussines;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -7,8 +9,14 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import clases.login.UsuarioSesion;
+import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
-import clases.vo.dinero.Moneda;
+import clases.vo.tienda.Tienda;
+import clases.vo.tienda.caja.TiendaCajaEfectivo;
+import clases.vo.tienda.caja.TiendaCajaEfectivoMovimiento;
+import clases.vo.tienda.caja.TiendaCajaEfectivoSaldo;
+import ejb.bussines.administracion.TiendaCajaEJB;
+import ejb.bussines.administracion.TiendaEJB;
 import ejb.bussines.administracion.TipoDeCambioEJB;
 import ejb.bussines.compra.ClienteEJB;
 import ejb.bussines.compra.CompraEJB;
@@ -40,6 +48,13 @@ public class TestEjb {
 	@EJB
 	TipoDeCambioEJB tc;
 	
+	
+	@EJB
+	TiendaEJB tienda;
+	
+	@EJB
+	TiendaCajaEJB caja;
+	
     /**
      * Default constructor. 
      */
@@ -56,26 +71,18 @@ System.out.println("Test EJB");
 	
     		System.out.println("iniciando");
     		
+    		List<TiendaCajaEfectivoSaldo> saldos=null;
     		
-    		Moneda peso= new Moneda(1);
-    		Moneda dolar= new Moneda(2);
+    		Tienda tienda= new Tienda(1);
+    		TiendaCajaEfectivo caja= new TiendaCajaEfectivo();
+    		caja.setId(1);
+    		caja.setTienda(tienda);
+			
+    		saldos= this.caja.recuperarSaldosPorCaja(caja);
     		
-    		System.out.println(this.tc.getTCPorMoneda(peso, dolar).getValor());
-    		System.out.println(this.tc.getTCPorMoneda(dolar, peso).getValor());
-    		
-    		this.tc.actualizarTipoDeCambio(peso, dolar, 10);
-    		
-    		
-    		
-    		System.out.println(this.tc.getTCPorMoneda(peso, dolar).getValor());
-    		System.out.println(this.tc.getTCPorMoneda(dolar, peso).getValor());
-    		
-    		
-    		this.tc.actualizarTipoDeCambio(dolar, peso, 10);
-    		
-    		System.out.println(this.tc.getTCPorMoneda(peso, dolar).getValor());
-    		System.out.println(this.tc.getTCPorMoneda(dolar, peso).getValor());
-    		
+    		for(TiendaCajaEfectivoSaldo s: saldos){
+    			System.out.println("saldos "+s.getCantidad()+" den "+s.getDenominacion());
+    		}
     		
 		} catch (Exception e) {
 			e.printStackTrace();

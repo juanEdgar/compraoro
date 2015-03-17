@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import clases.vo.tienda.Tienda;
+import clases.vo.tienda.caja.TiendaCajaEfectivo;
 
 @SessionScoped
 public class UsuarioSesion implements Serializable{
@@ -21,6 +22,7 @@ public class UsuarioSesion implements Serializable{
 	private static final long serialVersionUID = 8469525259835169321L;
 	private String nombreUsuario="SYS";
 	private Tienda tienda;
+	private TiendaCajaEfectivo caja;
 	
 	@Inject
 	public UsuarioSesion(){
@@ -52,6 +54,16 @@ public class UsuarioSesion implements Serializable{
 
 	public void setTienda(Tienda tienda) {
 		this.tienda = tienda;
+	}
+
+
+	public TiendaCajaEfectivo getCaja() {
+		return caja;
+	}
+
+
+	public void setCaja(TiendaCajaEfectivo caja) {
+		this.caja = caja;
 	}
 	
 	

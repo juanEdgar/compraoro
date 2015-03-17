@@ -1,7 +1,9 @@
 package ejb.bussines.compra;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -30,7 +32,9 @@ import clases.vo.catalogo.Estatus;
 import clases.vo.cliente.Cliente;
 import clases.vo.dinero.Moneda;
 import clases.vo.tienda.Tienda;
+import clases.vo.tienda.caja.TiendaCajaEfectivoMovimiento;
 import ejb.bussines.PropertiesEJB;
+import ejb.bussines.administracion.TiendaCajaEJB;
 import ejb.bussines.exception.RDNException;
 
 /**
@@ -57,6 +61,9 @@ public class CompraEJB {
 	
 	@EJB
 	private CotizadorEJB ejbCotizador;
+	
+	@EJB
+	private TiendaCajaEJB cajaEjb;
 	
 	private static final Logger log = LogManager .getLogger(CompraEJB.class);
 	
@@ -326,6 +333,9 @@ public class CompraEJB {
     		
     		Moneda moneda= this.ejbProperties.getMonedaSistema();
     		UsuarioModifico usuarioM= new UsuarioModifico(this.usuarioSesion.getNombreUsuario());
+    		TiendaCajaEfectivoMovimiento movimiento=null;
+    		List<TiendaCajaEfectivoMovimiento> movimientos= new ArrayList<TiendaCajaEfectivoMovimiento>();
+    		boolean afectarCaja=false;
     		
     		for(PagoCompra pago : compra.getPagos()  ){
     			
@@ -336,14 +346,31 @@ public class CompraEJB {
     			pago.setFecha(new Date());
     			// TODO registar baja de monto de caja
     			if( pago instanceof PagoCompraEfectivo ){
+    				
     				this.metalesEM.persist((PagoCompraEfectivo)pago);
+    				// se registra la efectacion en caja
+    				 movimiento=new TiendaCajaEfectivoMovimiento();
+    				 movimiento.setDenominacion(((PagoCompraEfectivo) pago).getDenominacion());
+    				 movimiento.setEstatus(1);
+    				 movimiento.setCantidad(-1*((PagoCompraEfectivo) pago).getCantidad());
+    				
+    				movimientos.add(movimiento);
+    				
+    				afectarCaja= true;
+    				
     			}
+    			
+    			
     			
     			if( pago instanceof PagoCompraSPEI ){
     				this.metalesEM.persist((PagoCompraSPEI)pago);
-    			}
+    			}   			
     			
-    			
+    		}
+    		
+    		if(afectarCaja){
+    			log.info("Se procede a la afectación de la caja");
+    			this.cajaEjb.registarSalidaEnCajaPorCompra(this.usuarioSesion.getCaja(), movimientos );
     		}
     		
     		log.info("Pago de compra registrado con exito");
@@ -363,6 +390,9 @@ public class CompraEJB {
     		
     	}
     }
+    
+    
+   
     
 
 

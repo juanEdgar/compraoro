@@ -1,0 +1,7 @@
+
+usuario:  psqlusrcompraoro
+pass      compraoro
+BD        compraoro
+
+usuario usrOro
+Pass: oro$#usroro

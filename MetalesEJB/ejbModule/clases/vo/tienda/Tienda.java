@@ -1,16 +1,23 @@
 package clases.vo.tienda;
 
+import java.util.List;
+
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
 import clases.vo.catalogo.Estatus;
+import clases.vo.tienda.caja.TiendaCajaEfectivo;
 
 @Entity
 @Table(schema="public" ,name="Tienda")
@@ -19,6 +26,11 @@ public class Tienda {
 
 	public Tienda(){
 		
+	}
+	
+	
+	public Tienda(int id){
+		this.id=id;
 	}
 	
 	public Tienda(String usuarioModifico){
@@ -39,6 +51,10 @@ public class Tienda {
 	@JoinColumn(name="fiIdEstatus")
 	private Estatus estatus;
 	
+	@OneToMany(mappedBy="tienda")	
+	@OrderBy("id asc")
+	@Basic(fetch=FetchType.LAZY)
+	private List<TiendaCajaEfectivo> cajasEfectivo;
 
 	
 	private UsuarioModifico usuarioModifico;
@@ -84,8 +100,36 @@ public class Tienda {
 		this.usuarioModifico = usuarioModifico;
 	}
 
+	public List<TiendaCajaEfectivo> getCajasEfectivo() {
+		return cajasEfectivo;
+	}
 
+	public void setCajasEfectivo(List<TiendaCajaEfectivo> cajasEfectivo) {
+		this.cajasEfectivo = cajasEfectivo;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
 	
+		if(obj==null){
+			return false;
+		}
+		if(!( obj instanceof Tienda)){
+			return false;
+		}
+		
+		
+		
+		return ((Tienda)obj).getId()==this.id;
+		
+	}
+
+	@Override
+	public int hashCode() {
+	
+		return  this.id;
+	}
 	
 	
 	
