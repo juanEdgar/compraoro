@@ -2,6 +2,18 @@ package clases.business.metales.vo.cotizador;
 
 import java.io.Serializable;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+
+@Entity
+@Table(schema="public", name="Diamante")
 public class Diamante extends Producto implements Serializable{
 
 	/**
@@ -16,6 +28,94 @@ public class Diamante extends Producto implements Serializable{
 	
 	public Diamante(int id){
 		super(id);
+		this.id=id;
+	}
+	
+	@Id
+	@Column(name="fiIdTipoDiamante")
+	private int id;
+	
+	@OneToMany
+	@JoinColumn(name="fiIdDiamanteColor")
+	@Basic(fetch=FetchType.EAGER)
+	@OrderBy("id")
+	private DiamanteColor color;
+	
+	@OneToMany
+	@JoinColumn(name="fiIdDiamantePunto")
+	@Basic(fetch=FetchType.EAGER)
+	@OrderBy("id")
+	private DiamantePunto punto;
+	
+	@OneToMany
+	@JoinColumn(name="fiIdDiamanteLimpieza")
+	@Basic(fetch=FetchType.EAGER)
+	@OrderBy("id")
+	private DiamanteLimpieza limpieza;
+	
+	@Column(name="fiIdEstatus")
+	private int estatus;
+
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public DiamanteColor getColor() {
+		return color;
+	}
+
+	public void setColor(DiamanteColor color) {
+		this.color = color;
+	}
+
+	public DiamantePunto getPunto() {
+		return punto;
+	}
+
+	public void setPunto(DiamantePunto punto) {
+		this.punto = punto;
+	}
+
+	public DiamanteLimpieza getLimpieza() {
+		return limpieza;
+	}
+
+	public void setLimpieza(DiamanteLimpieza limpieza) {
+		this.limpieza = limpieza;
+	}
+
+	public int getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(int estatus) {
+		this.estatus = estatus;
+	}
+	
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if(obj==null){
+			return false;
+		}
+		
+		if(!(obj instanceof Diamante)){
+			return false;
+		}
+		
+		return ((Diamante)obj).getId()==this.getId();
+	}
+	
+	@Override
+	public int hashCode() {
+		
+		return this.id;
 	}
 	
 	
