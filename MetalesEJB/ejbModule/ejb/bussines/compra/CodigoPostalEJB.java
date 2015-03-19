@@ -70,6 +70,10 @@ private static final Logger log = LogManager .getLogger(CodigoPostalEJB.class);
 		}
 	}
 	
+	public CodigoPostal find(int id) {
+		return metalesEM.find(CodigoPostal.class, id);
+	}
+	
 	public boolean validarInformacionAlta(CodigoPostal codigo) throws Exception {
 		log.info("Se validan los parametros");
 		

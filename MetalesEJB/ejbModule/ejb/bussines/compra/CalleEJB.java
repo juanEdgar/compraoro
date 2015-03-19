@@ -20,6 +20,7 @@ import clases.login.UsuarioSesionTienda;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
 import clases.vo.cliente.Calle;
 import clases.vo.cliente.Colonia;
+import clases.vo.cliente.Estado;
 import clases.vo.cliente.Municipio;
 import ejb.bussines.exception.RDNException;
 
@@ -68,6 +69,10 @@ private static final Logger log = LogManager .getLogger(CalleEJB.class);
 	    		this.context.setRollbackOnly();
 	    		throw e;
 		}
+	}
+	
+	public Calle find(int id) {
+		return metalesEM.find(Calle.class, id);
 	}
 	
 	public boolean validarInformacionAlta(Calle calle) throws Exception {

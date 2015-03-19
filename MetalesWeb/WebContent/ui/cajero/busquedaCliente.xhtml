@@ -156,17 +156,39 @@
 							        	<p:ajax event="itemSelect"  listener="#{direccionView.handleEstadoSeleccionado}"/>
 							        </p:autoComplete>
 							        
-							        <p:outputLabel value="Municipio" for="municipio" />
-							        <p:autoComplete id="municipio" value="#{direccionView.municipioQuery}" completeMethod="#{direccionView.completeMunicipios}" />
+							        <p:outputLabel value="Municipio" for="municipioA" />
+							        <p:autoComplete id="municipioA" value="#{direccionView.municipio}" var="municipio" 
+							        completeMethod="#{direccionView.completeMunicipios}"
+							        itemLabel="#{municipio.nombre}" itemValue="#{municipio}" converter="#{municipioConverter}">
+							        <p:ajax event="itemSelect"  listener="#{direccionView.handleMunicipioSeleccionado}"/>
+							        </p:autoComplete>
 							   		
-							   		<p:outputLabel value="Colonia" for="colonia" />
-							        <p:autoComplete id="colonia" value="#{direccionView.coloniaQuery}" completeMethod="#{direccionView.completeColonias}" />
+							   		<p:outputLabel value="Colonia" for="coloniaA" />
+							        <p:autoComplete id="coloniaA" value="#{direccionView.colonia}" var="colonia" 
+							        itemLabel="#{colonia.nombre}" itemValue="#{colonia}" converter="#{coloniaConverter}"
+							        completeMethod="#{direccionView.completeColonias}" >
+							        <p:ajax event="itemSelect" listener="#{direccionView.handleColoniaSeleccionada}"/>
+							        </p:autoComplete>
 							        
-							        <p:outputLabel value="Calle" for="calle" />
-							        <p:autoComplete id="calle" value="#{direccionView.calleQuery}" completeMethod="#{direccionView.completeCalles}" />
+							        <p:outputLabel value="Calle" for="calleA" />
+							        <p:autoComplete id="calleA" value="#{direccionView.calle}" var="calle" 
+							        itemLabel="#{calle.nombre}" itemValue="#{calle}" converter="#{calleConverter}"
+							        completeMethod="#{direccionView.completeCalles}" >
+							        <p:ajax event="itemSelect" listener="#{direccionView.handleCalleSeleccionada}"/>
+							        </p:autoComplete>
 							        
 							        <p:outputLabel value="Codigo" for="codigo" />
-							        <p:autoComplete id="codigo" value="#{direccionView.codigoQuery}" completeMethod="#{direccionView.completeCodigos}" />
+							        <p:autoComplete id="codigo" value="#{direccionView.codigo}" var="cp"
+							        itemLabel="#{cp.codigoPostal}" itemValue="#{cp}" converter="#{codigoPostalConverter}"
+							        completeMethod="#{direccionView.completeCodigos}" >
+							        <p:ajax event="itemSelect" listener="#{direccionView.handleCodigoSeleccionado}"/>
+							        </p:autoComplete>
+							        
+							        <p:outputLabel value="No. Exterior" for="noExt" />
+									<h:inputText id="noExt" value="#{direccionView.numeroExt}" />
+									
+									<p:outputLabel value="No. Interior" for="noInt" />
+									<h:inputText id="noInt" value="#{direccionView.numeroInt}" />
 
 							    </h:panelGrid>
 							    

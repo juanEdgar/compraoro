@@ -70,6 +70,10 @@ private static final Logger log = LogManager .getLogger(ColoniaEJB.class);
 		}
 	}
 	
+	public Colonia find(int id) {
+		return metalesEM.find(Colonia.class, id);
+	}
+	
 	public boolean validarInformacionAlta(Colonia colonia) throws Exception {
 		log.info("Se validan los parametros");
 		

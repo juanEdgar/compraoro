@@ -76,6 +76,10 @@ public class MunicipioEJB {
 		}
 	}
 	
+	public Municipio find(int id) {
+		return metalesEM.find(Municipio.class, id);
+	}
+	
 	public boolean validarInformacionAlta(Municipio municipio) throws Exception {
 		log.info("Se validan los parametros");
 		
