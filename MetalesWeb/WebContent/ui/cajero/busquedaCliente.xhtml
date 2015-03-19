@@ -138,13 +138,39 @@
 								<br></br>
 								Verifique los datos para una busqueda.
 								<br/><br/>
-								O puede crear un cliente nuevo con la infiormación proporcionada, dando clic en el botón anexo.
+								O puede crear un cliente nuevo con la información proporcionada, dando clic en el botón anexo.
 							</td>
 							<td>
 								<p:commandButton action="#{clienteView.eventAltaCliente()}" value="ALTA DE CLIENTE" 
 												 iconPos="right" icon="ui-icon-circle-check"
 								/>
 							</td>
+							<h:form>
+							    <p:growl id="msgs" showDetail="true" />
+							 
+							    <h:panelGrid columns="2" cellpadding="5">
+							        <p:outputLabel value="Estado:" for="estadoAutocomplete" />
+							        <p:autoComplete id="estadoAutocomplete" value="#{direccionView.estado}" var="estado" 
+							        	completeMethod="#{direccionView.completeEstados}"
+							        	itemLabel="#{estado.nombre}" itemValue="#{estado}" converter="#{estadoConverter}">
+							        	<p:ajax event="itemSelect"  listener="#{direccionView.handleEstadoSeleccionado}"/>
+							        </p:autoComplete>
+							        
+							        <p:outputLabel value="Municipio" for="municipio" />
+							        <p:autoComplete id="municipio" value="#{direccionView.municipioQuery}" completeMethod="#{direccionView.completeMunicipios}" />
+							   		
+							   		<p:outputLabel value="Colonia" for="colonia" />
+							        <p:autoComplete id="colonia" value="#{direccionView.coloniaQuery}" completeMethod="#{direccionView.completeColonias}" />
+							        
+							        <p:outputLabel value="Calle" for="calle" />
+							        <p:autoComplete id="calle" value="#{direccionView.calleQuery}" completeMethod="#{direccionView.completeCalles}" />
+							        
+							        <p:outputLabel value="Codigo" for="codigo" />
+							        <p:autoComplete id="codigo" value="#{direccionView.codigoQuery}" completeMethod="#{direccionView.completeCodigos}" />
+
+							    </h:panelGrid>
+							    
+							</h:form>
 						</tr>
 						
 						</table>
