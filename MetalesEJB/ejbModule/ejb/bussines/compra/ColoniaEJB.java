@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import clases.login.UsuarioSesion;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
 import clases.vo.cliente.Colonia;
+import clases.vo.cliente.Estado;
 import clases.vo.cliente.Municipio;
 import ejb.bussines.exception.RDNException;
 
@@ -65,6 +66,10 @@ private static final Logger log = LogManager .getLogger(ColoniaEJB.class);
 	    		this.context.setRollbackOnly();
 	    		throw e;
 		}
+	}
+	
+	public Colonia find(int id) {
+		return metalesEM.find(Colonia.class, id);
 	}
 	
 	public boolean validarInformacionAlta(Colonia colonia) throws Exception {

@@ -60,19 +60,18 @@ public class DireccionView implements Serializable {
 	
 	private List<Municipio> municipios;
 	private Municipio municipio;
-	private String municipioQuery;
 	
 	private List<Colonia> colonias;
 	private Colonia colonia;
-	private String coloniaQuery;
 	
 	private List<Calle> calles;
 	private Calle calle;
-	private String calleQuery;
 	
 	private List<CodigoPostal> codigos;
 	private CodigoPostal codigo;
-	private String codigoQuery;
+	
+	private String numeroExt;
+	private String numeroInt;
 	
 	//////////////////////////// Estados
 	public List<Estado> completeEstados(String query) {
@@ -103,14 +102,10 @@ public class DireccionView implements Serializable {
 	}
 	
 ////////////////////////////Municipios
-	public List<String> completeMunicipios(String query) {
+	public List<Municipio> completeMunicipios(String query) {
 		try {
 			municipios = municipioEJB.obtenerMunicipiosPorEstadoYNombre(getEstado(), query);
-			List<String> nombresMunicipio = new ArrayList<String>();
-			for (Municipio municipio : municipios) {
-				nombresMunicipio.add(municipio.getNombre());
-			}
-			return nombresMunicipio;
+			return municipios;
 		} catch(RDNException rdnE){
 			
 			log.debug("Error RDN en busqueda municipios");
@@ -122,18 +117,18 @@ public class DireccionView implements Serializable {
 			FacesContext context= FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo buscar municipios "+e.getMessage()));
 		}
-		return new ArrayList<String>();
+		return new ArrayList<Municipio>();
     }
 	
+	public void handleMunicipioSeleccionado(SelectEvent event) {
+		log.debug("Test handleEstadoSeleccionado");
+	}
+	
 //////////////////////////////// Colonia
-	public List<String> completeColonias(String query) {
+	public List<Colonia> completeColonias(String query) {
 		try {
-			colonias = coloniaEJB.obtenerColoniasPorMunicipioYNombre(municipio, query);
-			List<String> nombresColonia = new ArrayList<String>();
-			for (Colonia colonia : colonias) {
-				nombresColonia.add(colonia.getNombre());
-			}
-			return nombresColonia;
+			colonias = coloniaEJB.obtenerColoniasPorMunicipioYNombre(getMunicipio(), query);
+			return colonias;
 		} catch(RDNException rdnE){
 			
 			log.debug("Error RDN en busqueda colonias");
@@ -145,18 +140,18 @@ public class DireccionView implements Serializable {
 			FacesContext context= FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo buscar colonias "+e.getMessage()));
 		}
-		return new ArrayList<String>();
+		return new ArrayList<Colonia>();
     }
+	
+	public void handleColoniaSeleccionada(SelectEvent event) {
+		log.debug("Test handleEstadoSeleccionado");
+	}
 	
 ////////////////////////////////////Calles
-	public List<String> completeCalles(String query) {
+	public List<Calle> completeCalles(String query) {
 		try {
-			calles = calleEJB.obtenerCallesPorColoniaYNombre(colonia, query);
-			List<String> nombresCalle = new ArrayList<String>();
-			for (Calle calle : calles) {
-				nombresCalle.add(calle.getNombre());
-			}
-			return nombresCalle;
+			calles = calleEJB.obtenerCallesPorColoniaYNombre(getColonia(), query);
+			return calles;
 		} catch(RDNException rdnE){
 			
 			log.debug("Error RDN en busqueda calles");
@@ -168,19 +163,19 @@ public class DireccionView implements Serializable {
 			FacesContext context= FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo buscar calles "+e.getMessage()));
 		}
-		return new ArrayList<String>();
+		return new ArrayList<Calle>();
     }
+	
+	public void handleCalleSeleccionada(SelectEvent event) {
+		log.debug("Test handleCalleSeleccionado");
+	}
 	
 	///////////////////////// Codigo
-	public List<String> completeCodigo(String query) {
+	public List<CodigoPostal> completeCodigos(String query) {
 		try {
 			//codigos = codigoEJB.obtenerCallesPorColoniaYNombre(colonia, query);
-			codigos = codigoEJB.obtenerCodigosPorMunicipioYCodigo(municipio, query);
-			List<String> nombresCodigo = new ArrayList<String>();
-			for (CodigoPostal codigo : codigos) {
-				nombresCodigo.add(codigo.getCodigoPostal());
-			}
-			return nombresCodigo;
+			codigos = codigoEJB.obtenerCodigosPorMunicipioYCodigo(getMunicipio(), query);
+			return codigos;
 		} catch(RDNException rdnE){
 			
 			log.debug("Error RDN en busqueda calles");
@@ -192,39 +187,11 @@ public class DireccionView implements Serializable {
 			FacesContext context= FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo buscar calles "+e.getMessage()));
 		}
-		return new ArrayList<String>();
+		return new ArrayList<CodigoPostal	>();
     }
 	
-	public String getMunicipioQuery() {
-		return municipioQuery;
-	}
-
-	public void setMunicipioQuery(String municipioQuery) {
-		this.municipioQuery = municipioQuery;
-	}
-	
-	public String getColoniaQuery() {
-		return coloniaQuery;
-	}
-
-	public void setColoniaQuery(String coloniaQuery) {
-		this.coloniaQuery = coloniaQuery;
-	}
-	
-	public String getCalleQuery() {
-		return calleQuery;
-	}
-
-	public void setCalleQuery(String calleQuery) {
-		this.calleQuery = calleQuery;
-	}
-	
-	public String getCodigoQuery() {
-		return codigoQuery;
-	}
-
-	public void setCodigoQuery(String calleQuery) {
-		this.codigoQuery = codigoQuery;
+	public void handleCodigoSeleccionado(SelectEvent event) {
+		log.debug("Test handleCodigoSeleccionado");
 	}
 	
 	public Estado getEstado() {
@@ -235,21 +202,51 @@ public class DireccionView implements Serializable {
 		this.estado = estado;
 	}
 
-//	public class EstadoConverter implements Converter {
-//
-//		@Override
-//		public Object getAsObject(FacesContext context, UIComponent component, String value) {
-//			if (value != null && value.trim().length() > 0) {
-//				return estadoEJB.find(Integer.parseInt(value));
-//			}
-//		    return null;
-//		}
-//
-//		@Override
-//		public String getAsString(FacesContext context, UIComponent component, Object obj) {
-//			return String.valueOf(((Estado) obj).getId());
-//		}
-//		
-//	}
+	public Municipio getMunicipio() {
+		return municipio;
+	}
 
+	public void setMunicipio(Municipio municipio) {
+		this.municipio = municipio;
+	}
+
+	public Colonia getColonia() {
+		return colonia;
+	}
+
+	public void setColonia(Colonia colonia) {
+		this.colonia = colonia;
+	}
+
+	public Calle getCalle() {
+		return calle;
+	}
+
+	public void setCalle(Calle calle) {
+		this.calle = calle;
+	}
+
+	public CodigoPostal getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(CodigoPostal codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getNumeroExt() {
+		return numeroExt;
+	}
+
+	public void setNumeroExt(String numeroExt) {
+		this.numeroExt = numeroExt;
+	}
+
+	public String getNumeroInt() {
+		return numeroInt;
+	}
+
+	public void setNumeroInt(String numeroInt) {
+		this.numeroInt = numeroInt;
+	}
 }

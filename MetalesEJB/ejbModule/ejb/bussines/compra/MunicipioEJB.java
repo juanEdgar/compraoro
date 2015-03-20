@@ -10,6 +10,11 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -67,6 +72,10 @@ public class MunicipioEJB {
 	    		this.context.setRollbackOnly();
 	    		throw e;
 		}
+	}
+	
+	public Municipio find(int id) {
+		return metalesEM.find(Municipio.class, id);
 	}
 	
 	public boolean validarInformacionAlta(Municipio municipio) throws Exception {

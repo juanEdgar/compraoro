@@ -11,13 +11,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import clases.business.metales.vo.cotizador.Metal;
+import clases.business.metales.vo.cotizador.PurezaMetal;
+import clases.login.QualifierUsuarioSesionTienda;
 import clases.login.UsuarioSesion;
+import clases.login.UsuarioSesionTienda;
 import clases.vo.cliente.Calle;
 import clases.vo.cliente.CodigoPostal;
 import clases.vo.cliente.Colonia;
 import clases.vo.cliente.Direccion;
 import clases.vo.cliente.Estado;
 import clases.vo.cliente.Municipio;
+import clases.vo.tienda.Tienda;
 import ejb.bussines.TestEjb;
 import ejb.bussines.administracion.TipoDeCambioEJB;
 import ejb.bussines.compra.CalleEJB;
@@ -44,7 +49,7 @@ public class Test extends HttpServlet {
 	@EJB
 	TipoDeCambioEJB tcEjb;
 	
-	@Inject 
+	@Inject @QualifierUsuarioSesionTienda
 	private UsuarioSesion user;
 	
 	@EJB

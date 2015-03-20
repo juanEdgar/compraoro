@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import clases.login.UsuarioSesion;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
 import clases.vo.cliente.CodigoPostal;
+import clases.vo.cliente.Colonia;
 import clases.vo.cliente.Municipio;
 import ejb.bussines.exception.RDNException;
 
@@ -65,6 +66,10 @@ private static final Logger log = LogManager .getLogger(CodigoPostalEJB.class);
 	    		this.context.setRollbackOnly();
 	    		throw e;
 		}
+	}
+	
+	public CodigoPostal find(int id) {
+		return metalesEM.find(CodigoPostal.class, id);
 	}
 	
 	public boolean validarInformacionAlta(CodigoPostal codigo) throws Exception {
