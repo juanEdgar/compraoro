@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -35,19 +36,19 @@ public class Diamante extends Producto implements Serializable{
 	@Column(name="fiIdTipoDiamante")
 	private int id;
 	
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name="fiIdDiamanteColor")
 	@Basic(fetch=FetchType.EAGER)
 	@OrderBy("id")
-	private DiamanteColor color;
+	private  DiamanteColor color;
 	
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name="fiIdDiamantePunto")
 	@Basic(fetch=FetchType.EAGER)
 	@OrderBy("id")
 	private DiamantePunto punto;
 	
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name="fiIdDiamanteLimpieza")
 	@Basic(fetch=FetchType.EAGER)
 	@OrderBy("id")

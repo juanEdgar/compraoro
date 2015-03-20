@@ -29,7 +29,7 @@ public class TiendaCajaEfectivoMovimiento {
 	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name="fiIdCaja", referencedColumnName="fiIdCaja"),
-		@JoinColumn(name="fiIdTienda", referencedColumnName="fiIdTienda")
+		@JoinColumn(name="fiIdTienda", referencedColumnName="fiidtienda")
 	})
 	private TiendaCajaEfectivo tiendaCaja;
 	
