@@ -51,7 +51,6 @@ public class MunicipioEJB {
 			
 			UsuarioSesionTienda usuarioTienda = (UsuarioSesionTienda) this.usuarioSesion;
     		
-    		
     			if (usuarioTienda.getTienda() == null || usuarioTienda.getTienda().getId() <= 0) {
     				throw new Exception("La tienda en sesion es invalida, no se puede dar de alta al Municipio");
     			}

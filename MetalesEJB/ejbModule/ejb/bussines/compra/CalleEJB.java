@@ -44,8 +44,7 @@ private static final Logger log = LogManager .getLogger(CalleEJB.class);
 		try {
 			log.info("Alta de Calle");
 			
-			UsuarioSesionTienda usuarioTienda = (UsuarioSesionTienda) this.usuarioSesion;
-    		
+			UsuarioSesion usuarioTienda =  this.usuarioSesion;
     		
     			if (usuarioTienda.getTienda() == null || usuarioTienda.getTienda().getId() <= 0) {
     				throw new Exception("La tienda en sesion es invalida, no se puede dar de alta");
