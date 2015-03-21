@@ -1,7 +1,0 @@
-package clases.cotizacion.dto;
-
-import clases.business.metales.vo.compra.ArticuloCompraMetal;
-
-public class ArticuloCotizar extends ArticuloCompraMetal {
-
-}

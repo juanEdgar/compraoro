@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<typeInfoHistroy>
-<typeInfo handle="=MetalesWeb/\/home\/juan\/desarrollo\/servers\/wildfly-8.1.0.Final\/modules\/system\/layers\/base\/javax\/servlet\/api\/main\/jboss-servlet-api_3.1_spec-1.0.0.Final.jar&lt;javax.servlet.http(HttpServlet.class[HttpServlet" modifiers="1057" timestamp="1401504870000"/>
-<typeInfo handle="=MetalesEJB/ejbModule&lt;ejb.bussines.venta{CotizadorEJB.java[CotizadorEJB" modifiers="1" timestamp="1423512704000"/>
-<typeInfo handle="=MetalesEJB/\/usr\/lib\/jvm\/java-7-openjdk-amd64\/jre\/lib\/rt.jar&lt;java.io(Serializable.class[Serializable" modifiers="1537" timestamp="1368902280000"/>
-<typeInfo handle="=MetalesEJB/ejbModule&lt;clases.login{UsuarioSesion.java[UsuarioSesion" modifiers="1" timestamp="1423512704000"/>
-<typeInfo handle="=MetalesEJB/ejbModule&lt;clases.business.metales.vo.compra{ArticuloCompraMetal.java[ArticuloCompraMetal" modifiers="1" timestamp="1423629858000"/>
-</typeInfoHistroy>

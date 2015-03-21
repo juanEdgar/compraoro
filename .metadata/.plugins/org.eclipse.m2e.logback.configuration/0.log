@@ -1,2 +1,0 @@
-2015-02-07 14:59:13,594 [Worker-31] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 4
-2015-02-07 14:59:14,014 [Worker-31] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/org/jboss/spec/javax/el/jboss-el-api_3.0_spec/1.0.3.Final/jboss-el-api_3.0_spec-1.0.3.Final-sources.jar
