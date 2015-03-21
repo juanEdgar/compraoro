@@ -155,7 +155,7 @@
 							        	itemLabel="#{estado.nombre}" itemValue="#{estado}" converter="#{estadoConverter}">
 							        	<p:ajax event="itemSelect"  listener="#{direccionView.handleEstadoSeleccionado}"/>
 							        </p:autoComplete>
-							        
+
 							        <p:outputLabel value="Municipio" for="municipioA" />
 							        <p:autoComplete id="municipioA" value="#{direccionView.municipio}" var="municipio" 
 							        completeMethod="#{direccionView.completeMunicipios}"

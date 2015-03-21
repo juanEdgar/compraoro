@@ -23,8 +23,9 @@ public class TiendaCajaEfectivoSaldo  implements Serializable{
 	@Id
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name="fiIdCaja", referencedColumnName="fiIdCaja"),
-		@JoinColumn(name="fiIdTienda", referencedColumnName="fiIdTienda")
+		
+		@JoinColumn(name="fiIdTienda", referencedColumnName="fiidtienda"),
+		@JoinColumn(name="fiIdCaja", referencedColumnName="fiIdCaja")
 	})
 	private TiendaCajaEfectivo cajaEfectivo;
 	
