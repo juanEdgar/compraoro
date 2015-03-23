@@ -132,7 +132,7 @@ public class CompraView implements Serializable{
 		
 		
 		if(!bolsa.getTipo().equals(tipo)){
-			throw new RDNException("La bolsa no corresponde al tipo de metal seleccionado");
+			throw new RDNException("La bolsa no corresponde al tipo de producto seleccionado");
 		}
 		
 		

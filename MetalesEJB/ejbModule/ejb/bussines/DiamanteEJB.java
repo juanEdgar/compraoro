@@ -145,6 +145,8 @@ public class DiamanteEJB {
     			throw new RDNException("No es posible recuperar el precio de un diamante limpieza invalido");
     		}
     		
+    		log.info("Precio a consultar color, pureza, puntos: "+ diamante.getColor().getId()+" "+diamante.getLimpieza().getId()+" "+diamante.getPunto().getId());
+    		
     		StringBuilder sql= new StringBuilder();
     		
     		Diamante diamanteBD=null;

@@ -18,12 +18,18 @@ import javax.persistence.EntityManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import clases.business.metales.vo.compra.ArticuloCompraDiamante;
 import clases.business.metales.vo.compra.ArticuloCompraMetal;
 import clases.business.metales.vo.compra.Seguribolsa;
 import clases.business.metales.vo.cotizador.Diamante;
+import clases.business.metales.vo.cotizador.DiamanteColor;
+import clases.business.metales.vo.cotizador.DiamanteLimpieza;
+import clases.business.metales.vo.cotizador.DiamantePunto;
 import clases.business.metales.vo.cotizador.Metal;
+import clases.business.metales.vo.cotizador.PrecioDiamante;
 import clases.business.metales.vo.cotizador.Producto;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
+import ejb.bussines.DiamanteEJB;
 import ejb.bussines.MetalEJB;
 import ejb.bussines.compra.CompraEJB;
 import ejb.bussines.compra.CotizadorEJB;
@@ -62,11 +68,18 @@ public class CotizacionView  implements Serializable{
 	@Inject @MetalesEM
 	private EntityManager metalesEM;
 	
+	@Inject
+	private DiamanteEJB ejbDiamante;
+	
 	private List<Producto> productos;		
 	private int idProductoSeleccionado=0;
 
 	private boolean isMetalSeleccionado=false;
+	private boolean isDiamanteSeleccionado=false;
+	
 	private ArticuloCompraMetal articuloMetalCotizacion;
+	private Diamante diamateCotizado;
+	
 	private String seguribolsa="";
 	
 	
@@ -74,8 +87,6 @@ public class CotizacionView  implements Serializable{
 		
 	}
 	
-	
-
 	
 	
 	@PostConstruct
@@ -86,9 +97,15 @@ public class CotizacionView  implements Serializable{
 		
 		// se carga la lista de metales comercializables
 		this.productos.addAll(this.EjbMetal.getMetalesComercializables());
-		Diamante diamante= new Diamante(500);
+		Diamante diamante= new Diamante(-1);
 		diamante.setNombre("DIAMANTES");
 		this.productos.add(diamante);
+		
+		
+		this.diamateCotizado= new Diamante();
+		this.diamateCotizado.setColor(new DiamanteColor());
+		this.diamateCotizado.setLimpieza(new DiamanteLimpieza());
+		this.diamateCotizado.setPunto(new DiamantePunto());
 		
 		log.info("Lista de productos recuperados: "+this.productos!=null? this.productos.size():"NULL");
 		
@@ -114,7 +131,12 @@ public class CotizacionView  implements Serializable{
 			if( coincidencia  instanceof Metal) {
 				this.cotizarMetal();
 				
-			}		
+			}	
+			
+			if( coincidencia  instanceof Diamante) {
+				this.cotizarDiamante();
+				
+			}	
 			
 		}catch(Exception e){
 			log.info("Error al obtener la cotizacion");
@@ -123,6 +145,36 @@ public class CotizacionView  implements Serializable{
 		
 	}
 	
+	
+	private void cotizarDiamante(){
+		
+		try{
+			
+			log.debug("Cotizando diamante");
+			
+			if(this.diamateCotizado.getColor().getId()!=0 			&& this.diamateCotizado.getLimpieza().getId()!=0
+			   && this.getDiamateCotizado().getPunto().getId()!=0	&& this.diamateCotizado.getQuilates()>0.0F
+					
+			  ){
+				
+			
+				
+				this.diamateCotizado.setPreciocotizado(this.EjbCotizador.cotizarRedondeada(this.diamateCotizado, this.diamateCotizado.getQuilates()));
+				
+			}else{
+				this.diamateCotizado.setPreciocotizado(0.0F);
+			}
+			
+			log.debug("Cotizacion: "+this.diamateCotizado.getPreciocotizado());
+		}catch(RDNException e){
+			setMensage(FacesMessage.SEVERITY_WARN, "Cuidado", e.getMessage());
+		}catch (Exception e) {
+			log.info("Error al mandar a llamar la cotizacion", e);
+			setMensage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
+		}
+		
+		
+	}
 	
 	private void cotizarMetal(){
 		try{
@@ -165,15 +217,21 @@ public class CotizacionView  implements Serializable{
 		log.debug("Se selecciono un producto");
 		
 		this.isMetalSeleccionado=false;
+		this.isDiamanteSeleccionado=false;
+		
 		
 		if(this.idProductoSeleccionado!=0){
 		
-				this.isMetalSeleccionado=false;
+				
 				Producto  producto=this.getProductoSeleccionado();
 				
 				if(producto instanceof Metal){
 					log.debug("Se selecciono un Metal");
 					this.eventMetalSeleccionado();
+				}
+				if(producto instanceof Diamante){
+					log.debug("Se selecciono diamante");
+					this.eventDiamanteSeleccionado();
 				}
 		}
 		
@@ -181,6 +239,17 @@ public class CotizacionView  implements Serializable{
 		
 	}
 	
+	private void eventDiamanteSeleccionado(){
+		log.debug("Event eventDiamanteSeleccionado");
+		this.isDiamanteSeleccionado=true;
+		
+		if(this.diamateCotizado==null){
+			this.diamateCotizado=new Diamante();
+		}
+		
+		this.cotizarDiamante();
+		
+	}
 	
 	private void eventMetalSeleccionado(){
 		this.isMetalSeleccionado= true;
@@ -190,6 +259,10 @@ public class CotizacionView  implements Serializable{
 		this.cotizarMetal();
 		
 	}
+	
+	
+	
+	
 	
 	public void eventQuitarArticulo(String llave){
 		
@@ -239,12 +312,6 @@ public class CotizacionView  implements Serializable{
 			return;
 		}
 		
-		if(!isMetalSeleccionado){
-			setMensage(FacesMessage.SEVERITY_WARN, "Cuidado", "Debe seleccionar un producto válido");
-			return;
-		}
-		
-		
 		
 		if(isMetalSeleccionado){
 			if(!this.validarCotizacionMetal()){
@@ -254,6 +321,11 @@ public class CotizacionView  implements Serializable{
 			log.debug("Agregando producto");
 			this.agregarArticuloMetal();
 			
+		}else if(isDiamanteSeleccionado){
+			this.agregarArticuloDiamante();
+		}else{
+			setMensage(FacesMessage.SEVERITY_WARN, "Cuidado", "Debe seleccionar un producto válido");
+			return;
 		}
 		
 		
@@ -263,6 +335,27 @@ public class CotizacionView  implements Serializable{
 		
 	}
 	
+	private void agregarArticuloDiamante(){
+		log.debug("Agregando articulo Diamante");	
+		
+		ArticuloCompraDiamante articulo= new ArticuloCompraDiamante();
+		articulo.setDescripcion(this.diamateCotizado.getDescripcion());		
+		articulo.setValor(this.diamateCotizado.getPreciocotizado());
+		articulo.setQuilaes(this.diamateCotizado.getQuilates());
+		articulo.setPrecioDiamante(new PrecioDiamante());
+		articulo.getPrecioDiamante().setTipoDiamante(this.diamateCotizado);
+		
+		try {
+			this.compraView.agregarArticulo(articulo, this.seguribolsa, this.getProductoSeleccionado().getNombre());
+		} catch (RDNException e) {
+			this.setMensage(FacesMessage.SEVERITY_ERROR, "Cuidado", e.getMessage());
+			return;
+		}finally{
+			this.diamateCotizado= new Diamante();
+			this.isDiamanteSeleccionado=false;
+		}
+		
+	}
 	
 	private void agregarArticuloMetal(){
 		
@@ -302,7 +395,7 @@ public class CotizacionView  implements Serializable{
 		
 		int index=this.productos.indexOf(productoSeleccionado);
 		if(index<0){
-			log.error("Error al recuperar el produco seleccionado");
+			log.error("Error al recuperar el produco seleccionado idCombo "+this.idProductoSeleccionado);
 			this.setMensage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo obtener el ID delproducto seleccionado");
 			return null;
 		}
@@ -335,6 +428,10 @@ public class CotizacionView  implements Serializable{
 		
 		if(isMetalSeleccionado){
 			return "$ "+df2.format( this.articuloMetalCotizacion.getValor() );
+		}
+		
+		if(isDiamanteSeleccionado){
+			return "$ "+df2.format( this.diamateCotizado.getPreciocotizado() );
 		}
 		
 		return "$ "+df2.format( 0.0F );
@@ -438,8 +535,40 @@ public class CotizacionView  implements Serializable{
 
 
 
+	public boolean isDiamanteSeleccionado() {
+		return isDiamanteSeleccionado;
+	}
+
+
+
+	public void setDiamanteSeleccionado(boolean isDiamanteSeleccionado) {
+		this.isDiamanteSeleccionado = isDiamanteSeleccionado;
+	}
+
+
+	public List<DiamantePunto> getPuntosDiamante(){
+		return this.ejbDiamante.getPuntos();
+	}
 	
-  
+	public List<DiamanteColor> getColorDiamante(){
+		return this.ejbDiamante.getColores();
+	}
+	
+	public List<DiamanteLimpieza> getLimpiezaDiamante(){
+		return this.ejbDiamante.getLimpiezas();
+	}
+
+
+
+	public Diamante getDiamateCotizado() {
+		return diamateCotizado;
+	}
+
+
+
+	public void setDiamateCotizado(Diamante diamateCotizado) {
+		this.diamateCotizado = diamateCotizado;
+	}
 
 	
 	

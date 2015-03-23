@@ -18,6 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import clases.business.metales.vo.compra.ArticuloCompra;
+import clases.business.metales.vo.compra.ArticuloCompraDiamante;
 import clases.business.metales.vo.compra.ArticuloCompraMetal;
 import clases.business.metales.vo.compra.BitacoraCompra;
 import clases.business.metales.vo.compra.Compra;
@@ -33,6 +34,7 @@ import clases.vo.cliente.Cliente;
 import clases.vo.dinero.Moneda;
 import clases.vo.tienda.Tienda;
 import clases.vo.tienda.caja.TiendaCajaEfectivoMovimiento;
+import ejb.bussines.DiamanteEJB;
 import ejb.bussines.PropertiesEJB;
 import ejb.bussines.administracion.TiendaCajaEJB;
 import ejb.bussines.exception.RDNException;
@@ -64,6 +66,9 @@ public class CompraEJB {
 	
 	@EJB
 	private TiendaCajaEJB cajaEjb;
+	
+	@EJB
+	private DiamanteEJB ejbDiamante;
 	
 	private static final Logger log = LogManager .getLogger(CompraEJB.class);
 	
@@ -201,8 +206,10 @@ public class CompraEJB {
 			
 			if(articulo instanceof ArticuloCompraMetal){				
 
-				this.registrarArticuloCompraMetal((ArticuloCompraMetal)articulo,  bolsa);
+				this.registrarArticuloCompra((ArticuloCompraMetal)articulo,  bolsa);
 				
+			}else if( articulo instanceof ArticuloCompraDiamante){
+				this.registrarArticuloCompra((ArticuloCompraDiamante)articulo,  bolsa);
 			}
 			
 		}
@@ -241,7 +248,51 @@ public class CompraEJB {
 	}
     
     
-    private void registrarArticuloCompraMetal(ArticuloCompraMetal articulo , Seguribolsa bolsa) throws Exception{
+	 private void registrarArticuloCompra(ArticuloCompraDiamante articulo , Seguribolsa bolsa) throws Exception{
+	    	
+	    	log.info("Guardando lista de articulos de la compra diamante");
+	    	
+	    	
+	    	
+	    	if(articulo.getQuilaes()<=0.0F ){
+				throw new RDNException("Alguno de los artículos a comprar no tiene registrado el peso ");
+			}
+			if(articulo.getPrecioDiamante()==null || articulo.getPrecioDiamante().getTipoDiamante()==null || 
+			  articulo.getPrecioDiamante().getTipoDiamante().getColor()==null  ||
+			  articulo.getPrecioDiamante().getTipoDiamante().getColor().getId()==0||
+			  articulo.getPrecioDiamante().getTipoDiamante().getLimpieza()==null  ||
+			  articulo.getPrecioDiamante().getTipoDiamante().getLimpieza().getId()==0||
+			  articulo.getPrecioDiamante().getTipoDiamante().getPunto()==null  ||
+			  articulo.getPrecioDiamante().getTipoDiamante().getPunto().getId()==0
+			  
+					){
+				throw new RDNException("No se puede realizar la compra, alguno de los articulos no tiene el precio base especificado");
+			}
+			
+			
+			
+			
+			log.info("Validaciones terminadas, se guarda el articulo");
+			
+					
+			// se guarda el usuario modifico con el que se registrara la venta
+			articulo.setUsuarioModifico(new UsuarioModifico(this.usuarioSesion.getNombreUsuario()));
+			articulo.setSeguribolsa(bolsa);
+
+			// si no tienen el peso fino, se calcula
+			
+			articulo.setMoneda(this.ejbProperties.getMonedaSistema());
+			articulo.setPrecioDiamante(this.ejbDiamante.getPrecioDiamante(articulo.getPrecioDiamante().getTipoDiamante()));
+		
+			articulo.setId(0);
+		
+			this.metalesEM.persist(articulo);
+
+	    	
+	    }
+	
+	
+    private void registrarArticuloCompra(ArticuloCompraMetal articulo , Seguribolsa bolsa) throws Exception{
     	
     	log.info("Guardando lista de articulos de la compra");
     	

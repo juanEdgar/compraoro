@@ -37,11 +37,11 @@
 		<td>		
 			<table width="100%">
 			<tr >	
-					<td class="encabezadocampo">Producto *
+					<td class="encabezadocampo">PRODUCTO *
 					</td>
-					<td class="encabezadocampo">Bolsa Seguridad *
+					<td class="encabezadocampo">SEGURIBOLSA *
 					</td>	
-					<td class="encabezadocampo" style="text-align: right;">Cotización
+					<td class="encabezadocampo" style="text-align: right;">VALOR PRODUCTO
 					</td>
 					
 					<td></td>									
@@ -53,7 +53,8 @@
 						<p:selectOneMenu id="comboProducto" value="#{cotizacionView.idProductoSeleccionado}" tabindex="1">
 							<f:selectItem itemLabel="Seleccione un producto" itemValue="0"/>
 							<f:selectItems value="#{cotizacionView.productos}" var="producto" itemLabel="#{producto.nombre}" itemValue="#{producto.id}" />
-							<p:ajax update="@form:valorText, @form:vistaFormularioCotizacion" event="change"	listener="#{cotizacionView.eventProductoSeleccionado()}" />	
+							<p:ajax update="@form:valorText, @form:vistaFormularioCotizacion, @form:vistaFormularioCotizacionDiamante"
+							 event="change"	listener="#{cotizacionView.eventProductoSeleccionado()}" />	
 						</p:selectOneMenu>
 					</td>
 					<td>
@@ -76,17 +77,95 @@
 				</tr>
 				<tr>
 					<td colspan="4">
+					
+					
+					<p:panel id="vistaFormularioCotizacionDiamante" style="border: 0px">
+						<f:subview id="subViewFormularioDiamante" rendered="#{cotizacionView.diamanteSeleccionado}">
+							<br/>
+							<table cellspacing="10 px" width="95%">
+								<tr >	
+									<td class="encabezadocampo" >CATEGORIA *
+									</td>								
+								
+									<td class="encabezadocampo">COLOR *
+									</td>									
+									
+									<td class="encabezadocampo" >LIMPIEZA *
+									</td>
+									<td class="encabezadocampo"  >QUILATES *
+									</td>
+								</tr>								
+								<tr >	
+									<td  >
+											<p:selectOneMenu id="comboCategoria" value="#{cotizacionView.diamateCotizado.punto.id}" tabindex="1">
+												<f:selectItem itemLabel="Seleccione una categoría" itemValue="0"/>
+												<f:selectItems value="#{cotizacionView.puntosDiamante}" var="punto" 
+															   itemLabel="#{punto.rangoPuntos}" itemValue="#{punto.id}" />
+												<p:ajax update="@form:valorText" event="change"	
+														listener="#{cotizacionView.eventCotizar()}" />	
+											</p:selectOneMenu>
+									</td>								
+								
+									<td  >
+											<p:selectOneMenu id="comboColor" value="#{cotizacionView.diamateCotizado.color.id}" tabindex="2">
+												<f:selectItem itemLabel="Seleccione un color" itemValue="0"/>
+												<f:selectItems value="#{cotizacionView.colorDiamante}" var="color" 
+															   itemLabel="#{color.color}" itemValue="#{color.id}" />
+												<p:ajax update="@form:valorText" event="change"	
+														listener="#{cotizacionView.eventCotizar()}" />	
+											</p:selectOneMenu>
+									</td>									
+									
+									<td  >
+											<p:selectOneMenu id="comboLimpieza" value="#{cotizacionView.diamateCotizado.limpieza.id}" tabindex="1">
+												<f:selectItem itemLabel="Seleccione la limpieza" itemValue="0"/>
+												<f:selectItems value="#{cotizacionView.limpiezaDiamante}" var="limpieza" 
+															   itemLabel="#{limpieza.limpieza}" itemValue="#{limpieza.id}" />
+												<p:ajax update="@form:valorText" event="change"	
+														listener="#{cotizacionView.eventCotizar()}" />	
+											</p:selectOneMenu>
+									</td>
+									<td  >
+										<p:inputText id="pesoDiamante" value="#{cotizacionView.diamateCotizado.quilates}">
+											<f:validateDoubleRange maximum="99999.99" minimum="0.01" ></f:validateDoubleRange>
+											<p:ajax update="@form:valorText" event="blur"	listener="#{cotizacionView.eventCotizar()}" />
+										</p:inputText>
+									</td>
+									
+								</tr>
+								<tr>
+									<td colspan="4" class="encabezadocampo" >
+										DESCRIPCIÓN *
+									</td>
+								
+								</tr>
+								<tr>
+									<td colspan="2" >
+										<p:inputTextarea id="descripcionDiamante" style="width: 100%" 
+										maxlength="250" value="#{cotizacionView.diamateCotizado.descripcion}" tabindex="5"/>												
+										
+									</td>
+									<td colspan="2" >
+									</td>
+								
+								</tr>
+							</table>
+						
+						</f:subview>
+					</p:panel>
+					
+					
 						<p:panel id="vistaFormularioCotizacion" style="border: 0px">
 							<f:subview id="subViewFormularioMetal" rendered="#{cotizacionView.metalSeleccionado}">
 								<table cellspacing="10 px" width="95%">
 									<tr >	
-										<td class="encabezadocampo" width="20%">Porcentaje de pureza *
+										<td class="encabezadocampo" width="20%">PORCENTAJE PUREZA *
 										</td>									
-										<td class="encabezadocampo" width="20%">Peso Bruto *
+										<td class="encabezadocampo" width="20%">PESO BRUTO *
 										</td>
-										<td class="encabezadocampo" width="20%">Peso  Neto*
+										<td class="encabezadocampo" width="20%">PESO NETO *
 										</td>
-										<td class="encabezadocampo" width="20%">Descripción*
+										<td class="encabezadocampo" width="20%">DESCRIPCION *
 										</td>
 								
 									</tr>

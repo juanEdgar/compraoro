@@ -65,7 +65,13 @@ public class Diamante extends Producto implements Serializable{
 	
 	@Transient
 	private float quilates=0.0F;
-
+	
+	@Transient
+	private float preciocotizado=0.0F;
+	
+	@Transient
+	private String descripcion;
+	
 	public int getId() {
 		return id;
 	}
@@ -126,27 +132,46 @@ public class Diamante extends Producto implements Serializable{
 	public void setPrecio(PrecioDiamante precio) {
 		this.precio = precio;
 	}
+	
+	
+	public float getPreciocotizado() {
+		return preciocotizado;
+	}
 
-	@Override
-	public boolean equals(Object obj) {
-		
-		if(obj==null){
-			return false;
-		}
-		
-		if(!(obj instanceof Diamante)){
-			return false;
-		}
-		
-		return ((Diamante)obj).getId()==this.getId();
+	public void setPreciocotizado(float preciocotizado) {
+		this.preciocotizado = preciocotizado;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 	
-	@Override
-	public int hashCode() {
-		
-		return this.id;
-	}
 	
+
+//	@Override
+//	public boolean equals(Object obj) {
+//		
+//		if(obj==null){
+//			return false;
+//		}
+//		
+//		if(!(obj instanceof Diamante)){
+//			return false;
+//		}
+//		
+//		return ((Diamante)obj).getId()==this.getId();
+//	}
+//	
+//	@Override
+//	public int hashCode() {
+//		
+//		return this.id;
+//	}
+//	
 	
 	
 }
