@@ -18,13 +18,11 @@ import javax.persistence.EntityManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import clases.business.metales.vo.compra.ArticuloCompra;
 import clases.business.metales.vo.compra.ArticuloCompraMetal;
 import clases.business.metales.vo.compra.Seguribolsa;
 import clases.business.metales.vo.cotizador.Diamante;
 import clases.business.metales.vo.cotizador.Metal;
 import clases.business.metales.vo.cotizador.Producto;
-import clases.login.UsuarioSesion;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
 import ejb.bussines.MetalEJB;
 import ejb.bussines.compra.CompraEJB;

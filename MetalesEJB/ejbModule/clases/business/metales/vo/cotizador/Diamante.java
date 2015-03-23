@@ -9,9 +9,10 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(schema="public", name="Diamante")
@@ -56,7 +57,14 @@ public class Diamante extends Producto implements Serializable{
 	
 	@Column(name="fiIdEstatus")
 	private int estatus;
-
+	
+	
+	@OneToOne(mappedBy="tipoDiamante")	
+	private PrecioDiamante precio;
+	
+	
+	@Transient
+	private float quilates=0.0F;
 
 	public int getId() {
 		return id;
@@ -99,6 +107,26 @@ public class Diamante extends Producto implements Serializable{
 	}
 	
 	
+	
+	public float getQuilates() {
+		return quilates;
+	}
+
+	public void setQuilates(float quilates) {
+		this.quilates = quilates;
+	}
+
+	
+	
+	
+	public PrecioDiamante getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(PrecioDiamante precio) {
+		this.precio = precio;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		

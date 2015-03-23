@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+
+
+<ui:composition template="/ui/template/adminTemplate.xhtml">
+	<ui:define name="content">
+
+		<h:form id="preciosDiamanteForm">
+
+			<p:growl id="growl" showDetail="true" autoUpdate="true"	autlife="4500" />
+
+			<br />
+			<br />
+			<br />
+			<table width="90%" align="center">
+			
+				<tr>
+					<td> Categoría del diamante:
+						<p:selectOneMenu id="idPuntos" value="#{precioDiamanteView.idPuntoSeleccionado}" tabindex="1">
+							<f:selectItems value="#{precioDiamanteView.diamantePuntos}" var="puntos" 
+								itemLabel="#{puntos.rangoPuntos}" itemValue="#{puntos.id}" />
+							<p:ajax update="@form:vistaTabla" event="change"	listener="#{precioDiamanteView.eventCambiarPunto()}" />	
+						</p:selectOneMenu>
+					</td>
+					
+				</tr>
+				<tr>
+
+					<td >
+						<p:panel id="vistaTabla" style="border: 0px">
+						<f:subview id="subViewLista" rendered="#{precioDiamanteView.mostrarTabla()}">		
+						  <p:dataTable var="diamante" value="#{precioDiamanteView.precios}" editable="true" editMode="cell" >
+					        <f:facet name="header">
+					           LISTA DE PRECIOS DE DIAMANTES <h:outputText value="#{precioDiamanteView.puntoActual.rangoPuntos}"/> 
+					        </f:facet>
+					 	
+					 		<p:ajax event="cellEdit" listener="#{precioDiamanteView.onCellEdit}" />
+					 		
+					        <p:columnGroup type="header">
+					            <p:row>
+					                <p:column rowspan="2" headerText="COLOR" />
+					                <p:column colspan="4" headerText="LIMPIEZA" />
+					            </p:row>					           
+					            <p:row>
+					            	<ui:repeat var="limpieza" value="#{precioDiamanteView.diamanteLimpiezas}">
+					                	<p:column headerText="#{limpieza.limpieza}" />
+					                </ui:repeat>
+					            </p:row>
+					        </p:columnGroup>
+					        <p:column style="text-align:right">
+					        	 <h:outputText value="#{diamante.precioLimpieza1.color.color}"/>
+					        </p:column>
+					        <p:column style="text-align:right">
+					        
+					        
+						         <p:cellEditor>
+				                  <f:facet name="output">
+				                  	<h:outputText value="#{diamante.precioLimpieza1.precio.precio}">
+					        			<f:convertNumber type="currency" currencySymbol="USD $" />
+					        		</h:outputText>
+					        	  </f:facet>
+				                  <f:facet name="input">
+				                  	<p:inputText id="precio1" value="#{diamante.precioLimpieza1.precio.precio}" />
+				                  </f:facet>
+				              	</p:cellEditor>
+					        
+					        	
+					        </p:column>
+					         
+					         <p:column style="text-align:right">
+					        
+					        
+						         <p:cellEditor>
+				                  <f:facet name="output">
+				                  	<h:outputText value="#{diamante.precioLimpieza2.precio.precio}">
+					        			<f:convertNumber type="currency" currencySymbol="USD $" />
+					        		</h:outputText>
+					        	  </f:facet>
+				                  <f:facet name="input">
+				                  	<p:inputText id="precio2" value="#{diamante.precioLimpieza2.precio.precio}" />
+				                  </f:facet>
+				              	</p:cellEditor>
+					        
+					        	
+					        </p:column>
+					        
+					        <p:column style="text-align:right">
+					        
+					        
+						         <p:cellEditor>
+				                  <f:facet name="output">
+				                  	<h:outputText value="#{diamante.precioLimpieza3.precio.precio}">
+					        			<f:convertNumber type="currency" currencySymbol="USD $" />
+					        		</h:outputText>
+					        	  </f:facet>
+				                  <f:facet name="input">
+				                  	<p:inputText id="precio3" value="#{diamante.precioLimpieza3.precio.precio}" />
+				                  </f:facet>
+				              	</p:cellEditor>
+					        
+					        	
+					        </p:column>
+					        
+					        <p:column style="text-align:right">
+					        
+					        
+						         <p:cellEditor>
+				                  <f:facet name="output">
+				                  	<h:outputText value="#{diamante.precioLimpieza4.precio.precio}">
+					        			<f:convertNumber type="currency" currencySymbol="USD $" />
+					        		</h:outputText>
+					        	  </f:facet>
+				                  <f:facet name="input">
+				                  	<p:inputText id="precio4" value="#{diamante.precioLimpieza4.precio.precio}" />
+				                  </f:facet>
+				              	</p:cellEditor>
+					        </p:column>						       
+					        </p:dataTable>
+						</f:subview>
+						</p:panel>						
+					</td>
+
+				</tr>
+
+			</table>
+
+
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

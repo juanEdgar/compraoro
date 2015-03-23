@@ -4,6 +4,9 @@ FROM precioDiamanteQuilate
 WHERE FIIDESTATUS=1;
 
 
+CREATE  SEQUENCE SEQ_PRECIODIAMANTE INCREMENT  BY 50
+     MINVALUE 1  
+     START  WITH 1;
 
 
 INSERT INTO diamantecolor(  fiiddiamantecolor,  fccolor)
@@ -29,7 +32,7 @@ INSERT INTO diamantelimpieza(  fiiddiamantelimpieza,  fclimpieza)
 VALUES(  3,  'CON INCLUSIONES.SI1 Y SI2');
 
 INSERT INTO diamantelimpieza(  fiiddiamantelimpieza,  fclimpieza)
-VALUES(  4,  'CON INCLUSIONES.SI1 Y SI2');
+VALUES(  4,  'CON MUCHAS INCLUSIONES.I 1-I2');
 
 
 INSERT INTO diamantepunto(  fiiddiamantepunto,  fcrangopuntos)
@@ -385,3 +388,5 @@ INSERT INTO preciodiamantequilate( fiidpreciodiamante,fiidtipodiamante,fnprecio,
 INSERT INTO preciodiamantequilate( fiidpreciodiamante,fiidtipodiamante,fnprecio,fiidmoneda,fiidestatus,fcusuariomodifico, fdfechamodificacion) values(-559,60,1,2,1,'sys','20150101');
 INSERT INTO preciodiamantequilate( fiidpreciodiamante,fiidtipodiamante,fnprecio,fiidmoneda,fiidestatus,fcusuariomodifico, fdfechamodificacion) values(-560,61,1,2,1,'sys','20150101');
 INSERT INTO preciodiamantequilate( fiidpreciodiamante,fiidtipodiamante,fnprecio,fiidmoneda,fiidestatus,fcusuariomodifico, fdfechamodificacion) values(-561,62,1,2,1,'sys','20150101');
+INSERT INTO preciodiamantequilate( fiidpreciodiamante,fiidtipodiamante,fnprecio,fiidmoneda,fiidestatus,fcusuariomodifico, fdfechamodificacion) values(-562,63,1,2,1,'sys','20150101');
+INSERT INTO preciodiamantequilate( fiidpreciodiamante,fiidtipodiamante,fnprecio,fiidmoneda,fiidestatus,fcusuariomodifico, fdfechamodificacion) values(-563,64,1,2,1,'sys','20150101');
