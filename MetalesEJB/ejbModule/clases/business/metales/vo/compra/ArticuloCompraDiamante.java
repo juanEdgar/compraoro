@@ -39,12 +39,12 @@ public class ArticuloCompraDiamante  extends ArticuloCompra  implements Serializ
 			sb.append("Diamante de ");
 			sb.append(this.quilaes);
 			sb.append(" quilaes, ");
-			sb.append("color  ");
-			sb.append(this.getPrecioDiamante().getTipoDiamante().getColor().getColor());
-			sb.append(", categoria ");
-			sb.append(this.getPrecioDiamante().getTipoDiamante().getPunto().getRangoPuntos());
-			sb.append(", limpieza ");
-			sb.append(this.getPrecioDiamante().getTipoDiamante().getLimpieza().getLimpieza());
+//			sb.append("color  ");
+//			sb.append(this.getPrecioDiamante().getTipoDiamante().getColor().getColor());
+//			sb.append(", categoria ");
+//			sb.append(this.getPrecioDiamante().getTipoDiamante().getPunto().getRangoPuntos());
+//			sb.append(", limpieza ");
+//			sb.append(this.getPrecioDiamante().getTipoDiamante().getLimpieza().getLimpieza());
 			
 			return sb.toString().toUpperCase();
 		}

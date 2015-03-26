@@ -243,9 +243,12 @@ public class CotizacionView  implements Serializable{
 		log.debug("Event eventDiamanteSeleccionado");
 		this.isDiamanteSeleccionado=true;
 		
-		if(this.diamateCotizado==null){
-			this.diamateCotizado=new Diamante();
-		}
+		
+	
+		this.diamateCotizado= new Diamante();
+		this.diamateCotizado.setColor(new DiamanteColor());
+		this.diamateCotizado.setLimpieza(new DiamanteLimpieza());
+		this.diamateCotizado.setPunto(new DiamantePunto());
 		
 		this.cotizarDiamante();
 		
@@ -253,9 +256,9 @@ public class CotizacionView  implements Serializable{
 	
 	private void eventMetalSeleccionado(){
 		this.isMetalSeleccionado= true;
-		if(this.articuloMetalCotizacion==null){
+		
 			this.articuloMetalCotizacion= new ArticuloCompraMetal();
-		}
+		
 		this.cotizarMetal();
 		
 	}
@@ -290,6 +293,7 @@ public class CotizacionView  implements Serializable{
 		
 		log.debug("Agragando articulo bolsa "+this.getSeguribolsa());
 		
+		try{
 		
 		if( this.seguribolsa==null || this.seguribolsa.trim().equals("") ){
 			setMensage(FacesMessage.SEVERITY_WARN, "Cuidado", "Debe agregar el código de bolsa de seguridad");
@@ -327,11 +331,13 @@ public class CotizacionView  implements Serializable{
 			setMensage(FacesMessage.SEVERITY_WARN, "Cuidado", "Debe seleccionar un producto válido");
 			return;
 		}
+		}finally{
 		
-		
-		// se resetea el valor del combo
-		this.idProductoSeleccionado=0;
-	
+			// se resetea el valor del combo
+			this.idProductoSeleccionado=0;
+			this.isDiamanteSeleccionado=false;
+			this.isMetalSeleccionado=false;
+		}
 		
 	}
 	
@@ -344,6 +350,8 @@ public class CotizacionView  implements Serializable{
 		articulo.setQuilaes(this.diamateCotizado.getQuilates());
 		articulo.setPrecioDiamante(new PrecioDiamante());
 		articulo.getPrecioDiamante().setTipoDiamante(this.diamateCotizado);
+
+		
 		
 		try {
 			this.compraView.agregarArticulo(articulo, this.seguribolsa, this.getProductoSeleccionado().getNombre());
@@ -351,9 +359,12 @@ public class CotizacionView  implements Serializable{
 			this.setMensage(FacesMessage.SEVERITY_ERROR, "Cuidado", e.getMessage());
 			return;
 		}finally{
-			this.diamateCotizado= new Diamante();
+	
+			this.diamateCotizado= new Diamante();			
 			this.isDiamanteSeleccionado=false;
+			log.debug("Fin agregar diamante");
 		}
+		
 		
 	}
 	
