@@ -293,55 +293,59 @@ public class CotizacionView  implements Serializable{
 		
 		log.debug("Agragando articulo bolsa "+this.getSeguribolsa());
 		
-		try{
+
 		
-		if( this.seguribolsa==null || this.seguribolsa.trim().equals("") ){
-			setMensage(FacesMessage.SEVERITY_WARN, "Cuidado", "Debe agregar el código de bolsa de seguridad");
-			return;
-		}
-		
-		try {
-			log.debug("buscando bolsa");
-			Seguribolsa s=this.EjbCompra.buscarSeguribolsaPorCodigo(this.seguribolsa);
-			if(s!=null ){
-				log.debug("la bolsa existe  ");
-				throw new RDNException("La seguribolsa que intenta ingresar ya existe, cambiar código");
-			}
-		} catch (RDNException e) {
-			setMensage(FacesMessage.SEVERITY_WARN, "Cuidado", e.getMessage());
-			return;
-		}catch( Exception e ){
-			log.error(e);
-			setMensage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
-			return;
-		}
-		
-		
-		if(isMetalSeleccionado){
-			if(!this.validarCotizacionMetal()){
-				log.debug("No se puede agragar producto, faltan campos");
+			if( this.seguribolsa==null || this.seguribolsa.trim().equals("") ){
+				setMensage(FacesMessage.SEVERITY_WARN, "Cuidado", "Debe agregar el código de bolsa de seguridad");
 				return;
 			}
-			log.debug("Agregando producto");
-			this.agregarArticuloMetal();
-			
-		}else if(isDiamanteSeleccionado){
-			this.agregarArticuloDiamante();
-		}else{
-			setMensage(FacesMessage.SEVERITY_WARN, "Cuidado", "Debe seleccionar un producto válido");
-			return;
-		}
-		}finally{
+		
+			try {
+				log.debug("buscando bolsa");
+				Seguribolsa s=this.EjbCompra.buscarSeguribolsaPorCodigo(this.seguribolsa);
+				if(s!=null ){
+					log.debug("la bolsa existe  ");
+					throw new RDNException("La seguribolsa que intenta ingresar ya existe, cambiar código");
+				}
+			} catch (RDNException e) {
+				setMensage(FacesMessage.SEVERITY_WARN, "Cuidado", e.getMessage());
+				return;
+			}catch( Exception e ){
+				log.error(e);
+				setMensage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
+				return;
+			}
+		
+		
+			if(isMetalSeleccionado){
+				if(!this.validarCotizacionMetal()){
+					log.debug("No se puede agragar producto, faltan campos");
+					return;
+				}
+				log.debug("Agregando producto");
+				if(!this.agregarArticuloMetal()){
+					return;
+				}
+				
+			}else if(isDiamanteSeleccionado){
+				if(!this.agregarArticuloDiamante()){
+					return;
+				}
+			}else{
+				setMensage(FacesMessage.SEVERITY_WARN, "Cuidado", "Debe seleccionar un producto válido");
+				return;
+			}
+
 		
 			// se resetea el valor del combo
 			this.idProductoSeleccionado=0;
 			this.isDiamanteSeleccionado=false;
 			this.isMetalSeleccionado=false;
-		}
+	
 		
 	}
 	
-	private void agregarArticuloDiamante(){
+	private boolean agregarArticuloDiamante(){
 		log.debug("Agregando articulo Diamante");	
 		
 		ArticuloCompraDiamante articulo= new ArticuloCompraDiamante();
@@ -355,20 +359,22 @@ public class CotizacionView  implements Serializable{
 		
 		try {
 			this.compraView.agregarArticulo(articulo, this.seguribolsa, this.getProductoSeleccionado().getNombre());
-		} catch (RDNException e) {
-			this.setMensage(FacesMessage.SEVERITY_ERROR, "Cuidado", e.getMessage());
-			return;
-		}finally{
-	
 			this.diamateCotizado= new Diamante();			
 			this.isDiamanteSeleccionado=false;
 			log.debug("Fin agregar diamante");
+			return true;
+		} catch (RDNException e) {
+			this.setMensage(FacesMessage.SEVERITY_ERROR, "Cuidado", e.getMessage());
+			return false;
 		}
+	
+			
+		
 		
 		
 	}
 	
-	private void agregarArticuloMetal(){
+	private boolean agregarArticuloMetal(){
 		
 		log.debug("Agregando articulo metal");		
 		
@@ -385,19 +391,15 @@ public class CotizacionView  implements Serializable{
 		
 		try {
 			this.compraView.agregarArticulo(this.articuloMetalCotizacion, this.seguribolsa, mseleccionado.getNombre());
-		} catch (RDNException e) {
-			this.setMensage(FacesMessage.SEVERITY_ERROR, "Cuidado", e.getMessage());
-			return;
-		}finally{
 			this.articuloMetalCotizacion= new ArticuloCompraMetal();
 			this.isMetalSeleccionado=false;
+		} catch (RDNException e) {
+			this.setMensage(FacesMessage.SEVERITY_ERROR, "Cuidado", e.getMessage());
+			return false;
 		}
 		 
-		
-
-		log.debug("Articulo agregado");
-		
-		
+		log.debug("Articulo agregado");		
+		return true;
 	}
 	
 	private Producto getProductoSeleccionado(){

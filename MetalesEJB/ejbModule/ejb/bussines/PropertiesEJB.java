@@ -24,6 +24,7 @@ public class PropertiesEJB {
 
 
 	private  Moneda MONEDA_SISTEMA;
+	private  Moneda MONEDA_DOLAR;
 	private String codigoMonedasistema="MXP";
 	private String codigoDolar="USD";
 	
@@ -55,16 +56,17 @@ public class PropertiesEJB {
     			throw new Exception("No existe la moneda para el sistema de codigo"+this.codigoMonedasistema);
     		}
     		
-    		return this.MONEDA_SISTEMA;
-    	}else{
-    		return this.MONEDA_SISTEMA;
+    		
     	}
+    	
+    	return this.MONEDA_SISTEMA;
+    	
     	
     }
     
  public  Moneda getMonedaDolar() throws Exception{
     	
-    	if(MONEDA_SISTEMA==null){
+    	if(MONEDA_DOLAR==null){
     		
     		TypedQuery<Moneda> query=null;
     		
@@ -73,16 +75,16 @@ public class PropertiesEJB {
     			 query= metalesEM.createQuery("SELECT M FROM Moneda M where M.codigo= :codigo" ,Moneda.class);
     	    	 query.setParameter("codigo", this.codigoDolar);
     	    	
-    	    	 this.MONEDA_SISTEMA=query.getSingleResult();
+    	    	 this.MONEDA_DOLAR=query.getSingleResult();
     			
     		}catch(javax.persistence.NoResultException nre){
     			throw new Exception("No existe la moneda para el sistema de codigo"+this.codigoMonedasistema);
     		}
-    		
-    		return this.MONEDA_SISTEMA;
-    	}else{
-    		return this.MONEDA_SISTEMA;
     	}
+    		
+    		return this.MONEDA_DOLAR;
+    	
+    	
     	
     }
     

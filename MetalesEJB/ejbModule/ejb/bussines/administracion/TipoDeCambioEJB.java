@@ -265,7 +265,7 @@ public class TipoDeCambioEJB {
     	
     	try {
     		
-    		TypedQuery<TipoDeCambio> query= metalesEM.createQuery("SELECT TC FROM TipoDeCambio TC where  TC.estatus=1" ,TipoDeCambio.class);
+    		TypedQuery<TipoDeCambio> query= metalesEM.createQuery("SELECT TC FROM TipoDeCambio TC where  TC.estatus=1 order by TC.monedaBase.id,TC.monedaCambio.id" ,TipoDeCambio.class);
     		tcList= query.getResultList();
     		
     		

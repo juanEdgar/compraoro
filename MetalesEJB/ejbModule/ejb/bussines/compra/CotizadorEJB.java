@@ -116,7 +116,7 @@ public class CotizadorEJB {
         	
         	PrecioDiamante precio=this.ejbDiamante.getPrecioDiamante(diamante);
         	
-        	log.info("Precio del diamante: "+precio.getPrecio());
+        	log.info("Precio del diamante: "+precio.getPrecio()+" moneda: "+precio.getMoneda().getNombre());
     		
     		float valorTC;
     		
@@ -195,7 +195,8 @@ public class CotizadorEJB {
     		
     		// se obtiene el valor de la cotizacion , peso del metal por precio de gramo del metal por tipo de cambio
     		return  (valorTC* metalBD.getPrecioGramo().getPrecio() )* // esto da el precio de gramo de metal fino por el tipo de cambio a aplicar
-    				cantidadMetalFino;
+    				cantidadMetalFino*
+    				metalBD.getPrecioGramo().getAforo()/100F; // por el aforo de prestamo
     		
     		
     		

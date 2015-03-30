@@ -74,7 +74,7 @@ public class Seguribolsa implements Serializable{
 	}
 
 	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+		this.codigo = codigo.toUpperCase();
 	}
 
 	public int getEstatus() {

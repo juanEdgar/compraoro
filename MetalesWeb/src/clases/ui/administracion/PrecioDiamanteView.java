@@ -19,7 +19,6 @@ import clases.business.metales.vo.cotizador.Diamante;
 import clases.business.metales.vo.cotizador.DiamanteColor;
 import clases.business.metales.vo.cotizador.DiamanteLimpieza;
 import clases.business.metales.vo.cotizador.DiamantePunto;
-import clases.business.metales.vo.cotizador.PrecioDiamante;
 import clases.util.compra.FilaPreciosDiamante;
 import ejb.bussines.DiamanteEJB;
 import ejb.bussines.exception.RDNException;

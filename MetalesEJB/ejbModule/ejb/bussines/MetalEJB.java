@@ -89,9 +89,16 @@ public class MetalEJB {
   			if(metal==null|| metal.getId()==0){
   				throw new RDNException("No se puede actualizar el precio de un metal no existente");
   			}
+  			
+  			if(metal.getPrecioGramo()==null ||  metal.getPrecioGramo().getAforo()>100.0F || metal.getPrecioGramo().getAforo()<40F) {
+  				throw new RDNException("No se puede actualizar el precio de un metal con aforo mayor que 100 o menor que 40");
+  			}
+  			
   			if(precioGramo<=0){
   				throw new RDNException("El precio por gramo debe ser mayor que cero");
   			}
+  			
+  			
   			if(moneda==null || moneda.getId()==0){
   				throw new RDNException("La moneda del nuevo precio debe existir");
   			}
@@ -113,6 +120,7 @@ public class MetalEJB {
   			precioNuevo.setMoneda(moneda);
   			precioNuevo.setMetal(metal);
   			precioNuevo.setPrecio(precioGramo);
+  			precioNuevo.setAforo(metal.getPrecioGramo().getAforo());
   			this.metalesEM.persist(precioNuevo);
   			
   			log.info("Precio nuevo guardado");

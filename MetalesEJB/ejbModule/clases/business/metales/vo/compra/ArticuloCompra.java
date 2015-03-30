@@ -63,8 +63,6 @@ public    class ArticuloCompra implements Serializable {
 		
 		
 		
-		
-		
 		private UsuarioModifico usuarioModifico;
 		
 		

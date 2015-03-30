@@ -45,6 +45,8 @@ public class ArticuloCompraMetal  extends ArticuloCompra  implements Serializabl
 		@JoinColumn(name="fiidpreciometalgramofino")
 		private PrecioMetal precioMetal;
 		
+	
+		
 		@Column(name="fnPesoFino")
 		private float pesoFino;
 		
@@ -72,6 +74,7 @@ public class ArticuloCompraMetal  extends ArticuloCompra  implements Serializabl
 		public void setPrecioMetal(PrecioMetal precioMetal) {
 			this.precioMetal = precioMetal;
 		}
+		
 		
 		
 		

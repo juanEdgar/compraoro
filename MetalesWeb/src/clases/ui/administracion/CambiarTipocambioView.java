@@ -61,6 +61,7 @@ public class CambiarTipocambioView implements Serializable{
 			try{
 				this.ejbTC.actualizarTipoDeCambio(tcSeleccionado.getMonedaBase(), tcSeleccionado.getMonedaCambio(), tcSeleccionado.getValor());
 				this.setMensage(FacesMessage.SEVERITY_INFO, "Correcto", "Precio actualizado correctamente");
+				this.init();
 			}catch(Exception e){
 				if(!(e instanceof RDNException)){
 					log.error(e);
