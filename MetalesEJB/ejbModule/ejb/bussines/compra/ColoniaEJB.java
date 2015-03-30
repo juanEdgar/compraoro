@@ -14,12 +14,9 @@ import javax.persistence.TypedQuery;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import clases.login.QualifierUsuarioSesionTienda;
 import clases.login.UsuarioSesion;
-import clases.login.UsuarioSesionTienda;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
 import clases.vo.cliente.Colonia;
-import clases.vo.cliente.Estado;
 import clases.vo.cliente.Municipio;
 import ejb.bussines.exception.RDNException;
 
@@ -31,7 +28,7 @@ private static final Logger log = LogManager .getLogger(ColoniaEJB.class);
 	@Inject @MetalesEM
 	private EntityManager metalesEM;
 	
-	@Inject @QualifierUsuarioSesionTienda
+	@Inject 
 	private UsuarioSesion usuarioSesion;
 	
 	@Resource
@@ -43,7 +40,7 @@ private static final Logger log = LogManager .getLogger(ColoniaEJB.class);
 		try {
 			log.info("Alta de Colonia");
 			
-			UsuarioSesionTienda usuarioTienda = (UsuarioSesionTienda) this.usuarioSesion;
+			UsuarioSesion usuarioTienda =  this.usuarioSesion;
     		
     			if (usuarioTienda.getTienda() == null || usuarioTienda.getTienda().getId() <= 0) {
     				throw new Exception("La tienda en sesion es invalida, no se puede dar de alta a la Colonia");

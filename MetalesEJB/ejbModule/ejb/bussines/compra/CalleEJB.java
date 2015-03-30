@@ -14,14 +14,10 @@ import javax.persistence.TypedQuery;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import clases.login.QualifierUsuarioSesionTienda;
 import clases.login.UsuarioSesion;
-import clases.login.UsuarioSesionTienda;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
 import clases.vo.cliente.Calle;
 import clases.vo.cliente.Colonia;
-import clases.vo.cliente.Estado;
-import clases.vo.cliente.Municipio;
 import ejb.bussines.exception.RDNException;
 
 @Stateless
@@ -32,7 +28,7 @@ private static final Logger log = LogManager .getLogger(CalleEJB.class);
 	@Inject @MetalesEM
 	private EntityManager metalesEM;
 	
-	@Inject @QualifierUsuarioSesionTienda
+	@Inject 
 	private UsuarioSesion usuarioSesion;
 	
 	@Resource

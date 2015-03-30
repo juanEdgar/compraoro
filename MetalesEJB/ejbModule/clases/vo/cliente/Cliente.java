@@ -17,22 +17,15 @@ import clases.vo.tienda.Tienda;
 @Table(schema="public", name="Cliente")
 @DiscriminatorValue("-1")
 public class Cliente extends Persona implements Serializable{
-	
-	
-	
-	
 
 	private static final long serialVersionUID = 20365790312875790L;
-
-	{
-		
+	
+	{	
 		this.estatusCliente= new Estatus(1);
 	}
 		
 	public Cliente() {
 		super();
-		
-		
 	}
 	
 	public Cliente(int id){
@@ -53,6 +46,10 @@ public class Cliente extends Persona implements Serializable{
 	private Estatus estatusCliente;
 	
 	private UsuarioModifico usuarioModificoCliente;
+	
+	@OneToOne
+	@JoinColumn(name="fiIdDireccion")
+	private Direccion direccion;
 
 	public Tienda getTienda() {
 		return tienda;
@@ -79,6 +76,14 @@ public class Cliente extends Persona implements Serializable{
 	public void setUsuarioModificoCliente(UsuarioModifico usuarioModificoCliente) {
 		super.setUsuarioModifico(usuarioModificoCliente);
 		this.usuarioModificoCliente = usuarioModificoCliente;
+	}
+
+	public Direccion getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
 	
 	

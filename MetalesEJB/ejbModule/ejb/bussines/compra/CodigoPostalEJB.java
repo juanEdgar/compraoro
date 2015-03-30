@@ -14,12 +14,9 @@ import javax.persistence.TypedQuery;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import clases.login.QualifierUsuarioSesionTienda;
 import clases.login.UsuarioSesion;
-import clases.login.UsuarioSesionTienda;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
 import clases.vo.cliente.CodigoPostal;
-import clases.vo.cliente.Colonia;
 import clases.vo.cliente.Municipio;
 import ejb.bussines.exception.RDNException;
 
@@ -31,7 +28,7 @@ private static final Logger log = LogManager .getLogger(CodigoPostalEJB.class);
 	@Inject @MetalesEM
 	private EntityManager metalesEM;
 	
-	@Inject @QualifierUsuarioSesionTienda
+	@Inject 
 	private UsuarioSesion usuarioSesion;
 	
 	@Resource
@@ -43,7 +40,7 @@ private static final Logger log = LogManager .getLogger(CodigoPostalEJB.class);
 		try {
 			log.info("Alta de Codigo");
 			
-			UsuarioSesionTienda usuarioTienda = (UsuarioSesionTienda) this.usuarioSesion;
+			UsuarioSesion usuarioTienda = this.usuarioSesion;
     		
     			if (usuarioTienda.getTienda() == null || usuarioTienda.getTienda().getId() <= 0) {
     				throw new Exception("La tienda en sesion es invalida, no se puede dar de alta a la codigo");
@@ -120,6 +117,38 @@ private static final Logger log = LogManager .getLogger(CodigoPostalEJB.class);
 	    		
 		} catch (Exception e) {
 				log.error("Error al buscar el cliente",e);
+				throw e;
+		}
+	}
+	
+public List<CodigoPostal> obtenerCodigosPorCodigo(String codigoPostal) throws RDNException, Exception {
+    	
+    	List<CodigoPostal> listaCodigos = null;
+    	
+    	try {
+    		log.info("Recuperando la lista de codigos");
+    		
+    		TypedQuery<CodigoPostal> query=null;
+    		boolean sinResultados= false;
+    		
+    		try {
+	        	StringBuilder consulta= new StringBuilder("SELECT C FROM CodigoPostal C where lower(C.codigoPostal)  LIKE :codigo");
+	    		query = metalesEM.createQuery( consulta.toString(), CodigoPostal.class);
+	    		query.setParameter("codigo","%" + codigoPostal.toLowerCase() + "%");
+	    		listaCodigos = query.getResultList();
+	    	    	 
+	    		} catch(javax.persistence.NoResultException nre){
+	    			sinResultados=true;
+	    		}
+	    		if (listaCodigos==null || sinResultados || listaCodigos.size()==0){
+	    			return null;
+	    		}
+    		
+	    		log.info("Lista de colonias recuperados: " + listaCodigos.size());
+	    		return listaCodigos;
+	    		
+		} catch (Exception e) {
+				log.error("Error al buscar la colonia",e);
 				throw e;
 		}
 	}

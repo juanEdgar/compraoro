@@ -22,6 +22,7 @@ import clases.business.metales.vo.compra.ArticuloCompra;
 import clases.business.metales.vo.compra.Compra;
 import clases.business.metales.vo.compra.Seguribolsa;
 import clases.vo.cliente.Cliente;
+import clases.vo.cliente.Direccion;
 import ejb.bussines.compra.CompraEJB;
 import ejb.bussines.exception.RDNException;
 
@@ -46,6 +47,7 @@ public class CompraView implements Serializable{
 	//private List<ArticuloCompra> articulos;
 	private Compra compra;
 	private Cliente cliente;
+	private Direccion direccion;
 	
 	@EJB
 	private CompraEJB ejbCompra;
@@ -88,9 +90,6 @@ public class CompraView implements Serializable{
 			this.compra.getBolsas().remove(indexBolsa);
 		}
 			
-		
-		
-		
 	}
 	
 	public void agregarArticulo(ArticuloCompra articulo, String codigoBolsa, String tipo) throws RDNException{
@@ -129,13 +128,9 @@ public class CompraView implements Serializable{
 			
 		}
 		
-		
-		
 		if(!bolsa.getTipo().equals(tipo)){
 			throw new RDNException("La bolsa no corresponde al tipo de metal seleccionado");
 		}
-		
-		
 		
 		if(bolsa.getArticulosCompra()==null){
 			log.debug("se crea lista de articulos");
@@ -170,17 +165,15 @@ public class CompraView implements Serializable{
 			}
 			
 		}
-		
-		return total;
-		
+		return total;	
 	}
-	
 	
 	@PostConstruct
 	private void init(){
 		
 		this.compra= new Compra();
 		this.cliente= new Cliente();
+		this.setDireccion(new Direccion());
 	}
 	
 	public boolean mostrarTabla(){
@@ -192,38 +185,29 @@ public class CompraView implements Serializable{
 		}
 		return false;
 	}
-	
-	
 
 	public String getTipoCliente(){
 		return this.cliente.getIdPersona()==0?"NUEVO":"CONOCIDO";
 	}
 	
 	public String eventConfirmarOperacion(){
-	
 		
 		log.debug("Inicia el guardado de los datos");
 		
-		try{
-			
-			
+		try {
 			
 			log.debug("Lista de bolsas a mandar: "+this.compra.getBolsas().size());
 			
 			// limpiamos los ID
-			
-			
-			
+
+			this.cliente.setDireccion(this.direccion);
 			this.ejbCompra.registrarClienteCompra(this.cliente,this.compra);
 			
 			log.debug("OK, operacion realizada con éxito");
 			
 			this.endConversation();			
 			return this.navegacionCotizacion();
-			
-			
-			
-		}catch(RDNException rdnE){
+		} catch(RDNException rdnE){
 			
 			log.error("Error RDN en alta  cliente",rdnE);
 			FacesContext context= FacesContext.getCurrentInstance();
@@ -235,11 +219,7 @@ public class CompraView implements Serializable{
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo dar de alta al cliente"+e.getMessage()));
 			return null;
 		}
-		
-		
-	
 	}
-	
 
 	public String navegacionCliente(){
 		log.debug("navega cliente");
@@ -283,12 +263,6 @@ public class CompraView implements Serializable{
 		this.conversation = conversation;
 	}
 
-	
-	
-
-	
-	
-
 	public Compra getCompra() {
 		return compra;
 	}
@@ -307,6 +281,14 @@ public class CompraView implements Serializable{
 	
 	public int getNumeroArticulo(){
 		return ++this.numeroArticulo;
+	}
+
+	public Direccion getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
 
 

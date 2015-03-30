@@ -1,223 +1,200 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
-
-
-
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 
 <ui:composition template="/ui/template/cajeroTemplate.xhtml">
 	<ui:define name="content">
 
+		<h:head>
+			<link type="text/css" rel="stylesheet"
+				href="#{request.contextPath}/css/compra/compraMetal.css" />
+		</h:head>
 
-<h:head>
-<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/compra/compraMetal.css" />
-	
-</h:head>
+		<h:form id="busquedaCliente">
+			<p:growl id="growl" showDetail="true" life="4500"></p:growl>
+			<table width="90%" align="center">
+				<tr>
+					<td>
+						<table cellspacing="5px" cellpadding="2px" style="font-size: 12px">
+							<tr>
+								<td colspan="5"><p:commandButton
+										action="#{compraView.navegacionCotizacion()}" value="ATRAS"
+										icon="ui-icon-circle-triangle-w" styleClass="callToAction"
+										validateClient="false">
+									</p:commandButton> <br /> <br /></td>
+							</tr>
+							<tr>
+								<td class="encabezadocampo">Nombre *</td>
 
+								<td class="encabezadocampo">Segundo Nombre</td>
 
-<h:form id="busquedaCliente">
+								<td class="encabezadocampo">Apellido Paterno *</td>
+								<td class="encabezadocampo">Apellido Materno</td>
+								<td class="encabezadocampo">Fecha Nacimiento *</td>
+								<td></td>
+							</tr>
 
-	<p:growl id="growl" showDetail="true"  life="4500" ></p:growl>
-	
+							<tr>
+								<td><p:inputText value="#{compraView.cliente.nombre}"
+										tabindex="1" /></td>
 
-	<table width="90%" align="center">
-		<tr>
-			<td>
-				
-				
-			<table cellspacing="5px" cellpadding="2px" style="font-size: 12px">
-			<tr>
-				<td colspan="5">
-					<p:commandButton action="#{compraView.navegacionCotizacion()}" value="ATRAS" icon="ui-icon-circle-triangle-w" 
-							                styleClass="callToAction" validateClient="false">
-					</p:commandButton>
-					<br/>
-					<br/>
-				</td>
-			</tr>
-			<tr>
-				<td class="encabezadocampo">Nombre *
-				</td>
-				
-				<td class="encabezadocampo">Segundo Nombre 
-				</td>
-				
-				<td class="encabezadocampo"> Apellido Paterno *
-				</td>
-				<td class="encabezadocampo"> Apellido Materno 
-				</td>
-				<td class="encabezadocampo">Fecha Nacimiento *
-				</td>
-				<td></td>
-			</tr>
-			
-			<tr>
-				<td>	
-					<p:inputText value="#{compraView.cliente.nombre}"  tabindex="1"/>
-				</td>
-				
-				
-				<td>
-					<p:inputText value="#{compraView.cliente.segundoNombre}" tabindex="2" />
-					
-				</td>
-				<td>
-					<p:inputText value="#{compraView.cliente.apellidoPaterno}"  tabindex="3" />
-				
-				</td>
-				<td>
-					<p:inputText value="#{compraView.cliente.apellidoMaterno}" tabindex="4"/>
-				</td>
-				<td>
-					<p:outputLabel for="fechaCalendar"  />
-					<p:calendar  value="#{compraView.cliente.fechaNacimiento}" id="fechaCalendar"  tabindex="5" mindate="01/01/1920"
-								 pattern="dd/MM/yyyy" mask="true"  navigator="true" locale="es" maxdate="#{clienteView.metodoFechaMaximaNacimiento()}" 
-								 yearRange="c-35:c+10"
-								 />
-				</td>
-				<td colspan="5" align="right"  >
-					<p:commandButton action="#{clienteView.eventBuscarCliente()}" value="BUSCAR" styleClass="callToAction"
-					                 icon="ui-icon-search" iconPos="right" tabindex="6"
-					                 actionListener="#{clienteView.validarBusquedaCliente()}" 
-					                 update="@form:busquedaResultado, @form:growl, @form:subViewResultados,@form:subViewAlta"
-					                 />
-				</td>
-			</tr>
-			
-			
-		</table>
-	
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<br></br>
-				<br></br>
-				<p:panel id="busquedaResultado" >
-					<f:subview id="subViewResultados" rendered="#{clienteView.mostrarListaClientes}">
-						<BR/>
-						RESULTADOS DE LA BÚSQUEDA
-						<BR/>
-						<BR/>
-						<center>
-							<p:dataTable   rendered="#{clienteView.mostrarListaClientes}" value="#{clienteView.listaClientes}" 
-											var="cliente" id="tablaClientes" >
-										
-								<p:column headerText="Seleccionar" width="5%" style="text-align:center;">									
-									<p:commandButton action="#{clienteView.eventClienteEncontrado(cliente.idPersona)}"  
-													 id="cliente#{cliente.idPersona}" icon="ui-icon-star" />
-								</p:column>
-								<p:column headerText="NOMBRE" width="15%">
-									<h:outputText value="#{cliente.nombre}" />
-								</p:column>
-								<p:column headerText="SEGUNDO NOMBRE" width="15%">
-									<h:outputText value="#{cliente.segundoNombre}" />
-								</p:column>
-								<p:column headerText="APELLIDO PATERNO" width="20%">									
-										<h:outputText value="#{cliente.apellidoPaterno}"  />									
-								</p:column>
-								<p:column headerText="APELLIDO MATERNO" width="20%">									
-										<h:outputText value="#{cliente.apellidoMaterno}"  />									
-								</p:column>
-								<p:column headerText="FECHA NACIMIENTO" width="10%">									
-										<h:outputText value="#{cliente.fechaNacimientoFormateada}"  />									
-								</p:column>
-							</p:dataTable>
-						</center>
-					</f:subview>
-					
-					<f:subview id="subViewAlta" rendered="#{clienteView.mostarAltaCliente}">
-						<table>
-						<tr>
-							<td>	
-								No hay coincidencias para la información ingresada.
-								<br></br>
-								Verifique los datos para una busqueda.
-								<br/><br/>
-								O puede crear un cliente nuevo con la información proporcionada, dando clic en el botón anexo.
-							</td>
-							<td>
-								<p:commandButton action="#{clienteView.eventAltaCliente()}" value="ALTA DE CLIENTE" 
-												 iconPos="right" icon="ui-icon-circle-check"
-								/>
-							</td>
-							<h:form>
-							    <p:growl id="msgs" showDetail="true" />
-							 
-							    <h:panelGrid columns="2" cellpadding="5">
-							        <p:outputLabel value="Estado:" for="estadoAutocomplete" />
-							        <p:autoComplete id="estadoAutocomplete" value="#{direccionView.estado}" var="estado" 
-							        	completeMethod="#{direccionView.completeEstados}"
-							        	itemLabel="#{estado.nombre}" itemValue="#{estado}" converter="#{estadoConverter}">
-							        	<p:ajax event="itemSelect"  listener="#{direccionView.handleEstadoSeleccionado}"/>
-							        </p:autoComplete>
+								<td><p:inputText
+										value="#{compraView.cliente.segundoNombre}" tabindex="2" /></td>
+								<td><p:inputText
+										value="#{compraView.cliente.apellidoPaterno}" tabindex="3" />
 
-							        <p:outputLabel value="Municipio" for="municipioA" />
-							        <p:autoComplete id="municipioA" value="#{direccionView.municipio}" var="municipio" 
-							        completeMethod="#{direccionView.completeMunicipios}"
-							        itemLabel="#{municipio.nombre}" itemValue="#{municipio}" converter="#{municipioConverter}">
-							        <p:ajax event="itemSelect"  listener="#{direccionView.handleMunicipioSeleccionado}"/>
-							        </p:autoComplete>
-							   		
-							   		<p:outputLabel value="Colonia" for="coloniaA" />
-							        <p:autoComplete id="coloniaA" value="#{direccionView.colonia}" var="colonia" 
-							        itemLabel="#{colonia.nombre}" itemValue="#{colonia}" converter="#{coloniaConverter}"
-							        completeMethod="#{direccionView.completeColonias}" >
-							        <p:ajax event="itemSelect" listener="#{direccionView.handleColoniaSeleccionada}"/>
-							        </p:autoComplete>
-							        
-							        <p:outputLabel value="Calle" for="calleA" />
-							        <p:autoComplete id="calleA" value="#{direccionView.calle}" var="calle" 
-							        itemLabel="#{calle.nombre}" itemValue="#{calle}" converter="#{calleConverter}"
-							        completeMethod="#{direccionView.completeCalles}" >
-							        <p:ajax event="itemSelect" listener="#{direccionView.handleCalleSeleccionada}"/>
-							        </p:autoComplete>
-							        
-							        <p:outputLabel value="Codigo" for="codigo" />
-							        <p:autoComplete id="codigo" value="#{direccionView.codigo}" var="cp"
-							        itemLabel="#{cp.codigoPostal}" itemValue="#{cp}" converter="#{codigoPostalConverter}"
-							        completeMethod="#{direccionView.completeCodigos}" >
-							        <p:ajax event="itemSelect" listener="#{direccionView.handleCodigoSeleccionado}"/>
-							        </p:autoComplete>
-							        
-							        <p:outputLabel value="No. Exterior" for="noExt" />
-									<h:inputText id="noExt" value="#{direccionView.numeroExt}" />
-									
-									<p:outputLabel value="No. Interior" for="noInt" />
-									<h:inputText id="noInt" value="#{direccionView.numeroInt}" />
+								</td>
+								<td><p:inputText
+										value="#{compraView.cliente.apellidoMaterno}" tabindex="4" />
+								</td>
+								<td><p:outputLabel for="fechaCalendar" /> <p:calendar
+										value="#{compraView.cliente.fechaNacimiento}"
+										id="fechaCalendar" tabindex="5" mindate="01/01/1920"
+										pattern="dd/MM/yyyy" mask="true" navigator="true" locale="es"
+										maxdate="#{clienteView.metodoFechaMaximaNacimiento()}"
+										yearRange="c-35:c+10" /></td>
+								<td colspan="5" align="right"><p:commandButton
+										action="#{clienteView.eventBuscarCliente()}" value="BUSCAR"
+										styleClass="callToAction" icon="ui-icon-search"
+										iconPos="right" tabindex="6"
+										actionListener="#{clienteView.validarBusquedaCliente()}"
+										update="@form:busquedaResultado, @form:growl, @form:subViewResultados,@form:subViewAlta" />
+								</td>
+							</tr>
 
-							    </h:panelGrid>
-							    
-							</h:form>
-						</tr>
-						
 						</table>
-					</f:subview>
-			
-			
-			</p:panel>
-		
-				
-			</td>
-		</tr>
-	</table>
-	
-	<br></br>
 
-	
-</h:form>
+					</td>
+				</tr>
+				<tr>
+					<td><br></br> <br></br> <p:panel id="busquedaResultado">
+							<f:subview id="subViewResultados"
+								rendered="#{clienteView.mostrarListaClientes}">
+								<br />
+						RESULTADOS DE LA BÚSQUEDA
+						<br />
+								<br />
+								<center>
+									<p:dataTable rendered="#{clienteView.mostrarListaClientes}"
+										value="#{clienteView.listaClientes}" var="cliente"
+										id="tablaClientes">
 
+										<p:column headerText="Seleccionar" width="5%"
+											style="text-align:center;">
+											<p:commandButton
+												action="#{clienteView.eventClienteEncontrado(cliente.idPersona)}"
+												id="cliente#{cliente.idPersona}" icon="ui-icon-star" />
+										</p:column>
+										<p:column headerText="NOMBRE" width="15%">
+											<h:outputText value="#{cliente.nombre}" />
+										</p:column>
+										<p:column headerText="SEGUNDO NOMBRE" width="15%">
+											<h:outputText value="#{cliente.segundoNombre}" />
+										</p:column>
+										<p:column headerText="APELLIDO PATERNO" width="20%">
+											<h:outputText value="#{cliente.apellidoPaterno}" />
+										</p:column>
+										<p:column headerText="APELLIDO MATERNO" width="20%">
+											<h:outputText value="#{cliente.apellidoMaterno}" />
+										</p:column>
+										<p:column headerText="FECHA NACIMIENTO" width="10%">
+											<h:outputText value="#{cliente.fechaNacimientoFormateada}" />
+										</p:column>
+									</p:dataTable>
+								</center>
+							</f:subview>
 
+							<f:subview id="subViewAlta"
+								rendered="#{clienteView.mostarAltaCliente}">
+								<table>
+									<tr>
+										<td>No hay coincidencias para la información ingresada. <br></br>
+											Verifique los datos para una busqueda. <br />
+										<br /> O puede crear un cliente nuevo con la información
+											proporcionada, dando clic en el botón anexo.
+										</td>
+										<td><p:commandButton
+												action="#{clienteView.eventAltaCliente()}"
+												value="ALTA DE CLIENTE" iconPos="right"
+												icon="ui-icon-circle-check" /></td>
+										<h:form>
+											<p:growl id="msgs" showDetail="true" />
 
+											<h:panelGrid columns="2" cellpadding="5">
+												<p:outputLabel value="Estado:" for="estadoAutocomplete" />
+												<p:autoComplete id="estadoAutocomplete"
+													value="#{clienteView.estado}" var="estado"
+													completeMethod="#{clienteView.completeEstados}"
+													forceSelection="true" queryDelay="400"
+													itemLabel="#{estado.nombre}" itemValue="#{estado}"
+													converter="#{estadoConverter}">
+													<p:ajax event="itemSelect"
+														listener="#{clienteView.handleEstadoSeleccionado}" />
+												</p:autoComplete>
 
+												<p:outputLabel value="Municipio" for="municipioA" />
+												<p:autoComplete id="municipioA"
+													value="#{clienteView.municipio}" var="municipio"
+													completeMethod="#{clienteView.completeMunicipios}"
+													itemLabel="#{municipio.nombre}" itemValue="#{municipio}"
+													converter="#{municipioConverter}">
+													<p:ajax event="itemSelect"
+														listener="#{clienteView.handleMunicipioSeleccionado}" />
+												</p:autoComplete>
 
+												<p:outputLabel value="Colonia" for="coloniaA" />
+												<p:autoComplete id="coloniaA"
+													value="#{clienteView.colonia}" var="colonia"
+													itemLabel="#{colonia.nombre}" itemValue="#{colonia}"
+													converter="#{coloniaConverter}"
+													completeMethod="#{clienteView.completeColonias}">
+													<p:ajax event="itemSelect"
+														listener="#{clienteView.handleColoniaSeleccionada}" />
+												</p:autoComplete>
 
+												<p:outputLabel value="Calle" for="calleA" />
+												<p:autoComplete id="calleA" value="#{clienteView.calle}"
+													var="calle" itemLabel="#{calle.nombre}"
+													itemValue="#{calle}" converter="#{calleConverter}"
+													completeMethod="#{clienteView.completeCalles}">
+													<p:ajax event="itemSelect"
+														listener="#{clienteView.handleCalleSeleccionada}" />
+												</p:autoComplete>
 
-</ui:define>
+												<p:outputLabel value="Codigo" for="codigo" />
+												<p:autoComplete id="codigo" value="#{clienteView.codigo}"
+													var="cp" itemLabel="#{cp.codigoPostal}" itemValue="#{cp}"
+													converter="#{codigoPostalConverter}"
+													completeMethod="#{clienteView.completeCodigos}">
+													<p:ajax event="itemSelect"
+														listener="#{clienteView.handleCodigoSeleccionado}" />
+												</p:autoComplete>
+
+												<p:outputLabel value="No. Exterior" for="noExt" />
+												<h:inputText id="noExt" value="#{clienteView.numeroExt}" />
+
+												<p:outputLabel value="No. Interior" for="noInt" />
+												<h:inputText id="noInt" value="#{clienteView.numeroInt}" />
+
+											</h:panelGrid>
+
+										</h:form>
+									</tr>
+
+								</table>
+							</f:subview>
+						</p:panel></td>
+				</tr>
+			</table>
+
+			<br></br>
+		</h:form>
+
+	</ui:define>
 </ui:composition>
 </html>
 

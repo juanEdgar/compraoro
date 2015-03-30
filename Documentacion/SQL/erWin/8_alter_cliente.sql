@@ -1,0 +1,1 @@
+alter table Cliente add column fiiddireccion INT NOT NULL;
