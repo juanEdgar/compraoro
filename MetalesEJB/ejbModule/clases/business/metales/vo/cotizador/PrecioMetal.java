@@ -45,6 +45,9 @@ public class PrecioMetal {
 	@Column(name="fdprecio")
 	private float precio;
 	
+	@Column(name="fnAforo")
+	private float aforo;
+	
 	private UsuarioModifico usuarioModifico;
 
 	
@@ -106,6 +109,16 @@ public class PrecioMetal {
 		this.usuarioModifico = usuarioModifico;
 	}
 	
+	
+	
+	public float getAforo() {
+		return aforo;
+	}
+
+	public void setAforo(float aforo) {
+		this.aforo = aforo;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		

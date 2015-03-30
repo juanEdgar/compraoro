@@ -44,6 +44,10 @@ public class CambiarPrecioView implements Serializable{
 	private List<Metal> productoMetales= null;
 	private List<Moneda> monedas= null;
 	
+	private Metal metalEditar= null;
+	private boolean mostarTabla=false;
+	
+	
 	public CambiarPrecioView() {
 		// TODO Auto-generated constructor stub
 	}
@@ -53,21 +57,33 @@ public class CambiarPrecioView implements Serializable{
 		log.debug("Se recupera la lista de metales");
 		this.productoMetales= this.ejbMetales.getMetalesComercializables();
 		this.monedas= this.ejbTC.getListaMonedas();
+		this.mostarTabla= false;
 	}
 	
 	public void eventActualizarPrecio(int idMetal){
 		// se validan los campos
-		log.debug("Se selecciona actualizar precio");
-		Metal mSeleccionado= this.getMetalSeleccionado(idMetal);
-		if(mSeleccionado!=null){
-			if(mSeleccionado.getPrecioGramo().getPrecio()<=0.0F){
+		log.debug("Se selecciona actualizar precio id Metal "+idMetal);
+		this.metalEditar= this.getMetalSeleccionado(idMetal);
+		this.mostarTabla=true;
+
+	}
+	
+	
+	public void guardar(){
+		if(metalEditar!=null){
+			if(metalEditar.getPrecioGramo().getPrecio()<=0.0F){
 				this.setMensage(FacesMessage.SEVERITY_WARN, "Cuidado","Debe especificar un valor mayor que cero");
 				return;
 			}
+			if(metalEditar.getPrecioGramo().getAforo()<40F || metalEditar.getPrecioGramo().getAforo()>100F){
+				this.setMensage(FacesMessage.SEVERITY_WARN, "Cuidado","Debe especificar un aforo entre 40 y 100%");
+				return;
+			}
 			try{
-				log.debug("Se actualizan precios "+ mSeleccionado.getPrecioGramo().getMoneda().getId());
-				this.ejbMetales.actualizarPrecioMetal(mSeleccionado, mSeleccionado.getPrecioGramo().getPrecio(), mSeleccionado.getPrecioGramo().getMoneda());
+				log.debug("Se guarda el valor del precio de metal");
+				this.ejbMetales.actualizarPrecioMetal(metalEditar, metalEditar.getPrecioGramo().getPrecio(), metalEditar.getPrecioGramo().getMoneda());
 				this.setMensage(FacesMessage.SEVERITY_INFO, "Correcto", "Precio actualizado correctamente");
+				this.init();
 			}catch(Exception e){
 				if(!(e instanceof RDNException)){
 					log.error(e);
@@ -107,6 +123,22 @@ public class CambiarPrecioView implements Serializable{
 
 	public void setMonedas(List<Moneda> monedas) {
 		this.monedas = monedas;
+	}
+
+	public Metal getMetalEditar() {
+		return metalEditar;
+	}
+
+	public void setMetalEditar(Metal metalEditar) {
+		this.metalEditar = metalEditar;
+	}
+
+	public boolean isMostarTabla() {
+		return mostarTabla;
+	}
+
+	public void setMostarTabla(boolean mostarTabla) {
+		this.mostarTabla = mostarTabla;
 	}
 	
 	

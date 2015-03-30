@@ -87,6 +87,7 @@ CREATE TABLE PrecioMetalGramoFino
 	fiIdPrecioMetalGramoFino  INT  NOT NULL ,
 	fiIdMetal	  INT  NOT NULL ,
 	fdPrecio	  DECIMAL(12,2)  NOT NULL ,
+	fdAforo	  	  DECIMAL(5,2)  NOT NULL ,
 	fiidMoneda	  INT  NOT NULL ,
 	fiIdEstatus	  INT  NOT NULL ,
 	fcUsuarioModifico  VARCHAR(20)  NOT NULL ,

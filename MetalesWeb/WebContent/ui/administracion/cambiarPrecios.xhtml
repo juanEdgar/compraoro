@@ -11,58 +11,128 @@
 
 <ui:composition template="/ui/template/adminTemplate.xhtml">
 	<ui:define name="content">
+	
+	<h:head>
+		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/compra/compraMetal.css" />
+	</h:head>
 
 		<h:form id="preciosForm">
 
 			<p:growl id="growl" showDetail="true" autoUpdate="true"	autlife="4500" />
 
-			<br />
-			<br />
-			<br />
 			<table width="90%" align="center">
 				<tr>
 
 					<td>
+						
 						<table>
 							<tr>
-								<td>Lista actual de precios de metales</td>
+								<td>
+									<p:panel id="vistaFormularioPrecio" style="border: 0px">
+									<f:subview id="subViewFormularioPrecioMetal" rendered="#{cambiarPrecioView.mostarTabla}">
+										<table width="100%">
+											<tr>
+												<td class="encabezadocampo" >
+													METAL
+												</td>
+												<td class="encabezadocampo" >
+													PRECIO ONZA FINA
+												</td>
+												<td class="encabezadocampo">
+													PRECIO GRAMO FINO
+												</td  >
+												<td class="encabezadocampo" >
+													MONEDA PRECIO
+												</td>
+												<td class="encabezadocampo" >
+													AFORO (de 0 a 100%)
+												</td>
+												<td>
+													
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<h:outputText id="metalEditar" value="#{cambiarPrecioView.metalEditar.nombre}" />
+												</td>
+												<td>
+													<p:inputText id="onzasEditar" style="text-align:right"
+														value="#{cambiarPrecioView.metalEditar.precioGramo.precioPorOnza}">
+													<p:ajax event="blur" update="gramosEditar"></p:ajax>
+												
+											</p:inputText>
+												</td>
+												<td>
+													<p:inputText id="gramosEditar" value="#{cambiarPrecioView.metalEditar.precioGramo.precio}" style="text-align:right">
+														<p:ajax event="blur" update="onzasEditar"></p:ajax>
+												
+													</p:inputText>
+												</td>
+												<td>
+													<p:selectOneMenu id="comboMonedaEditar"
+														value="#{cambiarPrecioView.metalEditar.precioGramo.moneda.id}">
+														<f:selectItems value="#{cambiarPrecioView.monedas}"
+															var="moneda" itemLabel="#{moneda.nombre}"
+															itemValue="#{moneda.id}" />
+													</p:selectOneMenu>
+												</td>
+												<td>
+													<p:inputText id="aforoEditar" value="#{cambiarPrecioView.metalEditar.precioGramo.aforo}" style="text-align:right">
+														<f:convertNumber type="number" maxFractionDigits="2" maxIntegerDigits="3" ></f:convertNumber>
+														
+														
+													</p:inputText>
+												</td>
+												<td>
+													<p:commandButton
+														action="#{cambiarPrecioView.guardar()}"
+														value="GUARDAR" icon="ui-icon-disk"
+														styleClass="callToAction" 
+													update="@form"/>
+												</td>
+											</tr>
+											
+										</table>
+										<br/><br/>
+									</f:subview>
+									</p:panel>
+								
+								</td>
 							</tr>
 							<tr>
-								<td><p:dataTable
-										value="#{cambiarPrecioView.productoMetales}" var="metal"
-										id="tablaMetales">
+								<td>Lista actual de precios de metales<br/><br/></td>
+							</tr>
+							<tr>	
+								
+								<td>
+									<p:dataTable value="#{cambiarPrecioView.productoMetales}" var="metal">
 
-										<p:column headerText="Nombre" width="20%">
-											<h:outputText id="nombre#{metal.id}" value="#{metal.nombre}" />
+										<p:column headerText="NOMBRE METAL" width="15%">
+											<h:outputText value="#{metal.nombre}" />
 										</p:column>
-										<p:column headerText="Precio por Oz" width="15%">
-											<p:inputText id="onzas"
-												value="#{metal.precioGramo.precioPorOnza}">
-												<p:ajax event="blur" update="gramos"></p:ajax>
-											</p:inputText>
+										<p:column headerText="PRECIO POR Oz FINO" width="15%" style="text-align: right;">
+											<h:outputText  style="text-align:right"	value="#{metal.precioGramo.precioPorOnza}">
+												<f:convertNumber type="currency" currencySymbol="$"/>
+											</h:outputText>	
 										</p:column>
-										<p:column headerText="Precio por g" width="15%"
-											style="text-align: right;">
-
-											<p:inputText id="gramos" value="#{metal.precioGramo.precio}">
-												<p:ajax event="blur" update="onzas"></p:ajax>
-											</p:inputText>
-
+										<p:column headerText="PRECIO POR g FINO" width="15%"  style="text-align: right;"	>
+											<h:outputText  value="#{metal.precioGramo.precio}" >
+												<f:convertNumber type="currency" currencySymbol="$"/>
+											</h:outputText>	
 										</p:column>
-										<p:column headerText="Moneda" width="25%"
-											style="text-align: right;">
-											<p:selectOneMenu id="comboMoneda"
-												value="#{metal.precioGramo.moneda.id}">
-												<f:selectItems value="#{cambiarPrecioView.monedas}"
-													var="moneda" itemLabel="#{moneda.nombre}"
-													itemValue="#{moneda.id}" />
-											</p:selectOneMenu>
+										<p:column headerText="Moneda" width="25%" style="text-align: right;">
+											<h:outputText value="#{metal.precioGramo.moneda.nombre}" />
+										</p:column>
+										<p:column headerText="AFORO" width="20%" style="text-align: right;">
+											<h:outputText value="#{metal.precioGramo.aforo/100}" >
+												<f:convertNumber type="percent" ></f:convertNumber>
+											</h:outputText>
 										</p:column>
 										<p:column headerText="Actualizar" width="10%"
 											style="text-align:center;">
 											<p:commandLink id="metalActualizarB"
-												actionListener="#{cambiarPrecioView.eventActualizarPrecio(metal.id)}">
-												<h:outputText value="O"
+												actionListener="#{cambiarPrecioView.eventActualizarPrecio(metal.id)}" update="@form">
+												<h:outputText value="EDITAR"
 													style="color: blue; font-weight: bold" />
 											</p:commandLink>
 										</p:column>

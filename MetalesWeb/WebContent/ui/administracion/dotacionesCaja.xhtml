@@ -20,8 +20,6 @@
 
 <p:growl id="growl" showDetail="true"  autoUpdate="true"  autlife="4500" />
 
-<br />
-
 <table width="90%" align="center">
 	<tr>
 		<td>
@@ -122,7 +120,9 @@
 												update="@form:subViewLista:idSaldoDotar,@form:subViewLista:idSaldoTotal"></p:ajax>
 										
 										<p:column headerText="Moneda" style="text-align: right; width: 20%">
-											<h:outputText value="#{saldo.denominacion}"></h:outputText>
+											<h:outputText value="#{saldo.denominacion}">
+												<f:convertNumber type="currency" currencySymbol="$"></f:convertNumber>
+											</h:outputText>
 										</p:column>
 										<p:column headerText="Cantida actual" style="text-align: right; width: 20%">
 											<h:outputText value="#{saldo.cantidad}"></h:outputText>

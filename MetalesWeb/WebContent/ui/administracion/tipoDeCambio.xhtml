@@ -17,15 +17,13 @@
 <p:growl id="growl" showDetail="true"  autoUpdate="true"  autlife="4500" />
 
 <br />
-<br />
-<br />
 	<table width="90%" align="center">
 		<tr>
 			
 			<td>
 				<table>
 					<tr>
-						<td>Lista de tipos de cambio actuales
+						<td>Lista de tipos de cambio actuales<br/><br/>
 						</td>
 					</tr>
 					<tr>
@@ -40,13 +38,14 @@
 								</p:column>							
 								
 								<p:column headerText="Valor cambiario" width="15%">
-									<p:inputText id="valorCambiario" value="#{tc.valor}" >										
+									<p:inputText id="valorCambiario" value="#{tc.valor}" style="text-align:right;">	
+																		
 									</p:inputText>
 								</p:column>								
 								
 								<p:column headerText="Actualizar" width="10%" style="text-align:center;">
-									<p:commandLink id="metalActualizarB"  actionListener="#{cambiarTipocambioView.eventActualizarPrecio(tc.id)}">
-							        <h:outputText value="O" style="color: blue; font-weight: bold" />
+									<p:commandLink id="metalActualizarB"  actionListener="#{cambiarTipocambioView.eventActualizarPrecio(tc.id)}" update="@form">
+							        <h:outputText value="ACUALIZAR" style="color: blue; font-weight: bold" />
 							    </p:commandLink>
 								</p:column>
 							</p:dataTable>

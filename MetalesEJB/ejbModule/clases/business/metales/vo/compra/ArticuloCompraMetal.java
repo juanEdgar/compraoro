@@ -45,6 +45,8 @@ public class ArticuloCompraMetal  extends ArticuloCompra  implements Serializabl
 		@JoinColumn(name="fiidpreciometalgramofino")
 		private PrecioMetal precioMetal;
 		
+	
+		
 		@Column(name="fnPesoFino")
 		private float pesoFino;
 		
@@ -75,6 +77,7 @@ public class ArticuloCompraMetal  extends ArticuloCompra  implements Serializabl
 		
 		
 		
+		
 		public float getPesoFino() {
 			return pesoFino;
 		}
@@ -93,7 +96,7 @@ public class ArticuloCompraMetal  extends ArticuloCompra  implements Serializabl
 			sb.append(this.getPesoNeto());
 			sb.append(" GRAMOS.");
 			
-			return sb.toString().toLowerCase();
+			return sb.toString().toUpperCase();
 		}
 		
 	

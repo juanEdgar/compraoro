@@ -9,9 +9,10 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(schema="public", name="Diamante")
@@ -56,8 +57,21 @@ public class Diamante extends Producto implements Serializable{
 	
 	@Column(name="fiIdEstatus")
 	private int estatus;
-
-
+	
+	
+	@OneToOne(mappedBy="tipoDiamante")	
+	private PrecioDiamante precio;
+	
+	
+	@Transient
+	private float quilates=0.0F;
+	
+	@Transient
+	private float preciocotizado=0.0F;
+	
+	@Transient
+	private String descripcion;
+	
 	public int getId() {
 		return id;
 	}
@@ -99,26 +113,65 @@ public class Diamante extends Producto implements Serializable{
 	}
 	
 	
-	@Override
-	public boolean equals(Object obj) {
-		
-		if(obj==null){
-			return false;
-		}
-		
-		if(!(obj instanceof Diamante)){
-			return false;
-		}
-		
-		return ((Diamante)obj).getId()==this.getId();
+	
+	public float getQuilates() {
+		return quilates;
+	}
+
+	public void setQuilates(float quilates) {
+		this.quilates = quilates;
+	}
+
+	
+	
+	
+	public PrecioDiamante getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(PrecioDiamante precio) {
+		this.precio = precio;
 	}
 	
-	@Override
-	public int hashCode() {
-		
-		return this.id;
+	
+	public float getPreciocotizado() {
+		return preciocotizado;
+	}
+
+	public void setPreciocotizado(float preciocotizado) {
+		this.preciocotizado = preciocotizado;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 	
+	
+
+//	@Override
+//	public boolean equals(Object obj) {
+//		
+//		if(obj==null){
+//			return false;
+//		}
+//		
+//		if(!(obj instanceof Diamante)){
+//			return false;
+//		}
+//		
+//		return ((Diamante)obj).getId()==this.getId();
+//	}
+//	
+//	@Override
+//	public int hashCode() {
+//		
+//		return this.id;
+//	}
+//	
 	
 	
 }

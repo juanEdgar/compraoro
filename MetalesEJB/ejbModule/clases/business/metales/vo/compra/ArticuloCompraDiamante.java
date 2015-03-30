@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import clases.business.metales.vo.cotizador.PrecioDiamante;
-import clases.business.metales.vo.cotizador.PrecioMetal;
 
 @Entity
 @Table(schema="public",name="ArticuloCompraDiamante")
@@ -39,11 +38,34 @@ public class ArticuloCompraDiamante  extends ArticuloCompra  implements Serializ
 			
 			sb.append("Diamante de ");
 			sb.append(this.quilaes);
-			sb.append(" quilaes");
+			sb.append(" quilaes, ");
+//			sb.append("color  ");
+//			sb.append(this.getPrecioDiamante().getTipoDiamante().getColor().getColor());
+//			sb.append(", categoria ");
+//			sb.append(this.getPrecioDiamante().getTipoDiamante().getPunto().getRangoPuntos());
+//			sb.append(", limpieza ");
+//			sb.append(this.getPrecioDiamante().getTipoDiamante().getLimpieza().getLimpieza());
 			
-			
-			return sb.toString().toLowerCase();
+			return sb.toString().toUpperCase();
 		}
+
+		public PrecioDiamante getPrecioDiamante() {
+			return precioDiamante;
+		}
+
+		public void setPrecioDiamante(PrecioDiamante precioDiamante) {
+			this.precioDiamante = precioDiamante;
+		}
+
+		public float getQuilaes() {
+			return quilaes;
+		}
+
+		public void setQuilaes(float quilaes) {
+			this.quilaes = quilaes;
+		}
+		
+		
 		
 	
 	

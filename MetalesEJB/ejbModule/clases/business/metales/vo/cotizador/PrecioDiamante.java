@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
@@ -14,6 +16,7 @@ import clases.vo.dinero.Moneda;
 
 @Entity
 @Table(schema="public", name="V_PrecioDiamanteQuilate")
+@SequenceGenerator(schema="public", sequenceName="SEQ_PRECIODIAMANTE", name="SEQ_PRECIODIAMANTE", allocationSize=50)
 public class PrecioDiamante implements Serializable {
 
 
@@ -26,8 +29,8 @@ public class PrecioDiamante implements Serializable {
 		this.id=id;
 	}
 	
-	@Id
-	@Column(name="fiIDPrecioDiamanteQuilate")
+	@Id @GeneratedValue(generator="SEQ_PRECIODIAMANTE")
+	@Column(name="fiidpreciodiamante")
 	private int id;
 	
 	@OneToOne
@@ -46,9 +49,6 @@ public class PrecioDiamante implements Serializable {
 	
 	private UsuarioModifico usuarioModifico;
 	
-	
-	
-
 	public int getId() {
 		return id;
 	}

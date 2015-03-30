@@ -22,7 +22,7 @@ public  class Producto {
 		if(obj==null){
 			return false;
 		}
-		if(!(obj instanceof Metal)){
+		if(!(obj instanceof Producto)){
 			return false;
 		}
 		
