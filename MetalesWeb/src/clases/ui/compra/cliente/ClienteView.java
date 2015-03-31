@@ -184,11 +184,17 @@ public class ClienteView implements Serializable {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "Datos incompletos para dar de alta el cliente" ));
 			return null;
 		}
+		
+		log.debug("Datos validos");
+		
 		if (!createDireccion()) {
+			log.debug("No direccion");
 			FacesContext context= FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Dirección Incorrecta"));
 			return null;
 		}
+		
+		log.debug("Alta ok");
 		
 		this.mostarAltaCliente=false;
 		this.mostrarListaClientes=false;
@@ -410,28 +416,32 @@ public class ClienteView implements Serializable {
     }
 	
 	public boolean createDireccion() {
-		FacesContext context= FacesContext.getCurrentInstance();
-		if (estado == null) {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Selecciona un Estado"));
-			return false;
-		}
-		if (municipioString == null || municipioString.trim().length() < 1) {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Escribe un Municipio"));
-			return false;
-		}
-		if (coloniaString == null || coloniaString.trim().length() < 1) {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Escribe una Colonia"));
-			return false;
-		}
-		if (calleString == null || calleString.trim().length() < 1) {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Escribe una Calle"));
-			return false;
-		}
-		if (codigoString == null || codigoString.trim().length() < 1) {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Escribe un Código Postal"));
-			return false;
-		}
+		
 		try {
+			
+			
+			FacesContext context= FacesContext.getCurrentInstance();
+			if (estado == null) {
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Selecciona un Estado"));
+				return false;
+			}
+			if (municipioString == null || municipioString.trim().length() < 1) {
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Escribe un Municipio"));
+				return false;
+			}
+			if (coloniaString == null || coloniaString.trim().length() < 1) {
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Escribe una Colonia"));
+				return false;
+			}
+			if (calleString == null || calleString.trim().length() < 1) {
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Escribe una Calle"));
+				return false;
+			}
+			if (codigoString == null || codigoString.trim().length() < 1) {
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Escribe un Código Postal"));
+				return false;
+			}
+			
 			if (municipio == null) {
 				Municipio m = new Municipio();
 				m.setEstado(estado);
@@ -466,14 +476,13 @@ public class ClienteView implements Serializable {
 				direccion = direccionEJB.altaDireccion(d);
 				this.compra.setDireccion(direccion);
 			}
+			
 			return true;
 			
 		} catch (RDNException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e,e);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e,e);
 		}
 		return false;
 	}
