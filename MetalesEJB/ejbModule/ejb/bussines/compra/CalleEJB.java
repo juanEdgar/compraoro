@@ -18,8 +18,6 @@ import clases.login.UsuarioSesion;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
 import clases.vo.cliente.Calle;
 import clases.vo.cliente.Colonia;
-import clases.vo.cliente.Estado;
-import clases.vo.cliente.Municipio;
 import ejb.bussines.exception.RDNException;
 
 @Stateless
@@ -43,7 +41,6 @@ private static final Logger log = LogManager .getLogger(CalleEJB.class);
 			log.info("Alta de Calle");
 			
 			UsuarioSesion usuarioTienda =  this.usuarioSesion;
-    		
     		
     			if (usuarioTienda.getTienda() == null || usuarioTienda.getTienda().getId() <= 0) {
     				throw new Exception("La tienda en sesion es invalida, no se puede dar de alta");

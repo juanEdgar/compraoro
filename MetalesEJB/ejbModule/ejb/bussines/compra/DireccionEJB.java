@@ -39,7 +39,6 @@ private static final Logger log = LogManager .getLogger(DireccionEJB.class);
 			
 			UsuarioSesion usuarioTienda =  this.usuarioSesion;
     		
-    		
     			if (usuarioTienda.getTienda() == null || usuarioTienda.getTienda().getId() <= 0) {
     				throw new Exception("La tienda en sesion es invalida, no se puede dar de alta a la codigo");
     			}

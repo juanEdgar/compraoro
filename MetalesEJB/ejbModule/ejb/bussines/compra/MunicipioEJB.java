@@ -10,11 +10,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.EntityType;
-import javax.persistence.metamodel.Metamodel;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,7 +44,6 @@ public class MunicipioEJB {
 			
 			UsuarioSesion usuarioTienda =  this.usuarioSesion;
     		
-    		
     			if (usuarioTienda.getTienda() == null || usuarioTienda.getTienda().getId() <= 0) {
     				throw new Exception("La tienda en sesion es invalida, no se puede dar de alta al Municipio");
     			}
@@ -67,7 +61,7 @@ public class MunicipioEJB {
     		
 		} catch (Exception e) {
 			if (!(e  instanceof RDNException)) {
-	    			log.error("Error al dar de alta el Municipio",e);
+	    			log.error("Error al dar de alta el Municipio", e);
 	    		}
 	    		this.context.setRollbackOnly();
 	    		throw e;

@@ -20,7 +20,9 @@ public class EstadoConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value != null && value.trim().length() > 0) {
-			return estadoEJB.find(Integer.parseInt(value));
+			try {
+				return estadoEJB.find(Integer.parseInt(value));
+			} catch (Exception e) {}
 		}
 	    return null;
 	}
