@@ -7,16 +7,28 @@
 
 
 
-
-
 <ui:composition template="/ui/template/cajeroTemplate.xhtml">
 	<ui:define name="content">
 
 
 <h:head>
 <link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/compra/compraMetal.css" />
+
+<style>
+@media print {
+	.no-print, .no-print *
+    {
+        display: none !important;
+    }
+    #j_idt10 {
+    	display: none !important;
+    }
+}
+</style>
 	
 </h:head>
+
+
 
 
 <h:form id="cotizacionForm">
@@ -27,15 +39,18 @@
 	<table width="90%" align="center">
 		<tr>
 			<td width="50%">
-				<p:commandButton action="#{compraView.navegacionCliente()}" value="ATRAS" icon="ui-icon-circle-triangle-w" 
-									                styleClass="callToAction" validateClient="false">
+				<p:commandButton id="button_atras" action="#{compraView.navegacionCliente()}" value="ATRAS" icon="ui-icon-circle-triangle-w" 
+									                styleClass="callToAction" validateClient="false" class="no-print">
+				</p:commandButton>
+			</td>
+			<td width="50%" align="right" style="padding-right: 20px">
+				<p:commandButton id="button_print" value="Imprimir" icon="ui-icon-print" onclick="window.print();"
+									                styleClass="callToAction" class="no-print" >
 				</p:commandButton>
 			</td>
 			<td width="50%" align="right" style="padding-right: 20px">
 				<p:commandButton action="#{compraView.navegacionPago()}" value="Registrar Pago" icon="ui-icon-disk" 
-									                styleClass="callToAction" 
-									                
-									                >
+									                styleClass="callToAction" class="no-print" >
 				</p:commandButton>
 			</td>
 		</tr>
