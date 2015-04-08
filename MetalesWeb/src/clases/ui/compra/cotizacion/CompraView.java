@@ -240,6 +240,10 @@ public class CompraView implements Serializable{
 		return "resumen?faces-redirect=true";
 	}
 	
+	public String navegarResumenImpresionCompra() {		
+		return "resumenImpresion?faces-redirect=true";
+	}
+	
 	public void initConversation(){
 	    if (!FacesContext.getCurrentInstance().isPostback() 
 	      && conversation.isTransient()) {
