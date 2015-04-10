@@ -8,25 +8,15 @@
 
 
 <ui:composition template="/ui/template/cajeroTemplate.xhtml">
-	<ui:define name="content">
 
+<ui:define name="content">
 
-<h:head>
-<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/compra/compraMetal.css" />
-
-<style>
-@media print {
-	.no-print, .no-print *
-    {
-        display: none !important;
-    }
-    #j_idt10 {
-    	display: none !important;
-    }
-}
-</style>
 	
-</h:head>
+	<h:head>
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/compra/compraMetal.css" />
+	
+		
+	</h:head>
 
 
 
@@ -39,24 +29,28 @@
 	<table width="90%" align="center">
 		<tr>
 			<td width="50%">
-				<p:commandButton id="button_atras" action="#{compraView.navegacionCliente()}" value="ATRAS" icon="ui-icon-circle-triangle-w" 
-									                styleClass="callToAction" validateClient="false" class="no-print">
+				<p:commandButton id="button_atras" action="#{compraView.navegacionCliente()}" value="ATRAS" 
+				icon="ui-icon-circle-triangle-w" 
+									                styleClass="callToAction" validateClient="false" >
 				</p:commandButton>
 			</td>
+			
 			<td width="50%" align="right" style="padding-right: 20px">
-				<p:commandButton id="button_print" value="Imprimir" icon="ui-icon-print" onclick="window.print();"
-									                styleClass="callToAction" class="no-print" >
-				</p:commandButton>
-			</td>
-			<td width="50%" align="right" style="padding-right: 20px">
+				
+				<h:commandLink  value="Imprimir comprobante"  target="_blank" style="color: black; padding-right: 50px"
+								 action="#{compraView.navegarResumenImpresionCompra()}" validateClient="false" role="button">
+				</h:commandLink>
+		
 				<p:commandButton action="#{compraView.navegacionPago()}" value="Registrar Pago" icon="ui-icon-disk" 
-									                styleClass="callToAction" class="no-print" >
+									                styleClass="callToAction" >
 				</p:commandButton>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2">
-				Resumen de datos del cliente
+			<br/>
+			<br/>
+				DATOS DEL CLIENTE
 				<div id="cotizacionForm:tablaArticulos" class="ui-datatable ui-widget" style="padding-top: 30px; ">
 				<div class="ui-datatable-tablewrapper">
 				<table role="grid" width="100%" style="text-align: left" >	
@@ -103,8 +97,9 @@
 		
 		<tr>
 			<td colspan="2" style="padding-top: 30px"> <!-- RESUMEN ARTICULOS -->
+				<BR/>
 				
-				Resumen de artículos 
+				RESUMEN DE ARTICULOS
 				
 				<table id="tablaResumen" cellpadding="2px 10px" width="100%" style="font-size: 12px">
 					<tr>
