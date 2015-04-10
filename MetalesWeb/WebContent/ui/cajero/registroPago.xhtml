@@ -5,20 +5,14 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-
-
-
-
 <ui:composition template="/ui/template/cajeroTemplate.xhtml">
 	<ui:define name="content">
-
 
 		<h:head>
 			<link type="text/css" rel="stylesheet"
 				href="#{request.contextPath}/css/compra/compraMetal.css" />
 
 		</h:head>
-
 
 		<h:form id="pagoForm">
 
@@ -30,10 +24,6 @@
 				<p:commandButton value="No" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
-
-
-
-
 
 			<table width="90%" align="center">
 				<tr>
@@ -60,9 +50,7 @@
 								<td width="50%" align="center" style="vertical-align: text-top; padding-top: 20px; ">
 									
 									<f:subview id="subViewPagoNoDisponible" rendered="#{pagoCompraView.mostarPagoEfectivo}">
-									
-									
-									
+												
 											<table width="90%">
 											<tr>
 													<td  align="right">
@@ -176,25 +164,14 @@
 													value="#{pagoCompraView.pagoSpei.codigoRastreo}"></h:inputText>
 											</td>
 										</tr>
-										
 									</table>
-
-
 								</td>
-
 							</tr>
-
-
 						</table>
-
-
 					</td>
 				</tr>
 			</table>
-
 		</h:form>
-
-
 
 	</ui:define>
 </ui:composition>

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema="public", name="CodigoPostal")
-@SequenceGenerator(name="seq_codigopostal", schema="public", sequenceName="seq_codigopostal", allocationSize=50 )
+@SequenceGenerator(name="seq_codigopostal", schema="public", sequenceName="seq_codigopostal", allocationSize=1 )
 
 public class CodigoPostal  implements Serializable  {
 

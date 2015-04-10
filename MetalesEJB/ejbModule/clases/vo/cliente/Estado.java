@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema="public", name="Estado")
-@SequenceGenerator(name="seq_estado", schema="public", sequenceName="seq_estado", allocationSize=50 )
+@SequenceGenerator(name="seq_estado", schema="public", sequenceName="seq_estado", allocationSize=1 )
 public class Estado implements Serializable {
 
 	/**

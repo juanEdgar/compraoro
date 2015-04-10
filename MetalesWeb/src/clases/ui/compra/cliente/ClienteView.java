@@ -184,6 +184,11 @@ public class ClienteView implements Serializable {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "Datos incompletos para dar de alta el cliente" ));
 			return null;
 		}
+		if (!createDireccion()) {
+			FacesContext context= FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Dirección Incorrecta"));
+			return null;
+		}
 		
 		log.debug("Datos validos");
 		
@@ -312,6 +317,7 @@ public class ClienteView implements Serializable {
 ////////////////////////////Municipios
 	public List<Municipio> completeMunicipios(String query) {
 		municipioString = query;
+		log.debug(">>> " + query);
 		municipio = null;
 		colonia = null;
 		calle = null;

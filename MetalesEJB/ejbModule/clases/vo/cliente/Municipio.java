@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema="public", name="Municipio")
-@SequenceGenerator(name="seq_municipio", schema="public", sequenceName="seq_municipio", allocationSize=50 )
+@SequenceGenerator(name="seq_municipio", schema="public", sequenceName="seq_municipio", allocationSize=1 )
 
 public class Municipio implements Serializable {
 
