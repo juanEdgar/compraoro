@@ -15,7 +15,7 @@ import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
 
 @Entity
 @Table(schema="public", name="Direccion")
-@SequenceGenerator(name="seq_direccion", schema="public", sequenceName="seq_direccion", allocationSize=50 )
+@SequenceGenerator(name="seq_direccion", schema="public", sequenceName="seq_direccion", allocationSize=1 )
 public class Direccion implements Serializable {
 
 	/**
@@ -111,6 +111,10 @@ public class Direccion implements Serializable {
 
 	public void setNumeroInterior(String numeroInterior) {
 		this.numeroInterior = numeroInterior;
+	}
+
+	public UsuarioModifico getUsuarioModificoCliente() {
+		return usuarioModificoCliente;
 	}
 }
 

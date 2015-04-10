@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema="public", name="Calle")
-@SequenceGenerator(name="seq_calle", schema="public", sequenceName="seq_calle", allocationSize=50 )
+@SequenceGenerator(name="seq_calle", schema="public", sequenceName="seq_calle", allocationSize=1 )
 public class Calle implements Serializable {
 
 	/**

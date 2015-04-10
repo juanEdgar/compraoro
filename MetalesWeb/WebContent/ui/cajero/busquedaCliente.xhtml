@@ -143,7 +143,7 @@
 													value="#{clienteView.municipio}" var="municipio"
 													completeMethod="#{clienteView.completeMunicipios}"
 													itemLabel="#{municipio.nombre}" itemValue="#{municipio}"
-													converter="#{municipioConverter}">
+													converter="#{municipioConverter}" queryDelay="200">
 													<p:ajax event="itemSelect"
 														listener="#{clienteView.handleMunicipioSeleccionado}" />
 												</p:autoComplete>
@@ -152,7 +152,7 @@
 												<p:autoComplete id="coloniaA"
 													value="#{clienteView.colonia}" var="colonia"
 													itemLabel="#{colonia.nombre}" itemValue="#{colonia}"
-													converter="#{coloniaConverter}"
+													converter="#{coloniaConverter}" queryDelay="200"
 													completeMethod="#{clienteView.completeColonias}">
 													<p:ajax event="itemSelect"
 														listener="#{clienteView.handleColoniaSeleccionada}" />
@@ -160,7 +160,7 @@
 
 												<p:outputLabel value="Calle" for="calleA" />
 												<p:autoComplete id="calleA" value="#{clienteView.calle}"
-													var="calle" itemLabel="#{calle.nombre}"
+													var="calle" itemLabel="#{calle.nombre}" queryDelay="200"
 													itemValue="#{calle}" converter="#{calleConverter}"
 													completeMethod="#{clienteView.completeCalles}">
 													<p:ajax event="itemSelect"
@@ -170,7 +170,7 @@
 												<p:outputLabel value="Codigo" for="codigo" />
 												<p:autoComplete id="codigo" value="#{clienteView.codigo}"
 													var="cp" itemLabel="#{cp.codigoPostal}" itemValue="#{cp}"
-													converter="#{codigoPostalConverter}"
+													converter="#{codigoPostalConverter}" queryDelay="200"
 													completeMethod="#{clienteView.completeCodigos}">
 													<p:ajax event="itemSelect"
 														listener="#{clienteView.handleCodigoSeleccionado}" />

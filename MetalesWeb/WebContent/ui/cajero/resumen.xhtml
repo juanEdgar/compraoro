@@ -36,10 +36,13 @@
 			</td>
 			
 			<td width="50%" align="right" style="padding-right: 20px">
-				
-				<h:commandLink  value="Imprimir comprobante"  target="_blank" style="color: black; padding-right: 50px"
-								 action="#{compraView.navegarResumenImpresionCompra()}" validateClient="false" role="button">
-				</h:commandLink>
+			
+				<p:commandButton value="Imprimir comprobante" icon="ui-icon-print"
+					onclick="this.form.target='_blank'"
+					action="#{compraView.navegarResumenImpresionCompra()}"  
+					ajax="false"
+					styleClass="callToAction" >
+				</p:commandButton>
 		
 				<p:commandButton action="#{compraView.navegacionPago()}" value="Registrar Pago" icon="ui-icon-disk" 
 									                styleClass="callToAction" >

@@ -317,6 +317,7 @@ public class ClienteView implements Serializable {
 ////////////////////////////Municipios
 	public List<Municipio> completeMunicipios(String query) {
 		municipioString = query;
+		log.debug(">>> " + query);
 		municipio = null;
 		colonia = null;
 		calle = null;

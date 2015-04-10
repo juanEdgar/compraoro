@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import clases.login.UsuarioSesion;
+import clases.persistence.jpa.commun.embeddable.UsuarioModifico;
 import clases.persistence.jpa.factory.qualifier.MetalesEM;
 import clases.vo.cliente.Direccion;
 import ejb.bussines.exception.RDNException;
@@ -45,6 +46,10 @@ private static final Logger log = LogManager .getLogger(DireccionEJB.class);
     			
     			log.info("Tienda de sesion correcta, ID: "+usuarioTienda.getTienda().getId());
         		log.info("Se manda a validar la informacion de la codigo");
+        		
+        		if(direccion.getUsuarioModificoCliente()==null){
+        			direccion.setUsuarioModificoCliente(new UsuarioModifico(usuarioSesion.getNombreUsuario()));
+        		}
         		
         		this.validarInformacionAlta(direccion);
         		
